@@ -21,3 +21,14 @@ Home {
   position: relative;
   left: 40%;
 }
+
+.filter {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display: block;
+  width: 20%;
+  height: 40vw;
+  background-color: rgb(195, 175, 95);
+}
