@@ -1,6 +1,7 @@
 import Header from "../components/Header"
 import Filter from "../components/Filter"
 import Feed from "../components/Feed"
+import Ads from "../components/Ads"
 
 const Home = () => {
     return (
@@ -8,6 +9,7 @@ const Home = () => {
             <Header />
             <Filter />
             <Feed />
+            <Ads />
         </div>
     )
 }
