@@ -27,8 +27,19 @@ Home {
   left: 0px;
   top: 0px;
   margin: 0px;
-  display: block;
+  display: inline-block;
   width: 20%;
   height: 40vw;
   background-color: rgb(195, 175, 95);
+}
+
+.feed {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display: inline-block;
+  width: 60%;
+  height: 40vw;
+  background-color: red;
 }
