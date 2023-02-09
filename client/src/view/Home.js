@@ -2,6 +2,7 @@ import Header from "../components/Header"
 import Filter from "../components/Filter"
 import Feed from "../components/Feed"
 import Ads from "../components/Ads"
+import {TravelCard }from "../components/TravelCard"
 
 const Home = () => {
     return (
@@ -10,6 +11,7 @@ const Home = () => {
             <Filter />
             <Feed />
             <Ads />
+            <TravelCard />
         </div>
     )
 }
