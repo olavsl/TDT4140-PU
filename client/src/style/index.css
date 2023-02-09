@@ -19,6 +19,13 @@ Home {
   font-size: 2vw;
 }
 
+#header-logo{
+  position: absolute;
+  left: 0vw;
+  top: 0vw;
+  width:7vw;
+}
+
 .heading {
   position: relative;
   top: 1vw;
