@@ -44,6 +44,10 @@ Home {
   width: 60%;
   height: 40vw;
   background-color: rgb(223, 194, 79);
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .ads {
