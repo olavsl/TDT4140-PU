@@ -1,13 +1,93 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0; /* Removes white space at top of webpage */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+Home {
+  padding: 0px;
+}
+
+.header {
+  position: relative;
+  left: 0px;
+  top: 0vw;
+  margin: 0px;
+  display: block;
+  width: 100%;
+  height: 7vw;
+  background-color: rgb(167, 132, 69);
+  text-align: center;
+  font-size: 2vw;
+}
+
+#header-logo{
+  position: absolute;
+  left: 0vw;
+  top: 0vw;
+  width:7vw;
+}
+
+.heading {
+  position: relative;
+  top: 1vw;
+}
+
+.header-button {
+  position: absolute;
+  top: 1vw;
+  right: 0vw;
+  margin: 0px;
+  display: inline-block;
+  width: 10%;
+  height: 5vw;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 2vw;
+  border-radius: 2.5vw;
+  border: none;
+}
+
+.header-button:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#login-button {
+  right: 1vw;
+}
+
+#signup-button {
+  right: 12vw;
+}
+
+.filter {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display: inline-block;
+  width: 20%;
+  height: 40vw;
+  background-color: rgb(195, 175, 95);
+}
+
+.feed {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display: inline-block;
+  width: 60%;
+  height: 40vw;
+  background-color: rgb(223, 194, 79);
+}
+
+.ads {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0;
+  display: inline-block;
+  width: 20%;
+  height: 40vw;
+  background-color: rgb(195, 175, 95);
 }
