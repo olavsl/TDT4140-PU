@@ -2,10 +2,6 @@
   margin: 0; /* Removes white space at top of webpage */
 }
 
-Home {
-  padding: 0px;
-}
-
 .header {
   position: relative;
   left: 0px;
@@ -17,6 +13,7 @@ Home {
   background-color: rgb(167, 132, 69);
   text-align: center;
   font-size: 2vw;
+  border-bottom: 1px solid black;
 }
 
 #header-logo{
@@ -29,6 +26,14 @@ Home {
 .heading {
   position: relative;
   top: 1vw;
+}
+.flexContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height:100%
 }
 
 .header-button {
@@ -66,7 +71,7 @@ Home {
   margin: 0px;
   display: inline-block;
   width: 20%;
-  height: 40vw;
+  height: 47vw;
   background-color: rgb(195, 175, 95);
 }
 
@@ -75,10 +80,14 @@ Home {
   left: 0px;
   top: 0px;
   margin: 0px;
-  display: inline-block;
+  display:flex;
   width: 60%;
-  height: 40vw;
+  height: 47vw;
   background-color: rgb(223, 194, 79);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-y: scroll;
 }
 
 .ads {
@@ -88,6 +97,6 @@ Home {
   margin: 0;
   display: inline-block;
   width: 20%;
-  height: 40vw;
+  height: 47vw;
   background-color: rgb(195, 175, 95);
 }

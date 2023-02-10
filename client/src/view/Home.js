@@ -7,9 +7,11 @@ const Home = () => {
     return (
         <div className="home">
             <Header />
+            <div className="flexContent">
             <Filter />
             <Feed />
             <Ads />
+            </div>
         </div>
     )
 }
