@@ -133,7 +133,6 @@ export const TravelCard = ({ travel }) => {
                                     </Typography>
                                 </Box>
                             </Grid>
-                            <Button> Expand </Button>
                         </CardContent>
                     </CardActionArea>
                 </Card>
