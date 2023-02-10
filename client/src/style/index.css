@@ -19,9 +19,44 @@ Home {
   font-size: 2vw;
 }
 
+#header-logo{
+  position: absolute;
+  left: 0vw;
+  top: 0vw;
+  width:7vw;
+}
+
 .heading {
   position: relative;
   top: 1vw;
+}
+
+.header-button {
+  position: absolute;
+  top: 1vw;
+  right: 0vw;
+  margin: 0px;
+  display: inline-block;
+  width: 10%;
+  height: 5vw;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 2vw;
+  border-radius: 2.5vw;
+  border: none;
+}
+
+.header-button:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#login-button {
+  right: 1vw;
+}
+
+#signup-button {
+  right: 12vw;
 }
 
 .filter {
