@@ -2,7 +2,7 @@ require("dotenv").config()
 
 const express = require("express")
 const mongoose = require("mongoose")
-const userRoutes = require("./routes/users")
+const userRoutes = require("./routes/userRoutes")
 
 // Suppress warning
 mongoose.set('strictQuery', true);
