@@ -91,3 +91,72 @@ Home {
   height: 40vw;
   background-color: rgb(195, 175, 95);
 }
+
+.logInWindow {
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  display: block;
+  width: 25vw;
+  height: 25vw;
+  background-color: rgb(240, 204, 160);
+  z-index: 1;
+  opacity: 80%;
+  border-radius: 3vw;
+  backdrop-filter: blur(10px);  
+}
+
+.loginHeading {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 1.5vw;
+}
+
+.loginInput {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 3vw;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+}
+
+#usernameInput {
+  top: 20%;
+}
+
+#passwordInput {
+  top: 35%;
+}
+
+.button {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 3vw;
+  border-radius: 1vw;
+  background-color: gray;
+}
+
+#loginButton {
+  top: 60%;
+}
+
+.notALine {
+  margin-top: 65%;
+  background-color: bisque;
+}
+.dontHaveAnAccount {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 76%;
+}
+
+#signupButton {
+  top: 87%;
+}
