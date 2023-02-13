@@ -74,10 +74,24 @@ const updateUser = async (req, res) => {
     res.status(200).json(user)
 }
 
+// GET login user
+const loginUser = async (req, res) => {
+    const {username} = req.params;
+
+    const user = await User.findOne({username: username})
+
+    if (!user) {
+        return res.status(400).json({error: "No user matches those credentials!"})
+    }
+
+    res.status(200).json(user)
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    loginUser,
 }
