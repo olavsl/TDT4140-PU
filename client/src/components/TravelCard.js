@@ -37,6 +37,9 @@ const cardTheme = createTheme({
 });
 
 export const TravelCard = ({ travel }) => {
+    
+    const {title, start, end, desc, author, travelType, distance, country} = travel;
+
     return (
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
@@ -54,13 +57,13 @@ export const TravelCard = ({ travel }) => {
                                     textDecoration: "underline"
                                     }}>
 
-                                {dummyData1.title}   
+                                {travel.title}   
 
                             </Typography>
                             <Grid container direction="row" justifyContent="flex-start">
                                 <Typography variant="body2" color="text.secondary" classname="travelStartEnd">
 
-                                    {dummyData1.start} to {dummyData1.end}
+                                    {travel.start} to {travel.end}
 
                                 </Typography>
                             </Grid>
@@ -70,7 +73,7 @@ export const TravelCard = ({ travel }) => {
                                     fontStyle: 'italic' 
                                     }}>
 
-                                {dummyData1.desc}
+                                {travel.desc}
 
                             </Typography>
                             <Divider />
@@ -80,7 +83,7 @@ export const TravelCard = ({ travel }) => {
                                     }}>
                                 <Typography variant="body2" color="text.secondary" classname="travelAuthor" >
 
-                                    By {dummyData1.author}
+                                    By {travel.author}
 
                                 </Typography>
                             </Grid>
@@ -95,7 +98,7 @@ export const TravelCard = ({ travel }) => {
                                     }}>
                                     <Typography variant="body2" color="text.secondary" classname="travelType">
 
-                                        {dummyData1.travelType}
+                                        {travel.travelType}
 
                                     </Typography>
                                 </Box>
@@ -108,7 +111,7 @@ export const TravelCard = ({ travel }) => {
                                         }}>
                                     <Typography variant="body2" color="text.secondary" classname="travelDistance">
 
-                                        {dummyData1.distance} km
+                                        {travel.distance} km
 
                                     </Typography>
                                 </Box>
@@ -121,7 +124,7 @@ export const TravelCard = ({ travel }) => {
                                     }}>
                                     <Typography variant="body2" color="text.secondary" classname="travelCountry">
 
-                                        {dummyData1.country}
+                                        {travel.country}
 
                                     </Typography>
                                 </Box>
