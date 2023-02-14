@@ -1,3 +1,4 @@
+import TravelRoutes from "./TravelRoutes";
 
 export const User = class {
     constructor(username, password, logedIn, likedTravels, myTravels) {
