@@ -17,26 +17,15 @@ export const User = class {
     get username() {
         return this.username;
     }
-
     get name() {
         return this.name;
     }
 
     get likedTravels() {
-        if (this.username === "") {
-            throw new Error('You are not logged in')
-        }
-        else {
-            return this.likedTravels;
-        }
+        return this.likedTravels;
     }
 
     get myTravels() {
-        if (this.username === "") {
-            throw new Error('You are not logged in')
-        }
-        else {
-            return this.myTravels;
-        }
+        return this.myTravels;
     }
 }
