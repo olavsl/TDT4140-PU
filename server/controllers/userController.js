@@ -1,4 +1,4 @@
-const User = require("../schema/userSchema.js")
+const User = require("../model/userSchema.js")
 const mongoose = require("mongoose")
 
 // GET all users
@@ -74,17 +74,22 @@ const updateUser = async (req, res) => {
     res.status(200).json(user)
 }
 
-// GET login user
+// Login user
 const loginUser = async (req, res) => {
-    const {username} = req.params;
+    const {username, password} = req.body
 
-    const user = await User.findOne({username: username})
+    try {
+        const user = await User.login(username, password)
 
-    if (!user) {
-        return res.status(400).json({error: "No user matches those credentials!"})
+        res.status(200).json({username})
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
+}
 
-    res.status(200).json(user)
+// Signup user
+const signupUser = async (req, res) => {
+    res.json({mssg: "Signed up user"})
 }
 
 module.exports = {
@@ -94,4 +99,5 @@ module.exports = {
     deleteUser,
     updateUser,
     loginUser,
+    signupUser
 }
