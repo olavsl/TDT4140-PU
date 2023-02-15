@@ -27,6 +27,15 @@
   position: relative;
   top: 1vw;
 }
+
+.username-display {
+  position: absolute;
+  top: 2vw;
+  right: 15vw;
+  font-size: 3vw;
+  color: white;
+}
+
 .flexContent {
   display: flex;
   flex-direction: row;
@@ -108,7 +117,7 @@
   height: 25vw;
   background-color: rgb(240, 204, 160);
   z-index: 1;
-  opacity: 80%;
+  opacity: 100%;
   border-radius: 3vw;
   backdrop-filter: blur(10px);  
 }
