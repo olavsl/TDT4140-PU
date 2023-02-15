@@ -1,8 +1,10 @@
+import TravelRoutes from "./TravelRoutes";
 
 export const User = class {
-    constructor(username, password, logedIn, likedTravels, myTravels) {
+    constructor(username, password, name, logedIn, likedTravels, myTravels) {
         this.username = username;
         this.password = password;
+        this.name = name;
         this.logedIn = logedIn;
         this.likedTravels = likedTravels;
         this.myTravels = myTravels;
@@ -12,21 +14,18 @@ export const User = class {
         return User;
     }
 
+    get username() {
+        return this.username;
+    }
+    get name() {
+        return this.name;
+    }
+
     get likedTravels() {
-        if (this.username === "") {
-            throw new Error('You are not logged in')
-        }
-        else {
-            return this.likedTravels;
-        }
+        return this.likedTravels;
     }
 
     get myTravels() {
-        if (this.username === "") {
-            throw new Error('You are not logged in')
-        }
-        else {
-            return this.myTravels;
-        }
+        return this.myTravels;
     }
 }
