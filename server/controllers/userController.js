@@ -1,4 +1,4 @@
-const User = require("../schema/userSchema.js")
+const User = require("../model/userSchema.js")
 const mongoose = require("mongoose")
 
 // GET all users
@@ -74,10 +74,22 @@ const updateUser = async (req, res) => {
     res.status(200).json(user)
 }
 
+// Login user
+const loginUser = async (req, res) => {
+    res.json({mssg: "Logged in user"})
+}
+
+// Signup user
+const signupUser = async (req, res) => {
+    res.json({mssg: "Signed up user"})
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    loginUser,
+    signupUser
 }
