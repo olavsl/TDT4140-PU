@@ -1,37 +1,28 @@
-# Available Scripts
+# Peregrinate - explore the world
+This web application is a application for backpacking. 
+The goal of the application is to share your own experiences, see and like others travels, and be inspired to try new destinations!
 
-In the project directory, you can run:
+## To start, run the following commands:
+```
+cd client
+npm start
+cd server
+npm start
+```
 
-### `npm start`
+### The project structure
+We have divided our project into two parts: a Client and a Server.  The backend side consists of mongoose models, resolvers and files for starting the Apollo server. Our application is connected to a MongoDB database that on the virtual machine. The frontend or client consists of the application itself, with different views containing presentational components.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## MongoDB 
+MongoDB may be a suitable database for use in a web application for a number of reasons. MongoDB was chosen because of its ease of deployment, administration, and scalability. A benefit of MongoDB is that it is a NoSQL database, which allows it to be more flexible than other traditional SQL databases. If your data is not well defined or if you need to change the database structure quickly, this can be very useful. MongoDB can also handle large amounts of data since it is easy to scale. As a final point, MongoDB is known for its reliability and speed.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Mongoose
+Mongoose was chosen for interacting with the database since it facilitates the creation of models for the data. The data can be accessed in a specific manner using this tool. Furthermore, Mongoose provides useful methods for querying and updating data, and it was well documented. Some of the group members already had good experiences with mongoose and MongoDB that made it easier to choose.
 
-### `npm test`
+## ReactJS
+As our frontend framework, we choose to use traditional ReactJS. TypeScript is per 2022 more used than 
+JavaScript, but due to the timelimit we choose to keep it easier with JavaScript.
+React is a great web application framework and is traditionaly used a lot both in classes like this and in different work situations.
+Some of our members had good experience with React, in addition to other frameworks. However, as React is often a demand in work applications and this was the framwrok more of us knew, is was natural to choose React.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
