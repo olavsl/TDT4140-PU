@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { useLogin } from "../hooks/useLogin"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const Loginform = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const { login, error, isLoading } = useLogin()
+    const { user } = useAuthContext()
     
     const handleLogin = async (e) => {
         // Stops the page from refreshing
@@ -15,7 +17,7 @@ const Loginform = () => {
     }
     
     return (
-        <form className="logInWindow" onSubmit={handleLogin}>
+        <form className="logInWindow" onSubmit={handleLogin} style={ user ? {display: "none",} : {} }>
             <h1 className="loginHeading">Log in</h1>
 
             <input type="text" className="loginInput" id="usernameInput" placeholder="Username" 

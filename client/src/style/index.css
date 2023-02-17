@@ -2,6 +2,10 @@
   margin: 0; /* Removes white space at top of webpage */
 }
 
+.blur-wrapper {
+  filter: blur(0px);
+}
+
 .header {
   position: relative;
   left: 0px;
