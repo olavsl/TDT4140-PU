@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useLogin } from "../hooks/useLogin"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { Link } from "react-router-dom"
 
 const Loginform = () => {
     const [username, setUsername] = useState("")
@@ -32,7 +33,9 @@ const Loginform = () => {
 
             <p className="dontHaveAnAccount">Don't have an account?</p>
 
-            {/* <button className="formButton" id="signupButton">Sign up</button> */}
+            <Link className="link-form-button" id="go-to-signup" to={"signup"}>
+                <p className="link-form-text">Sign up</p>
+            </Link>
 
             {error && <div className="errorResponse">{error}</div>}
         </form>
