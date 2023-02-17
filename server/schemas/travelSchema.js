@@ -3,10 +3,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const travelSchema = new Schema({
-    travelID: {
-        type: int,
-        required: true
-    },
     title: {
         type: String,
         required: true
@@ -19,12 +15,12 @@ const travelSchema = new Schema({
         type: String,
         required: true
     },
-    endDestiantion: {
+    endDestination: {
         type: String,
         required: true
     },
     price: {
-        type: int,
+        type: Number,
         required: true
     }, 
     travelType: {
@@ -35,15 +31,15 @@ const travelSchema = new Schema({
         type: String,
         required: false
     }, 
-    desripction: {
+    descripction: {
         type: String,
         required: false
     }
-}, { /* Here one can add spesific fields to every new user (e.g. "timestamps: true") */ })
+}, { timestamps: true })
 
-travelSchema.static.createTravel = async function(travelID, title, country, startDestination, 
-    endDestiantion, price, travelType) {
-    if (!travelID || !title || !country || !startDestination || !endDestiantion || !price || !travelType) {
+travelSchema.static.create = async function(title, country, startDestination, 
+    endDestination, price, travelType) {
+    if (!title || !country || !startDestination || !endDestination || !price || !travelType) {
         throw Error("All fields, except distance and description, must be filled in!")
     }
     
