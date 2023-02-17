@@ -10,20 +10,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 // This component is a card that contains information about a travel route. 
-// It will be used in the TravelList component.
+// It will be used in the Feed component.
 
-// This dummydata will be replaced with data from the database, once it is up and running.
-const dummyData1 = {
-    title: "A very long trip",
-    country: "Norway",
-    start: "Lindesnes",
-    end: "Nordkapp",
-    price: 100,
-    travelType: "Hike",
-    distance: 1000,
-    desc: "Palms sweaty, knees weak, arms are heavy, there's vomit on his sweater already, mom's spaghetti",
-    author: "User Userson"
-}
 
 // This MUI theme affects all elements in the card.
 const cardTheme = createTheme({
@@ -37,13 +25,11 @@ const cardTheme = createTheme({
 });
 
 export const TravelCard = ({ travel }) => {
-    
-    const {title, start, end, desc, author, travelType, distance, country} = travel;
-
+ 
     return (
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
-                <Card variant = "outlined" sx={{ maxWidth: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
+                <Card variant = "outlined" sx={{maxWidth: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
                     <CardActionArea>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
                             image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
@@ -125,6 +111,19 @@ export const TravelCard = ({ travel }) => {
                                     <Typography variant="body2" color="text.secondary" classname="travelCountry">
 
                                         {travel.country}
+
+                                    </Typography>
+                                </Box>
+                                <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: "#dbe892",
+                                    }}>
+                                    <Typography variant="body2" color="text.secondary" classname="travelCountry">
+
+                                        {travel.price} kr
 
                                     </Typography>
                                 </Box>
