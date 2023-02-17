@@ -3,6 +3,7 @@ require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
 const userRoutes = require("./routes/userRoutes")
+const travelRoutes = require("./routes/travelRoutes")
 
 // Suppress warning
 mongoose.set('strictQuery', true);
@@ -32,3 +33,4 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 peregrinateApp.use("/api/users", userRoutes)
+peregrinateApp.use("/api/travels", travelRoutes)
