@@ -1,6 +1,10 @@
 import logo from '../resources/logo-a.png' 
+import profile from "../resources/profile.png"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const Header = () => {
+    const { user } = useAuthContext()
+
     return (
         <div className="header">
             <div>
@@ -10,10 +14,14 @@ const Header = () => {
                 <h1 className="heading">Peregrinate</h1>
             </div>
             <div> 
-                <button className="header-button" id="login-button">Log in</button>
+                <button className="profileButton" id="profileButton">
+                    <img className="profileImg" src={profile} alt="profile"></img>
+                </button>
             </div>
-            <div> 
-                <button className="header-button" id="signup-button">Sign up</button>
+            <div>
+                {user && (
+                    <h2 className="username-display">{user.username}</h2>
+                )}
             </div>
         </div>
     )
