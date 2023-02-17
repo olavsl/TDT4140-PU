@@ -89,7 +89,15 @@ const loginUser = async (req, res) => {
 
 // Signup user
 const signupUser = async (req, res) => {
-    res.json({mssg: "Signed up user"})
+    const {username, password, confirmedPassword} = req.body
+
+    try {
+        const user = await User.signup(username, password, confirmedPassword)
+
+        res.status(200).json({message: "New user successfully created!"})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 module.exports = {
