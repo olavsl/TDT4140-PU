@@ -100,6 +100,54 @@
   overflow-y: scroll;
 }
 
+.add-travel-button {
+  position: absolute;
+  bottom: 3vh;
+  right: 3vw;
+  display: block;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 2.5vw;
+  border: none;
+  background-color: hsl(198, 100%, 59%);
+}
+
+.add-travel-button:hover {
+  cursor: pointer;
+  background-color: hsl(198, 93%, 45%);
+}
+
+.add-travel-plus-sign-component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  background-color: white;
+  border-radius: 0.5vw;
+}
+
+#vertical-plus-sign-component {
+  width: 1vw;
+  height: 4vw;
+}
+
+#horizontal-plus-sign-component {
+  width: 4vw;
+  height: 1vw;
+}
+
+.add-travel-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 60%;
+  height: 80%;
+  background-color: rgb(240, 204, 160);
+}
+
 .ads {
   position: relative;
   left: 0px;
