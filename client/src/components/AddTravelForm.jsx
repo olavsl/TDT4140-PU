@@ -17,25 +17,6 @@ const AddTravelForm = () => {
 
         console.log(title, country, startDestination, endDestination, price, travelType)
         
-        // const travel = {title, country, startDestination, endDestination, price, travelType}
-
-        // const response = await fetch("/api/travels", {
-        //     method: "POST",
-        //     body: JSON.stringify(travel),
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // })
-
-        // const json = await response.json()
-
-        // if (!response.ok) {
-        //     setError(json.error)
-        // }
-
-        // if (response.ok) {
-        //     dispatch({type: "CREATE_TRAVEL", payload: json})
-        // }
         await addTravel(title, country, startDestination, endDestination, price, travelType)
     }
     
