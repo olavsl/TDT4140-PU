@@ -114,23 +114,23 @@
 .logInWindow {
   position: fixed;
   top: 50%;
-  transform: translate(-50%,-50%);
   left: 50%;
+  transform: translate(-50%,-50%);
   display: block;
   width: 25vw;
-  height: 25vw;
+  height: 40vh;
   background-color: rgb(240, 204, 160);
   z-index: 1;
   opacity: 100%;
   border-radius: 3vw;
-  backdrop-filter: blur(10px);  
+  backdrop-filter: blur(10px);
 }
 
 .loginHeading {
   position: absolute;
-  transform: translate(-50%,-50%);
+  transform: translateX(-50%);
   left: 50%;
-  top: 1.5vw;
+  top: 1.5vh;
 }
 
 .loginInput {
@@ -138,17 +138,17 @@
   transform: translate(-50%,-50%);
   left: 50%;
   width: 20vw;
-  height: 3vw;
+  height: 4vh;
   border-radius: 1vw;
   border: 0.2vw solid rgb(0, 0, 0);
 }
 
 #usernameInput {
-  top: 20%;
+  top: 10vh;
 }
 
 #passwordInput {
-  top: 35%;
+  top: 16vh;
 }
 
 .formButton {
@@ -156,7 +156,7 @@
   transform: translate(-50%,-50%);
   left: 50%;
   width: 20vw;
-  height: 3vw;
+  height: 4vh;
   border-radius: 1vw;
   background-color:  rgb(255, 255, 255);
 }
@@ -167,20 +167,114 @@
 }
 
 #loginButton {
-  top: 50%;
+  top: 22vh;
 }
 
 .notALine {
-  margin-top: 65%;
+  margin-top: 26vh;
   background-color: bisque;
 }
+
+.signupWindow {
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  display: block;
+  width: 25vw;
+  height: 45vh;
+  background-color: rgb(240, 204, 160);
+  z-index: 1;
+  opacity: 100%;
+  border-radius: 3vw;
+  backdrop-filter: blur(10px);  
+}
+
+.signupHeading {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.signupInput {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+}
+
+#signupUsernameInput {
+  top: 10vh;
+}
+
+#signupPasswordInput {
+  top: 16vh;
+}
+
+#confirmPasswordInput {
+  top: 22vh;
+}
+
+#signupButton {
+  top: 28vh;
+}
+
 .dontHaveAnAccount {
   position: absolute;
   transform: translate(-50%,-50%);
   left: 50%;
-  top: 76%;
+  top: 29vh;
+  display: block;
+  width: 90%;
+  text-align: center;
 }
 
-#signupButton {
-  top: 87%;
+.alreadyHaveAnAccount {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 33.5vh;
+  display: block;
+  width: 90%;
+  text-align: center;
+}
+
+.link-form-button {
+  position: absolute;
+  top: 38vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  background-color:  rgb(255, 255, 255);
+}
+
+.link-form-button:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#go-to-signup {
+  top: 32.5vh;
+}
+
+#go-to-login {
+  top: 38vh;
+}
+
+.link-form-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:rgb(0, 0, 0);
+}
+
+.line {
+  margin-top: 31.5vh;
 }
