@@ -1,5 +1,5 @@
 import React from 'react'
-import { TravelCard } from './TravelCard'
+import { TravelCard } from '../TravelCard'
 
 describe('<TravelCard />', () => {
   it('renders', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Filter from './Filter'
+import Filter from '../Filter'
 
 describe('<Filter />', () => {
   it('renders', () => {

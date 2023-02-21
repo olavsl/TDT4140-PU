@@ -1,5 +1,5 @@
 import React from 'react'
-import AddTravelForm from './AddTravelForm'
+import AddTravelForm from '../AddTravelForm'
 
 describe('<AddTravelForm />', () => {
   it('renders', () => {

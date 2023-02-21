@@ -1,5 +1,5 @@
 import React from 'react'
-import Signup from './Signup'
+import Signup from '..components/Signup'
 
 describe('<Signup />', () => {
   it('renders', () => {

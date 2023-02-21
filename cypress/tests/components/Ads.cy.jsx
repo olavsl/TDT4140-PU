@@ -1,5 +1,5 @@
 import React from 'react'
-import Ads from './Ads'
+import Ads from '../Ads'
 
 describe('<Ads />', () => {
   it('renders', () => {
