@@ -1,6 +1,6 @@
-import Header from "../components/Header"
-import Feed from "../components/Feed"
-import Ads from "../components/Ads"
+import Header from "./Header"
+import Feed from "./Feed"
+import Ads from "./Ads"
 
 const ProfilePage = () => {
     return (
