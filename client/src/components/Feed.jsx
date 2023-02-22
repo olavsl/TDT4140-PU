@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { TravelCard } from "./TravelCard"
-import { useStore } from "../context/Store"
 import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
@@ -127,18 +126,6 @@ const Feed = () => {
         
 
     ]
-
-    // const loggedIn = useStore.getState().loggedIn
-    // console.log(loggedIn)
-
-    // Display cards only if logged in. Checks state of loggedIn-boolean from Zustand storage.
-    // if (loggedIn) {
-    //     return (
-    //         <div className="feed">
-    //             Not logged in
-    //             </div>
-    //     )
-    // }
 
     return (
         <div className="feed">
