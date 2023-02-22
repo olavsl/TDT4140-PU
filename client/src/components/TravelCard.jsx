@@ -4,38 +4,50 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import { CardActionArea, Grid, rgbToHex } from '@mui/material';
+import { CardActionArea, DialogContent, Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
 
-// This component is a card that contains information about a travel route. 
-// It will be used in the Feed component.
-
-
-// This MUI theme affects all elements in the card.
+// The travel card component is used to display all travels from the database in the feed. 
+// Can be clicked on to open a diaog with more information about the specific travel of the card.
+// Mapping from database is done in the feed component.
 const cardTheme = createTheme({
     typography:{
         fontFamily: [
             "Georgia"
         ]
-
     }
-
 });
 
-
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 export const TravelCard = ({ travel }) => {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
  
     return (
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
-                <Card variant = "outlined" sx={{ maxWidth: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
-                    <CardActionArea sx={{
-                        "&:hover":{backgroundColor: "#D9DDAB"},
-                        }}>
+                <Card variant = "outlined" sx={{maxWidth: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
+                    <CardActionArea onClick={handleClickOpen}>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
                             image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
                             alt ="Picture from the trip"
@@ -135,6 +147,104 @@ export const TravelCard = ({ travel }) => {
                             </Grid>
                         </CardContent>
                     </CardActionArea>
+
+                    {/* This is the dialog opened upon clicking on 'Show More' */}
+                    <Dialog
+                        fullScreen
+                        open={open}
+                        onClose={handleClose}
+                        TransitionComponent={Transition}
+                    >
+                        <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleClose}
+                            aria-label="close"
+                            >
+                            <CloseIcon />
+                            </IconButton>
+                            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            {travel.title}
+                            </Typography>
+                            <Typography>
+                            By {travel.author}
+                            </Typography>
+
+                        </Toolbar>
+                        </AppBar>
+
+                        <Divider />
+                        <Typography variant="h6" component="div" sx={{ p: 2 }}>
+                            {travel.title}
+                            
+                        </Typography>
+                        <Typography variant="body2" component="div" sx={{ p: 2 }}>
+                            From {travel.start} to {travel.end}
+                        </Typography>
+                        <Divider/>
+                        <DialogContent>
+                        <Typography variant="body2" component="div" sx={{ p: 2 }}>
+                            {travel.desc}
+                        </Typography>
+                        <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
+                            <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: "#A8D881",
+                                }}>
+                                <Typography variant="body2" color="text.secondary" classname="travelType">
+
+                                    {travel.travelType}
+
+                                </Typography>
+                            </Box>
+                            <Box sx = {{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: "#F2C077",
+                                    }}>
+                                <Typography variant="body2" color="text.secondary" classname="travelDistance">
+
+                                    {travel.distance} km
+
+                                </Typography>
+                            </Box>
+                            <Box sx={{
+                                border: 1,
+                                borderColor: "dark-gray",
+                                borderRadius: 1,
+                                px:0.5,
+                                bgcolor: "#99DBE4",
+                                }}>
+                                <Typography variant="body2" color="text.secondary" classname="travelCountry">
+
+                                    {travel.country}
+
+                                </Typography>
+                            </Box>
+                            <Box sx={{
+                                border: 1,
+                                borderColor: "dark-gray",
+                                borderRadius: 1,
+                                px:0.5,
+                                bgcolor: "#dbe892",
+                                }}>
+                                <Typography variant="body2" color="text.secondary" classname="travelCountry">
+
+                                    {travel.price} kr
+
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        </DialogContent>
+                    </Dialog>
+
                 </Card>
             </div>
         </ThemeProvider>
