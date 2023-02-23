@@ -11,7 +11,7 @@ const Signup = () => {
     return (
         <div className="signup">
             <SignupForm />
-            <div className="blur-wrapper" style={ !user ? {filter: "blur(5px)",} : {} }>
+            <div className="blur-wrapper" style={ !user ? {filter: "blur(5px)", pointerEvents: "none"} : {} }>
                 <Header />
                 <div className="flexContent">
                     <Filter />
