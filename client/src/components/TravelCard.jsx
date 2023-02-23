@@ -76,7 +76,7 @@ export const TravelCard = ({ travel }) => {
                                     fontStyle: 'italic' 
                                     }}>
 
-                                {travel.desc}
+                                {travel.description}
 
                             </Typography>
                             <Divider />
@@ -155,7 +155,7 @@ export const TravelCard = ({ travel }) => {
                         onClose={handleClose}
                         TransitionComponent={Transition}
                     >
-                        <AppBar sx={{ position: 'relative' }}>
+                        <AppBar sx={{ position: 'relative', backgroundColor: '#DFC296' }}>
                         <Toolbar>
                             <IconButton
                             edge="start"
@@ -186,7 +186,7 @@ export const TravelCard = ({ travel }) => {
                         <Divider/>
                         <DialogContent>
                         <Typography variant="body2" component="div" sx={{ p: 2 }}>
-                            {travel.desc}
+                            {travel.description}
                         </Typography>
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box sx={{

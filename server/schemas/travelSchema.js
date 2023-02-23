@@ -31,14 +31,14 @@ const travelSchema = new Schema({
         type: String,
         required: false
     }, 
-    descripction: {
+    description: {
         type: String,
         required: false
     }
 }, { timestamps: true })
 
 travelSchema.static.create = async function(title, country, startDestination, 
-    endDestination, price, travelType) {
+    endDestination, price, travelType, description) {
     if (!title || !country || !startDestination || !endDestination || !price || !travelType) {
         throw Error("All fields, except distance and description, must be filled in!")
     }

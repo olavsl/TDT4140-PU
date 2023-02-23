@@ -361,5 +361,10 @@ a {
 }
 
 #add-travel-button {
-  top: 65vh;
+  background-color: rgb(207, 226, 190);
+  top: 72vh;
+}
+
+#add-travel-button:hover {
+  background-color: rgb(110, 241, 67);
 }

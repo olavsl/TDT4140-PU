@@ -33,7 +33,7 @@ const createTravel = async (req, res) => {
     // Add Travel document to database
     try {
         const travel = await Travel.create({title, country, startDestination, 
-            endDestination, price, travelType, timestamps})
+            endDestination, price, travelType, timestamps, description})
         res.status(200).json(travel)
     } catch (error) {
         res.status(400).json({error: error.message})
