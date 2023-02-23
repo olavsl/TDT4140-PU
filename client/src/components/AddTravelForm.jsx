@@ -10,14 +10,15 @@ const AddTravelForm = () => {
     const [endDestination, setEndDestination] = useState("")
     const [price, setPrice] = useState("")
     const [travelType, setTravelType] = useState("")
+    const [description, setDescription] = useState("")
     const { addTravel, error, isLoading } = useAddTravel()
     
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
-        console.log(title, country, startDestination, endDestination, price, travelType)
+        console.log(title, country, startDestination, endDestination, price, travelType, description)
         
-        await addTravel(title, country, startDestination, endDestination, price, travelType)
+        await addTravel(title, country, startDestination, endDestination, price, travelType, description)
     }
     
     return (
@@ -42,7 +43,10 @@ const AddTravelForm = () => {
             <input className="add-travel-input" type="text" placeholder="travelType"
                 onChange={(e) => setTravelType(e.target.value)} value={travelType} />
 
-            <button onClick={handleAddTravel}>ADD</button>
+            <input className="add-travel-input" type="text" placeholder="description"
+                onChange={(e) => setDescription(e.target.value)} value={description} />
+
+            <button class="formButton" id="add-travel-button" onClick={handleAddTravel}>Publish</button>
         </form>
     )
 }

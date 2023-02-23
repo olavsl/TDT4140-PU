@@ -13,30 +13,42 @@
   margin: 0px;
   display: block;
   width: 100%;
-  height: 7vw;
-  background-color: rgb(167, 132, 69);
+  height: 10vh;
+  background-color: #DFC296;
   text-align: center;
-  font-size: 2vw;
-  border-bottom: 1px solid black;
+  box-shadow: 0.2vh 0.2vh 0.2vh #c0b8af;
+  z-index: 2;
 }
 
 #header-logo{
   position: absolute;
   left: 0vw;
   top: 0vw;
-  width:7vw;
+  height: 10vh;
 }
 
 .heading {
-  position: relative;
-  top: 1vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  font-size: 5vh;
+  color: #876833;
+}
+
+a {
+  color: #876833;
+  text-decoration: none;
+  cursor: default;
 }
 
 .username-display {
   position: absolute;
-  top: 2vw;
+  top: 50%;
   right: 15vw;
-  font-size: 3vw;
+  transform: translateY(-50%);
+  font-size: 2vw;
   color: white;
 }
 
@@ -51,12 +63,13 @@
 
 .profileButton {
   position: absolute;
-  top: 1vw;
+  top: 50%;
   right: 1vw;
+  transform: translateY(-50%);
   margin: 0px;
   display: inline-block;
-  width: 5%;
-  height: 5vw;
+  width: 8vh;
+  height: 8vh;
   background-color: rgb(255, 255, 255);
   text-align: center;
   font-size: 2vw;
@@ -81,8 +94,8 @@
   margin: 0px;
   display: inline-block;
   width: 20%;
-  height: 47vw;
-  background-color: rgb(195, 175, 95);
+  height: 90vh;
+  background-color: #ECE3D9;
 }
 
 .feed {
@@ -92,8 +105,8 @@
   margin: 0px;
   display:flex;
   width: 60%;
-  height: 47vw;
-  background-color: rgb(223, 194, 79);
+  height: 90vh;
+  background-color: #ECE3D9;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
@@ -101,9 +114,9 @@
 }
 
 .add-travel-button {
-  position: absolute;
+  position: fixed;
   bottom: 3vh;
-  right: 3vw;
+  right: 23%;
   display: block;
   width: 5vw;
   height: 5vw;
@@ -144,8 +157,10 @@
   transform: translate(-50%, -50%);
   display: block;
   width: 60%;
-  height: 80%;
+  height: 85vh;
   background-color: rgb(240, 204, 160);
+  border-radius: 3vw;
+  text-align: center;
 }
 
 .ads {
@@ -155,8 +170,8 @@
   margin: 0;
   display: inline-block;
   width: 20%;
-  height: 47vw;
-  background-color: rgb(195, 175, 95);
+  height: 90vh;
+  background-color: #ECE3D9;
 }
 
 .logInWindow {
@@ -325,4 +340,31 @@
 
 .line {
   margin-top: 31.5vh;
+}
+
+.add-travel-heading {
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.add-travel-input {
+  position: relative;
+  /* transform: translate(-50%,-50%);
+  left: 50%; */
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+  margin-top: 4vh;
+}
+
+#add-travel-button {
+  background-color: rgb(207, 226, 190);
+  top: 72vh;
+}
+
+#add-travel-button:hover {
+  background-color: rgb(110, 241, 67);
 }
