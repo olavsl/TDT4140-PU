@@ -12,7 +12,7 @@ import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 
 // The travel card component is used to display all travels from the database in the feed. 
@@ -53,7 +53,7 @@ export const TravelCard = ({ travel }) => {
                             alt ="Picture from the trip"
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" classname="travelTitle"
+                            <Typography gutterBottom variant="h5" component="div" className="travelTitle"
                                 sx={{
                                     mt: -1, 
                                     mb: -0.1, 
@@ -64,14 +64,14 @@ export const TravelCard = ({ travel }) => {
 
                             </Typography>
                             <Grid container direction="row" justifyContent="flex-start">
-                                <Typography variant="body2" color="text.secondary" classname="travelStartEnd">
+                                <Typography variant="body2" color="text.secondary" className="travelStartEnd">
 
                                     {travel.startDestination} to {travel.endDestination}
 
                                 </Typography>
                             </Grid>
                             <Divider />
-                            <Typography variant="body2" color="text.secondary" classname="travelShortDesc"
+                            <Typography variant="body2" color="text.secondary" className="travelShortDesc"
                                 sx={{
                                     fontStyle: 'italic' 
                                     }}>
@@ -84,7 +84,7 @@ export const TravelCard = ({ travel }) => {
                                 sx={{
                                     mb: -0.5
                                     }}>
-                                <Typography variant="body2" color="text.secondary" classname="travelAuthor" >
+                                <Typography variant="body2" color="text.secondary" className="travelAuthor" >
 
                                     By {travel.author}
 
@@ -99,7 +99,7 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#A8D881",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" classname="travelType">
+                                    <Typography variant="body2" color="text.secondary" className="travelType">
 
                                         {travel.travelType}
 
@@ -112,7 +112,7 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#F2C077",
                                         }}>
-                                    <Typography variant="body2" color="text.secondary" classname="travelDistance">
+                                    <Typography variant="body2" color="text.secondary" className="travelDistance">
 
                                         {travel.distance} km
 
@@ -125,7 +125,7 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#99DBE4",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" classname="travelCountry">
+                                    <Typography variant="body2" color="text.secondary" className="travelCountry">
 
                                         {travel.country}
 
@@ -138,7 +138,7 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#dbe892",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" classname="travelCountry">
+                                    <Typography variant="body2" color="text.secondary" className="travelCountry">
 
                                         {travel.price} kr
 
@@ -163,7 +163,7 @@ export const TravelCard = ({ travel }) => {
                             onClick={handleClose}
                             aria-label="close"
                             >
-                            <CloseIcon />
+                            
                             </IconButton>
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             {travel.title}
@@ -196,7 +196,7 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#A8D881",
                                 }}>
-                                <Typography variant="body2" color="text.secondary" classname="travelType">
+                                <Typography variant="body2" color="text.secondary" className="travelType">
 
                                     {travel.travelType}
 
@@ -209,7 +209,7 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#F2C077",
                                     }}>
-                                <Typography variant="body2" color="text.secondary" classname="travelDistance">
+                                <Typography variant="body2" color="text.secondary" className="travelDistance">
 
                                     {travel.distance} km
 
@@ -222,7 +222,7 @@ export const TravelCard = ({ travel }) => {
                                 px:0.5,
                                 bgcolor: "#99DBE4",
                                 }}>
-                                <Typography variant="body2" color="text.secondary" classname="travelCountry">
+                                <Typography variant="body2" color="text.secondary" className="travelCountry">
 
                                     {travel.country}
 
@@ -235,7 +235,7 @@ export const TravelCard = ({ travel }) => {
                                 px:0.5,
                                 bgcolor: "#dbe892",
                                 }}>
-                                <Typography variant="body2" color="text.secondary" classname="travelCountry">
+                                <Typography variant="body2" color="text.secondary" className="travelCountry">
 
                                     {travel.price} kr
 
