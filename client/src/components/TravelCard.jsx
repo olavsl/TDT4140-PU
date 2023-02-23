@@ -46,7 +46,7 @@ export const TravelCard = ({ travel }) => {
     return (
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
-                <Card variant = "outlined" sx={{maxWidth: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
+                <Card variant = "outlined" sx={{height: '22vw', width: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
                     <CardActionArea onClick={handleClickOpen}>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
                             image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
@@ -66,7 +66,7 @@ export const TravelCard = ({ travel }) => {
                             <Grid container direction="row" justifyContent="flex-start">
                                 <Typography variant="body2" color="text.secondary" classname="travelStartEnd">
 
-                                    {travel.start} to {travel.end}
+                                    {travel.startDestination} to {travel.endDestination}
 
                                 </Typography>
                             </Grid>
@@ -181,7 +181,7 @@ export const TravelCard = ({ travel }) => {
                             
                         </Typography>
                         <Typography variant="body2" component="div" sx={{ p: 2 }}>
-                            From {travel.start} to {travel.end}
+                            From {travel.startDestination} to {travel.endDestination}
                         </Typography>
                         <Divider/>
                         <DialogContent>
