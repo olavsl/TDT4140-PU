@@ -157,8 +157,10 @@ a {
   transform: translate(-50%, -50%);
   display: block;
   width: 60%;
-  height: 80%;
+  height: 85vh;
   background-color: rgb(240, 204, 160);
+  border-radius: 3vw;
+  text-align: center;
 }
 
 .ads {
@@ -338,4 +340,26 @@ a {
 
 .line {
   margin-top: 31.5vh;
+}
+
+.add-travel-heading {
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.add-travel-input {
+  position: relative;
+  /* transform: translate(-50%,-50%);
+  left: 50%; */
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+  margin-top: 4vh;
+}
+
+#add-travel-button {
+  top: 65vh;
 }
