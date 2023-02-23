@@ -42,7 +42,7 @@ const AddTravelForm = () => {
             <input className="add-travel-input" type="text" placeholder="travelType"
                 onChange={(e) => setTravelType(e.target.value)} value={travelType} />
 
-            <button onClick={handleAddTravel}>ADD</button>
+            <button class="formButton" id="add-travel-button" onClick={handleAddTravel}>Publish</button>
         </form>
     )
 }
