@@ -152,6 +152,7 @@ export const TravelCard = ({ travel }) => {
                     <Dialog
                         fullScreen
                         open={open}
+                        color="inherit"
                         onClose={handleClose}
                         TransitionComponent={Transition}
                     >
@@ -159,9 +160,10 @@ export const TravelCard = ({ travel }) => {
                         <Toolbar>
                             <IconButton
                             edge="start"
-                            color="inherit"
+                            color="primary"
                             onClick={handleClose}
                             aria-label="close"
+                            sx = {{backgroundColor: "red"}}
                             >
                             
                             </IconButton>
