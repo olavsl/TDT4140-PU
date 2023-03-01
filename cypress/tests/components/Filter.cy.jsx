@@ -3,7 +3,8 @@ import Filter from '../Filter'
 
 describe('<Filter />', () => {
   it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
     cy.mount(<Filter />)
   })
 })
+
+//Vet ikke helt hva som skal testes i Filter så må ta det seinere.
