@@ -138,7 +138,7 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#dbe892",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" className="travelCountry">
+                                    <Typography variant="body2" color="text.secondary" className="travelPrice">
 
                                         {travel.price} kr
 
@@ -237,7 +237,7 @@ export const TravelCard = ({ travel }) => {
                                 px:0.5,
                                 bgcolor: "#dbe892",
                                 }}>
-                                <Typography variant="body2" color="text.secondary" className="travelCountry">
+                                <Typography variant="body2" color="text.secondary" className="travelPrice">
 
                                     {travel.price} kr
 
