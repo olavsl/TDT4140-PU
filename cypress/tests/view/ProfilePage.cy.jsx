@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfilePage from '../ProfilePage'
+import '../../support/commands'
 
 describe('<ProfilePage />', () => {
   it('renders', () => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import Home from '../Home'
+import '../../support/commands'
 
 describe('<Home />', () => {
   it('renders', () => {

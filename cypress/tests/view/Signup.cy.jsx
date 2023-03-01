@@ -1,5 +1,6 @@
 import React from 'react'
 import Signup from '..components/Signup'
+import '../../support/commands'
 
 describe('<Signup />', () => {
   it('renders', () => {
