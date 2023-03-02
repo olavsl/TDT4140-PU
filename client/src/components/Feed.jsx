@@ -75,8 +75,6 @@ const Feed = () => {
                     <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
                 </button>
 
-                <p>Hello world</p>
-
                 {addNewTravel && 
                     <AddTravelForm className="add-travel-form" />
                 }
