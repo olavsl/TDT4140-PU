@@ -8,12 +8,13 @@ import { CardActionArea, DialogContent, Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
+import Dialog from '@mui/material/Dialog'; 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+
+import CommentCard from '../components/CommentCard'
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -41,7 +42,10 @@ export const TravelCard = ({ travel }) => {
     const handleClose = () => {
       setOpen(false);
     };
-  
+
+    const onSubmitCommment = () => {
+        //Får fra BE
+    }
  
     return (
         <ThemeProvider theme={cardTheme}>
@@ -244,9 +248,20 @@ export const TravelCard = ({ travel }) => {
                                 </Typography>
                             </Box>
                         </Grid>
+                        <divider />
+                        {/*Comment section under the extended travel card*/}
+                        <Grid>
+                            <Box>
+                                <CommentCard/>
+                                <form onSubmit={onSubmitCommment()}>
+                                    <label for="commmentText">Comment:</label>
+                                    <input type="text" id="commentText" name="commentText"/>
+                                    <input type="publish" value="Publish"/>
+                                </form>
+                            </Box>
+                        </Grid>
                         </DialogContent>
                     </Dialog>
-
                 </Card>
             </div>
         </ThemeProvider>
