@@ -63,8 +63,6 @@ const Feed = () => {
             <div></div> }
 
 
-            <div className='Tab' id='Toplist'>
-                Hello World
                 {!toggleValue ? <div className='Tab' id='Toplist'>
                 {travels && travels.map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} /*title={travel.title} country={travel.country}
@@ -72,11 +70,12 @@ const Feed = () => {
                     travelType={travel.travelType}*/ />
                 ))}
 
-
                 <button className="add-travel-button" onClick={fireAddNewTravel}>
                     <div className="add-travel-plus-sign-component" id="vertical-plus-sign-component" />
                     <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
                 </button>
+
+                <p>Hello world</p>
 
                 {addNewTravel && 
                     <AddTravelForm className="add-travel-form" />
@@ -85,9 +84,6 @@ const Feed = () => {
             :
             <div></div> }
             </div>
-
-            
-        </div>
     )
 }
 
