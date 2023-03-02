@@ -29,8 +29,7 @@ export const Comment = class {
         return Comment;
     }
 
-    deleteComment(commentID) {
-        commentID = this.commentID;
+    deleteComment() {
         //BE code
         return {}
     } 

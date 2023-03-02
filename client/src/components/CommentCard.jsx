@@ -4,7 +4,7 @@ import { Comment } from '../classes/Comment';
 import Fab from '@mui/material/Fab';
 import { User } from '../classes/User';
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ Comment }) => {
     let name = User.name();
 
     const onClickEdit = () => {
