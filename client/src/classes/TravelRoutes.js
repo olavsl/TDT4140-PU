@@ -1,6 +1,6 @@
 
 export const TravelRoutes = class {
-    constructor(title, country, start, end, price, travelType, distance, desc, author) {
+    constructor(title, country, start, end, price, travelType, distance, desc, author, comments) {
         this.title = title;
         this.country = country;
         this.start = start;
@@ -10,6 +10,7 @@ export const TravelRoutes = class {
         this.distance = distance;
         this.desc = desc;
         this.author = author;
+        this.comments = comments;
     }
 
     get title() {
@@ -19,5 +20,4 @@ export const TravelRoutes = class {
     get author() {
         return this.author;
     }
- 
 }
