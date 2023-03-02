@@ -1,14 +1,14 @@
 export const Comment = class {
-    constructor(ID, author, travelRoute, text, time) {
+    constructor(commentID, author, travelRoute, text, time) {
         this.author = author
         this.travelRoute = travelRoute
         this.text = text
         this.time = time
-        this.ID = ID
+        this.commentID = commentID
     }
 
-    get ID (){
-        return this.ID;
+    get commentID (){
+        return this.commentID;
     }
 
     get author () {
@@ -29,30 +29,21 @@ export const Comment = class {
         return Comment;
     }
 
-    deleteComment(ID) {
-        ID = this.ID;
+    deleteComment(commentID) {
+        commentID = this.commentID;
         //BE code
         return {}
     } 
-    
+
     updateComment(text, time) {
-        let ID = ID();
+        let commentID = commentID();
         let author = author();
         let travelRoute = travelRoute();
         text = this.text;
         time = this.time;
      
-        deleteComment(ID);
-        Comment(ID, author, travelRoute, text, time)
+        deleteComment(commentID);
+        Comment(commentID, author, travelRoute, text, time)
         return Comment
     }
 }
-
-
-
-/*if (this.user === this.author) {
-        updateComment()
-    }
-    else {
-        throw new illegalArgument("Can not change other peoples comments")
-    }*/
