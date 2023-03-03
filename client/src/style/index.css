@@ -110,8 +110,19 @@ a {
   flex-wrap: wrap;
   align-items: center;
   overflow-y: scroll;
-}
 
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  /* -ms-overflow-style: none;   
+  scrollbar-width: none;    
+}
+*/
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* .feed::-webkit-scrollbar {
+  display: none;
+} */
+
+}
 .add-travel-button {
   position: fixed;
   bottom: 3vh;
@@ -382,7 +393,7 @@ a {
 }
 
 .tabButton {
-  background-color: #876833;
+  background-color: #b29460;
   color: white;
   float: left;
   border: #DFC296;
@@ -390,11 +401,30 @@ a {
   padding: 8px 16px;
   font-size: 17px;
   font-family: "Times New Roman", Times, serif;
-  width: 25%;
+  width: 50%;
+  border: 2px solid #c0a06a;
+  box-sizing: border-box;
+}
+.tabButton-Active {
+  background-color: #b99452;
+  color: white;
+  float: left;
+  border: #DFC296;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-size: 17px;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  text-decoration: underline;
+  width: 50%;
+  border: 2px solid #ac8239;
+  box-sizing: border-box;
+
 }
 
 .tabButton:hover {
-  background-color: #777;
+  background-color: #debe7e;
+  
 }
 
 .Tab {
@@ -410,6 +440,8 @@ a {
   flex-wrap: wrap;
   align-items: center;
 }
+
+
 
 .TabHidden {
   display: none;
