@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useAddTravel } from "../hooks/useAddTravel"
 import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const AddTravelForm = () => {
     const { dispatch } = useTravelsContext()
+
     const [title, setTitle] = useState("")
     const [country, setCountry] = useState("")
     const [startDestination, setStartDestination] = useState("")
@@ -11,18 +11,46 @@ const AddTravelForm = () => {
     const [price, setPrice] = useState("")
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
-    const { addTravel, error, isLoading } = useAddTravel()
+    const [error, setError] = useState(null)
+
+    const [style, setStyle] = useState("add-travel-form-show")
     
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
+        const travel = {title, country, startDestination, endDestination, price, travelType, description}
+
+        const response = await fetch("/api/travels", {
+            method: "POST",
+            body: JSON.stringify(travel),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        const json = await response.json()
+
+        if (!response) {
+            setError(json.error)
+        }
+
+        if (response.ok) {
+            setError(null)
+            setTitle("")
+            setCountry("")
+            setStartDestination("")
+            setEndDestination("")
+            setPrice("")
+            setTravelType("")
+            setDescription("")
+            dispatch({type: "CREATE_TRAVEL", payload: json})
+
+            setStyle("add-travel-form-hide")
+        }
+
         console.log(title, country, startDestination, endDestination, price, travelType, description)
-        
-        await addTravel(title, country, startDestination, endDestination, price, travelType, description)
     }
     
     return (
-        <form className="add-travel-form" onSubmit={handleAddTravel} >
+        <form className={style} onSubmit={handleAddTravel} >
             <h1 className="add-travel-heading">Add new travel</h1>
 
             <input className="add-travel-input" type="text" placeholder="Title"

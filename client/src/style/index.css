@@ -160,7 +160,7 @@ a {
   height: 1vw;
 }
 
-.add-travel-form {
+.add-travel-form-show {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -171,6 +171,10 @@ a {
   background-color: rgb(240, 204, 160);
   border-radius: 3vw;
   text-align: center;
+}
+
+.add-travel-form-hide {
+  display: none;
 }
 
 .ads {
