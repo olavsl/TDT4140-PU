@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useAddTravel } from "../hooks/useAddTravel"
 import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const AddTravelForm = () => {
     const { dispatch } = useTravelsContext()
+
     const [title, setTitle] = useState("")
     const [country, setCountry] = useState("")
     const [startDestination, setStartDestination] = useState("")
@@ -11,14 +11,38 @@ const AddTravelForm = () => {
     const [price, setPrice] = useState("")
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
-    const { addTravel, error, isLoading } = useAddTravel()
+    const [error, setError] = useState(null)
     
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
+        const travel = {title, country, startDestination, endDestination, price, travelType, description}
+
+        const response = await fetch("/api/travels", {
+            method: "POST",
+            body: JSON.stringify(travel),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        const json = await response.json()
+
+        if (!response) {
+            setError(json.error)
+        }
+
+        if (response.ok) {
+            setError(null)
+            setTitle("")
+            setCountry("")
+            setStartDestination("")
+            setEndDestination("")
+            setPrice("")
+            setTravelType("")
+            setDescription("")
+            dispatch({type: "CREATE_TRAVEL", payload: json})
+        }
+
         console.log(title, country, startDestination, endDestination, price, travelType, description)
-        
-        await addTravel(title, country, startDestination, endDestination, price, travelType, description)
     }
     
     return (
