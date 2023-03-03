@@ -10,7 +10,7 @@ export const travelsReducer = (state, action) => {
             }
         case "CREATE_TRAVEL":
             return {
-                travels: [action.payload, ...state.travels]
+                travels: [...state.travels, action.payload]
             }
         default: 
             return state
