@@ -12,6 +12,8 @@ const AddTravelForm = () => {
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
     const [error, setError] = useState(null)
+
+    const [style, setStyle] = useState("add-travel-form-show")
     
     const handleAddTravel = async (e) => {
         e.preventDefault()
@@ -40,13 +42,15 @@ const AddTravelForm = () => {
             setTravelType("")
             setDescription("")
             dispatch({type: "CREATE_TRAVEL", payload: json})
+
+            setStyle("add-travel-form-hide")
         }
 
         console.log(title, country, startDestination, endDestination, price, travelType, description)
     }
     
     return (
-        <form className="add-travel-form" onSubmit={handleAddTravel} >
+        <form className={style} onSubmit={handleAddTravel} >
             <h1 className="add-travel-heading">Add new travel</h1>
 
             <input className="add-travel-input" type="text" placeholder="Title"
