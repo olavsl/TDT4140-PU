@@ -16,7 +16,7 @@ router.get("/", getTravels)
 router.get("/:id", getTravel)
 
 // POST new travel
-router.post("/add", createTravel)
+router.post("/", createTravel)
 
 // DELETE new travel
 router.delete("/:id", deleteTravel)
