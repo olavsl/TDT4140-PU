@@ -1,14 +1,9 @@
 export const Comment = class {
-    constructor(commentID, author, travelRoute, text, time) {
-        this.commentID = commentID
+    constructor(author, travelRoute, text, time) {
         this.author = author
         this.travelRoute = travelRoute
         this.text = text
         this.time = time
-    }
-
-    get commentID (){
-        return this.commentID;
     }
 
     get author () {
@@ -29,20 +24,17 @@ export const Comment = class {
         return Comment;
     }
 
-    deleteComment() {
+    deleteComment(commentID) {
+        commentID = this.commentID;
         //BE code
         return {}
     } 
 
     updateComment(text, time) {
-        let commentID = commentID();
         let author = author();
         let travelRoute = travelRoute();
         text = this.text;
         time = this.time;
-     
-        deleteComment(commentID);
-        Comment(commentID, author, travelRoute, text, time)
         return Comment
     }
 }

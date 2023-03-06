@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -13,8 +12,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
-
 import CommentCard from '../components/CommentCard'
+import useComment from '../hooks/useComment';
+import { useCommentContext } from '../hooks/useCommentContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -32,7 +32,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   });
 
 export const TravelCard = ({ travel }) => {
-
+    const [author, setAuthor] = useState("")
+    const [travelID, setTravelID] = useState("")
+    const [text, setText] = useState("")
+    const [time, setTime] = useState("")
+    const { comment, dispatch } = useCommentContext()
+    const [addNewTravel, setAddNewTravel] = useState(false) 
+    const { newComment, error, isLoading } = useComment.addComment()
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -43,8 +49,22 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
-    const onSubmitCommment = () => {
-        //Får fra BE
+    useEffect(() => {
+        const fetchComments = async () => {
+            const response = await fetch("/api/comment")
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatch({type: "SET_COMMENT", payload: json})
+            }
+        }
+        fetchComments();
+    }, [])
+
+    const onSubmitCommment = async (e) => {
+        e.preventDefault()
+
+        await newComment(author, travelID, text, time);
     }
  
     return (
@@ -252,7 +272,8 @@ export const TravelCard = ({ travel }) => {
                         {/*Comment section under the extended travel card*/}
                         <Grid>
                             <Box>
-                                <CommentCard/>
+                            {comment && comment.map((comment) => (
+                                <CommentCard key={comment._id} comment = {comment}/>))}
                                 <form onSubmit={onSubmitCommment()}>
                                     <label for="commmentText">Comment:</label>
                                     <input type="text" id="commentText" name="commentText"/>

@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react"
+import { createContext, useReducer, useMemo } from "react"
 
 export const TravelsContext = createContext()
 
@@ -21,9 +21,11 @@ export const TravelsContextSupplier = ({ children }) => {
     const [state, dispatch] = useReducer(travelsReducer, {
         travels: null
     })
+    
+    const valueTravCon = useMemo(() => ({...state, dispatch}), [state])
 
     return (
-        <TravelsContext.Provider value={{...state, dispatch}}>
+        <TravelsContext.Provider value={valueTravCon}>
             { children }
         </TravelsContext.Provider>
     )

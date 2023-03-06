@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../Card';
+import Card from '@mui/material/Card';
 import { Comment } from '../classes/Comment';
 import Fab from '@mui/material/Fab';
 import { User } from '../classes/User';
