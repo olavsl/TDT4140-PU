@@ -1,10 +1,10 @@
 export const Comment = class {
     constructor(commentID, author, travelRoute, text, time) {
+        this.commentID = commentID
         this.author = author
         this.travelRoute = travelRoute
         this.text = text
         this.time = time
-        this.commentID = commentID
     }
 
     get commentID (){
