@@ -4,6 +4,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const userRoutes = require("./routes/userRoutes")
 const travelRoutes = require("./routes/travelRoutes")
+const commentRoutes = require("./routes/commentRoutes")
 
 // Suppress warning
 mongoose.set('strictQuery', true);
@@ -34,3 +35,4 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 peregrinateApp.use("/api/users", userRoutes)
 peregrinateApp.use("/api/travels", travelRoutes)
+peregrinateApp.use("api/comments", commentRoutes)
