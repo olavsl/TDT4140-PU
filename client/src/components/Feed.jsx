@@ -29,7 +29,7 @@ const Feed = () => {
             }
         }
         fetchTravels()
-    }, [])
+    }, [dispatch])
     
     return (
         <div className="feed">

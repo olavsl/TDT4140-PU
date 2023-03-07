@@ -13,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
-import useComment from '../hooks/useComment';
+import { useAddComment } from '../hooks/useAddComment';
 import { useCommentContext } from '../hooks/useCommentContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
@@ -36,9 +36,8 @@ export const TravelCard = ({ travel }) => {
     const [travelID, setTravelID] = useState("")
     const [text, setText] = useState("")
     const [time, setTime] = useState("")
-    const { comment, dispatch } = useCommentContext()
-    const [addNewTravel, setAddNewTravel] = useState(false) 
-    const { newComment, error, isLoading } = useComment.addComment()
+    const { comments, dispatch } = useCommentContext() 
+    const { newComment, error, isLoading } = useAddComment()
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -59,7 +58,7 @@ export const TravelCard = ({ travel }) => {
             }
         }
         fetchComments();
-    }, [])
+    }, [dispatch])
 
     const onSubmitCommment = async (e) => {
         e.preventDefault()
@@ -270,17 +269,18 @@ export const TravelCard = ({ travel }) => {
                         </Grid>
                         <divider />
                         {/*Comment section under the extended travel card*/}
-                        <Grid>
-                            <Box>
-                            {comment && comment.map((comment) => (
-                                <CommentCard key={comment._id} comment = {comment}/>))}
-                                <form onSubmit={onSubmitCommment()}>
-                                    <label for="commmentText">Comment:</label>
-                                    <input type="text" id="commentText" name="commentText"/>
-                                    <input type="publish" value="Publish"/>
-                                </form>
-                            </Box>
-                        </Grid>
+                            <Grid>
+                                <Box>
+                                {comments && comments
+                                .slice(0).map((comment) => (
+                                    <CommentCard key={comment._id} comment = {comment}/>))}
+                                    <form onSubmit={onSubmitCommment()}>
+                                        <label for="commmentText">Comment:</label>
+                                        <input type="text" id="commentText" name="commentText"/>
+                                        <input type="publish" value="Publish"/>
+                                    </form>
+                                </Box>
+                            </Grid>
                         </DialogContent>
                     </Dialog>
                 </Card>

@@ -4,25 +4,24 @@ export const CommentContext = createContext()
 
 export const commentReducer = (state, action) => {
     switch (action.type) {
-        case "SET_COMMENT":
+        case "GET_COMMENTS":{
             return {
-                comments: action.payload
-            }
+                comment: action.payload
+            }}
         case "CREATE_COMMENT":
             return {
-                cpmments: [action.payload, ...state.travels]
-            }
+                comment: [...state.comment, action.payload]}
         default: 
-            return state
+            throw Error ("Uknown action:"+ action.type)
     } 
 }
 
 export const CommentContextSupplier = ({ children }) => {
     const [state, dispatch] = useReducer(commentReducer, {
-        travels: null
+        comment: null
     })
 
-    const valueComCon = useMemo(() => ({...state, dispatch}), [state])
+    const valueComCon = useMemo(() => ({...state, dispatch}), [state, dispatch])
 
     return (
         <CommentContext.Provider value={valueComCon}>

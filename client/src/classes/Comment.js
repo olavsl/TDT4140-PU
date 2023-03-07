@@ -31,8 +31,6 @@ export const Comment = class {
     } 
 
     updateComment(text, time) {
-        let author = author();
-        let travelRoute = travelRoute();
         text = this.text;
         time = this.time;
         return Comment
