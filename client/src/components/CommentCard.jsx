@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import { Comment } from '../classes/Comment';
 import Fab from '@mui/material/Fab';
 import { User } from '../classes/User';
+import { current } from '@reduxjs/toolkit';
 
 const CommentCard = ({ Comment }) => {
     let name = User.name();
@@ -29,12 +30,15 @@ const CommentCard = ({ Comment }) => {
     }
 
     return (
-        <Card className="CommentCard" id={Comment.ID.toString()}>
+        <Card className="CommentCard" ClassName="commentID">
+            {Comment.ID.toString()}
         <div id="defaultView">
             <div id="top">
-            <h4 id="author">{Comment.author}</h4>
+            <h4 ClassName="author">
+                {Comment.author}
+            </h4>
             </div>
-            <div id="commentText">
+            <div ClassName="commentText">
                 <p id="text">{Comment.text}</p>
             </div>
             <div>
@@ -45,7 +49,7 @@ const CommentCard = ({ Comment }) => {
                 <Fab title='delete' className='icons' id="iconDelete" size="medium" color="primary" onClick={() => onClickDelete()}>
                 </Fab>
                 
-                <time datetime={Comment.time}></time>
+                <time datetime={current.datetime}></time>
             </div>
         </div>
         </Card>
