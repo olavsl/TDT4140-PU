@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -13,7 +13,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
-import { useAddComment } from '../hooks/useAddComment';
 import { useCommentContext } from '../hooks/useCommentContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
@@ -27,18 +26,17 @@ const cardTheme = createTheme({
     }
 });
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
 export const TravelCard = ({ travel }) => {
-    const [author, setAuthor] = useState("")
-    const [travelID, setTravelID] = useState("")
+    //const [author, setAuthor] = useState("")
+    //const [travelID, setTravelID] = useState("")
     const [text, setText] = useState("")
     const [time, setTime] = useState("")
     const { comments, dispatch } = useCommentContext() 
-    const { newComment, error, isLoading } = useAddComment()
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false)
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -50,20 +48,40 @@ export const TravelCard = ({ travel }) => {
 
     useEffect(() => {
         const fetchComments = async () => {
-            const response = await fetch("/api/comment")
+            const response = await fetch("/api/Comment")
             const json = await response.json()
 
             if (response.ok) {
-                dispatch({type: "SET_COMMENT", payload: json})
+                dispatch({type: "GET_COMMENT", payload: json})
             }
         }
         fetchComments();
     }, [dispatch])
 
+
+    /*const addComment = async (commentID, author, travelID, text, time) => {
+        setError(null)
+        setIsLoading(null)
+    
+        const response = await fetch("/api/comment/createComment", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({commentID, author, travelID, text, time})
+        })
+        const json = await response.json()
+        if (!response.ok) {
+            setError(json.error)
+            setIsLoading(false)
+        }
+        if (response.ok) {
+            setIsLoading(false)
+        } return response
+    }*/
+
     const onSubmitCommment = async (e) => {
         e.preventDefault()
 
-        await newComment(author, travelID, text, time);
+        //await comments(comments.author, comments.travelID, comments.text, comments.time);
     }
  
     return (
@@ -267,17 +285,17 @@ export const TravelCard = ({ travel }) => {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <divider />
+                        <Divider />
                         {/*Comment section under the extended travel card*/}
-                            <Grid>
-                                <Box>
+                        <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
+                            <Box>
                                 {comments && comments
                                 .slice(0).map((comment) => (
                                     <CommentCard key={comment._id} comment = {comment}/>))}
                                     <form onSubmit={onSubmitCommment()}>
                                         <label for="commmentText">Comment:</label>
-                                        <input type="text" id="commentText" name="commentText"/>
-                                        <input type="publish" value="Publish"/>
+                                        <input type="text" id="commentText" className="commentText" onChange={(e)=>setText(e.target.value)} value = {text}/>
+                                        <button type="publish" id="publishComment" className="publishComment" onPress={(e)=>setTime(Date.now)} value={time}>Publish</button>
                                     </form>
                                 </Box>
                             </Grid>
