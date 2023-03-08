@@ -1,5 +1,6 @@
 export const Comment = class {
-    constructor(author, travelRoute, text, time) {
+    constructor(commentID, author, travelRoute, text, time) {
+        this.commentID = commentID
         this.author = author
         this.travelRoute = travelRoute
         this.text = text
