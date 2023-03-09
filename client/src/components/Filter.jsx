@@ -1,7 +1,7 @@
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
 
-function search_travel() {
+/* function search_travel() {
     // try {
         let input = document.getElementById('searchBar').value
         input = input.toLowerCase();
@@ -12,14 +12,22 @@ function search_travel() {
     // } catch (TypeError) {
     // }    
     
-}
+} */
 
 const Filter = () => {
     const { travels, dispatch } = useTravelsContext()
+
+    const handleSearch = (e) => {
+        const search = e.target.value
+        const filteredTravels = travels.filter(travel => travel.title.toLowerCase().includes(search.toLowerCase()))
+        dispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
+    }
+
+
     return (
         <div className="filter">
             <div>
-                <input className="searchBar" onKeyUp={search_travel()} name="search" value="notNull" type="text" placeholder='Search travels' />
+                <input className="searchBar" onKeyUp={handleSearch} placeholder='Search travels' />
             </div>
         </div>
     )
