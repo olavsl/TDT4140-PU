@@ -31,7 +31,7 @@ const Feed = () => {
         fetchTravels()
     }, [])
     
-    return (
+    return (        
         <div className="feed">
 
             <div className="feedHeader">
