@@ -1,8 +1,6 @@
 export const Comment = class {
-    constructor(commentID, author, travelRoute, text, time) {
-        this.commentID = commentID
+    constructor(author, text, time) {
         this.author = author
-        this.travelRoute = travelRoute
         this.text = text
         this.time = time
     }
@@ -10,24 +8,17 @@ export const Comment = class {
     get author () {
         return this.author;
     }
-    get travelRoute () {
-        return this.travelRoute;
-    }
     get text () {
         return this.text;
     }
-
     get time () {
         return this.time;
     }
-
     get Comment () {
         return Comment;
     }
 
-    deleteComment(commentID) {
-        commentID = this.commentID;
-        //BE code
+    deleteComment(_ID) {
         return {}
     } 
 

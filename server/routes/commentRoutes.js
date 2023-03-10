@@ -2,7 +2,7 @@ const express = require("express")
 const {
     getComments,
     getComment,
-    getCommentsByTravel,
+    //getCommentsByTravel,
     createComment,
     deleteComment,
     updateComment
@@ -17,7 +17,7 @@ router.get("/", getComments)
 router.get("/:id", getComment)
 
 // GET comments by travelID
-router.get("/:travelID", getCommentsByTravel)
+//router.get("/:travelID", getCommentsByTravel)
 
 // POST new comment
 router.post("/", createComment)

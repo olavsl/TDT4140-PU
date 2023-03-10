@@ -3,7 +3,6 @@ import { createContext, useReducer, useMemo } from "react"
 export const TravelsContext = createContext()
 
 export const travelsReducer = (state, action) => {
-    console.log(action.type);
     switch (action.type) {
         case "SET_TRAVELS":
             return {

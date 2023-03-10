@@ -10,19 +10,19 @@ const getComments = async (req, res) => {
 
 // GET a single comment
 const getComment = async (req, res) => {
-    const { id } = req.params
+    const { _id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(400).json({error: "Not a valid comment ID!"})
     }
 
-    const comment = await Comment.findById(id)
+    const comment = await Comment.findById(_id)
 
     res.status(200).json(comment)
 }
 
 // GET comments for one travel route
-const getCommentsByTravel = async (req, res) => {
+/*const getCommentsByTravel = async (req, res) => {
     const { travelID } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(travelID)) {
@@ -36,15 +36,15 @@ const getCommentsByTravel = async (req, res) => {
     }
 
     res.status(200).json(comments)
-}
+}*/
 
 // POST (create) new comment
 const createComment = async (req, res) => {
-    const { commentID, author, travelID, text, time } = req.body
+    const { _ID, author, text, time } = req.body
 
     // Add Comment document to database
     try {
-        const comment = await Comment.create({commentID, author, travelID, text, time})
+        const comment = await Comment.create({author, text, time})
         res.status(200).json(comment)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -55,7 +55,7 @@ const createComment = async (req, res) => {
 const deleteComment = async (req, res) => {
     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(400).json({error: "Not a valid comment ID!"})
     }
 
@@ -70,9 +70,9 @@ const deleteComment = async (req, res) => {
 
 // PATCH (update) comment
 const updateComment = async (req, res) => {
-    const { id } = req.params
+    const { _id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).json({error: "Not a valid comment ID!"})
     }
 

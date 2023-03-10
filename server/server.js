@@ -35,4 +35,4 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 peregrinateApp.use("/api/users", userRoutes)
 peregrinateApp.use("/api/travels", travelRoutes)
-peregrinateApp.use("api/comments", commentRoutes)
+peregrinateApp.use("/api/comments", commentRoutes)

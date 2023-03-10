@@ -2,21 +2,19 @@ import { createContext, useReducer, useMemo } from "react"
 
 export const CommentContext = createContext()
 
-export const commentReducer = (comments, action) => {
+export const commentReducer = (state, action) => {
     switch (action.type) {
         case "GET_COMMENTS":{
-            return {
-                comment: action.payload
-            }}
+            return { comment: action.payload }}
         case "CREATE_COMMENT":
-            return [...comments, {
+            return [...state, {
                 commentID: action.commentID,
                 author: action.author,
                 travelRoute: action.travelID,
                 text: action.text,
                 time: action.time
             }]
-        case "UPDATE_COMMENT": 
+        /*case "UPDATE_COMMENT": 
             return comments.map((t) => {
                 if (t.author === action.comment.author && t.travelID === action.comment.travelID) {
                   return action.comment
@@ -25,18 +23,18 @@ export const commentReducer = (comments, action) => {
                 }
             });
         case "DELETE_COMMENT":
-            return comments.filter((t) => t.id !== action.id);
+            return comments.filter((t) => t.id !== action.id);*/
         default: 
             throw Error ("Uknown action:"+ action.type)
     } 
 }
 
 export const CommentContextSupplier = ({ children }) => {
-    const [comments, dispatch] = useReducer(commentReducer, {
+    const [state, dispatch] = useReducer(commentReducer, {
         comment: null
     })
 
-    const valueComCon = useMemo(() => ({...comments, dispatch}), [comments, dispatch])
+    const valueComCon = useMemo(() => ({...state, dispatch}), [state])
 
     return (
         <CommentContext.Provider value={valueComCon}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, forwardRef } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -31,59 +31,51 @@ const Transition = forwardRef(function Transition(props, ref) {
   });
 
 export const TravelCard = ({ travel }) => {
-    //const [author, setAuthor] = useState("")
-    //const [travelID, setTravelID] = useState("")
+    const [open, setOpen] = useState(false)
+    const { comments, dispatch } = useCommentContext()
+    const [author, setAuthor] = useState("")
     const [text, setText] = useState("")
     const [time, setTime] = useState("")
-    const { comments, dispatch } = useCommentContext() 
-    const [open, setOpen] = useState(false)
-
+ 
     const handleClickOpen = () => {
       setOpen(true);
+      getComments()
     };
   
     const handleClose = () => {
       setOpen(false);
     };
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            const response = await fetch("/api/Comment")
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({type: "GET_COMMENT", payload: json})
-            }
-        }
-        fetchComments();
-    }, [dispatch])
-
-
-    /*const addComment = async (commentID, author, travelID, text, time) => {
-        setError(null)
-        setIsLoading(null)
-    
-        const response = await fetch("/api/comment/createComment", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({commentID, author, travelID, text, time})
-        })
+    const onSubmitCommment = async  (author, text, time) => {    
+        
+        const response = await fetch("/api/comments")
         const json = await response.json()
         if (!response.ok) {
-            setError(json.error)
-            setIsLoading(false)
+            throw new Error("Can not get Comment (addComments)")
         }
         if (response.ok) {
-            setIsLoading(false)
-        } return response
-    }*/
-
-    const onSubmitCommment = async (e) => {
-        e.preventDefault()
-
-        //await comments(comments.author, comments.travelID, comments.text, comments.time);
+            setAuthor(author)
+            setText(text)
+            setTime(time)
+            dispatch({type: "CREATE_COMMENT", payload: json})
+        }
     }
- 
+        
+    const getComments = async () => {
+        const response = await fetch("/api/comments")
+
+        const json = await response.json()
+
+        if (!response.ok) {
+            throw new Error("Can not get Comment (getComments)")
+        }
+
+        if (response.ok) {    
+            dispatch({type: "GET_COMMENTS", payload: json})
+        }
+        return dispatch
+    }
+
     return (
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
@@ -292,10 +284,10 @@ export const TravelCard = ({ travel }) => {
                                 {comments && comments
                                 .slice(0).map((comment) => (
                                     <CommentCard key={comment._id} comment = {comment}/>))}
-                                    <form onSubmit={onSubmitCommment()}>
-                                        <label for="commmentText">Comment:</label>
-                                        <input type="text" id="commentText" className="commentText" onChange={(e)=>setText(e.target.value)} value = {text}/>
-                                        <button type="publish" id="publishComment" className="publishComment" onPress={(e)=>setTime(Date.now)} value={time}>Publish</button>
+                                    <form onSubmit={onSubmitCommment(text, author, time)}>
+                                        <label type="commmentText">Comment:</label>
+                                        <input type="text" id="commentText" className="commentText" value={text}/>
+                                        <button type="publish" id="publishComment" className="publishComment">Publish</button>
                                     </form>
                                 </Box>
                             </Grid>
