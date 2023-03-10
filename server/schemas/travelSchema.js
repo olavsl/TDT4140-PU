@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-
 const Schema = mongoose.Schema
 
 const travelSchema = new Schema({
@@ -38,11 +37,24 @@ const travelSchema = new Schema({
     rating: {
         type: Number,
         required: false
-    }
-
+    },
+    comments: [{
+        author: {
+            type: String,
+            required: true
+        },
+        text: {
+            type: String,
+            required: true
+        },
+        time: {
+            type: String,
+            required: true
+        }
+    }]
 }, { timestamps: true })
 
-travelSchema.static.create = async function(title, country, startDestination, 
+/*travelSchema.static.create = async function(title, country, startDestination, 
     endDestination, price, travelType, distance, description, rating) {
     if (!title || !country || !startDestination || !endDestination || !price || !travelType) {
         throw Error("All fields, except distance and description, must be filled in!")
@@ -51,6 +63,6 @@ travelSchema.static.create = async function(title, country, startDestination,
     const TravelRoutes = await this.findOne({travelID})
     
     return TravelRoutes;
-}
+}*/
 
 module.exports = mongoose.model("TravelRoutes", travelSchema)  

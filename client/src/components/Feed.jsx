@@ -4,7 +4,8 @@ import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
 const Feed = () => {
-    const { travels, dispatch } = useTravelsContext()
+    const { travelContext, dispatch } = useTravelsContext()
+    const [ travels, setTravels] = useState([])
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -20,16 +21,19 @@ const Feed = () => {
         setToggleValue(false);
     }
 
-    useEffect(() => {
-        const fetchTravels = async () => {
-            const response = await fetch("/api/travels")
-            const json = await response.json()
-            if (response.ok) {
-                dispatch({type: "SET_TRAVELS", payload: json})
-            }
+    const fetchTravels = async () => {
+        const response = await fetch("/api/travels")
+        const json = await response.json()
+        if (response.ok) {
+            setTravels(json)
         }
-        fetchTravels()
-    }, [dispatch])
+    }
+
+    useEffect(() => {
+        fetchTravels().then((res) => {
+            console.log("did mount")
+        })
+    }, [])
     
     return (
         <div className="feed">

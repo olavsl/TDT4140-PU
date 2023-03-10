@@ -1,28 +1,18 @@
 import React from 'react';
 import Card from '@mui/material/Card';
-import { Comment } from '../classes/Comment';
 import Fab from '@mui/material/Fab';
-import { User } from '../classes/User';
-import { current } from '@reduxjs/toolkit';
+import { useAuthContext } from '../hooks/useAuthContext';
 
-const CommentCard = ({ Comment }) => {
-    let name = User.name();
+const CommentCard = ({ comment }) => {
+    const { user } = useAuthContext();
 
-    const onClickEdit = () => {
-        if (name === Comment.author) {
-            Comment.updateComment()
-        }
-        else {
-            throw new Error("Can not change other peoples comments")
-        }
-    }
-    
     const onClickDelete = () => {
-        if (name === Comment.author) {
-            Comment.deleteComment()
+        if (user.username === comment.author) {
+            //TODO: deleteComment
+                //fjern fra travel.comment lista 
         }
-        /*if (name === admin.name) {
-            Comment.deleteComment()
+        /*if (user.username === admin.name) {
+            //fjern fra travel.comment lista
         }*/
         else {
             throw new Error("Can not delete other peoples comments")
@@ -31,25 +21,20 @@ const CommentCard = ({ Comment }) => {
 
     return (
         <Card className="CommentCard" ClassName="commentID">
-            {Comment.ID.toString()}
         <div id="defaultView">
             <div id="top">
             <h4 ClassName="author">
-                {Comment.author}
+                {comment.author}
             </h4>
             </div>
             <div ClassName="commentText">
-                <p id="text">{Comment.text}</p>
+                <p id="text">{comment.text}</p>
             </div>
             <div>
-            {/*Fiks onClick */}
-                <Fab title='edit' className='icons' id="iconEdit" size="medium" color="primary" onClick={() => onClickEdit()}>
-                </Fab>
-            {/*Fiks onClick */}
                 <Fab title='delete' className='icons' id="iconDelete" size="medium" color="primary" onClick={() => onClickDelete()}>
                 </Fab>
                 
-                <time datetime={current.datetime}></time>
+                <div>{comment.time}</div>
             </div>
         </div>
         </Card>

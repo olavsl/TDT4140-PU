@@ -13,9 +13,6 @@ const Header = () => {
             </div>
             <div>
                 <h1 className="heading">
-                    <Link to="">
-                        PEREGRINATE
-                    </Link>
                 </h1>
             </div>
             <div> 

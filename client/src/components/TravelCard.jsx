@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -13,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
-import { useCommentContext } from '../hooks/useCommentContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -30,13 +30,13 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
-    const { comments, dispatch } = useCommentContext()
-    const [author, setAuthor] = useState("")
-    const [text, setText] = useState("")
-    const [time, setTime] = useState("")
- 
+    const [commentArray, setCommentArray] = useState([])
+    const { user } = useAuthContext();
+    const [commentInput, setCommentInput] = useState("")
+
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -45,35 +45,22 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
-    const onSubmitCommment = async  (author, text, time) => {    
-        
-        const response = await fetch("/api/comments")
-        const json = await response.json()
-        if (!response.ok) {
-            throw new Error("Can not get Comment (addComments)")
+    const onSubmitCommment = () => {
+        if (user != null){
+            let newComment = {author: user.username, text: commentInput, time: String(Date.now())}
+            let oldArray = commentArray
+            oldArray.push(newComment)
+            setCommentArray(oldArray)
         }
-        if (response.ok) {
-            setAuthor(author)
-            setText(text)
-            setTime(time)
-            dispatch({type: "CREATE_COMMENT", payload: json})
-        }
+    };
+
+    const handelCommentInput = (e) => {
+        setCommentInput(e.target.value)
     }
-        
-    const getComments = async () => {
-        const response = await fetch("/api/comments")
-
-        const json = await response.json()
-
-        if (!response.ok) {
-            throw new Error("Can not get Comment (getComments)")
-        }
-
-        if (response.ok) {    
-            dispatch({type: "GET_COMMENTS", payload: json})
-        }
-        return dispatch
-    }
+    
+    /*useEffect(() => {
+        setCommentArray(travel.comments)
+    }, [])*/
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -280,20 +267,20 @@ export const TravelCard = ({ travel }) => {
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
-                                {comments && comments
-                                .slice(0).map((comment) => (
-                                    <CommentCard key={comment._id} comment = {comment}/>))}
-                                    <form onSubmit={onSubmitCommment(text, author, time)}>
-                                        <label type="commmentText">Comment:</label>
-                                        <input type="text" id="commentText" className="commentText" value={text}/>
-                                        <button type="publish" id="publishComment" className="publishComment">Publish</button>
-                                    </form>
-                                </Box>
-                            </Grid>
-                        </DialogContent>
-                    </Dialog>
-                </Card>
-            </div>
-        </ThemeProvider>
+                                {commentArray && commentArray.map((comment, index) => (
+                                    <CommentCard key={index} comment = {comment}/>
+                                ))}
+                                <form onSubmit={onSubmitCommment()}>
+                                    <label type="commmentText">Comment:</label>
+                                    <input type="text" id="commentText" className="commentText" onChange={(e) => {handelCommentInput(e)}}/>
+                                    <button type="publish" id="publishC omment" className="publishComment">Publish</button>
+                                </form>
+                            </Box>
+                        </Grid>
+                    </DialogContent>
+                </Dialog>
+            </Card>
+        </div>
+    </ThemeProvider>
     );
 }

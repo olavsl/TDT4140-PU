@@ -8,29 +8,16 @@ import Filter from "../components/Filter"
 import Feed from "../components/Feed"
 import Ads from "../components/Ads"
 import Loginform from "../components/Loginform"
+import SignupForm from "../components/SignupForm"
 
 const Home = () => {
-    const { user } = useAuthContext()
 
-    const { travels, dispatch } = useTravelsContext()
-
-    useEffect(() => {
-        const fetchTravels = async () => {
-            const response = await fetch("/api/travels")
-            const json = await response.json()
-
-            if (response.ok) {
-                dispatch({type: "SET_TRAVELS", payload: json})
-            }
-        }
-
-        fetchTravels()
-    }, [dispatch])
+    //TODO: toggle som bytter mellom signup og login
 
     return (
         <div className="home">
             <Loginform />
-            <div className="blur-wrapper" style={ !user ? {filter: "blur(5px)", pointerEvents: "none"} : {} }>
+            <div className="blur-wrapper">
                 <Header />
                 <div className="flexContent">
                     <Filter />

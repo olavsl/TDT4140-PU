@@ -35,10 +35,6 @@ const SignupForm = () => {
 
             <p className="alreadyHaveAnAccount">Already have an account?</p>
 
-            <Link className="link-form-button" id="go-to-login" to={"../"}>
-                <p className="link-form-text">Log in</p>
-            </Link>
-
             {error && <div className="errorResponse">{error}</div>}
         </form>
     )

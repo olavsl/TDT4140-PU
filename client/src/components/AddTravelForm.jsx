@@ -41,6 +41,7 @@ const AddTravelForm = () => {
             setPrice("")
             setTravelType("")
             setDescription("")
+            
             dispatch({type: "CREATE_TRAVEL", payload: json})
 
             setStyle("add-travel-form-hide")
