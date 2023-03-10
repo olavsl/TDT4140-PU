@@ -17,17 +17,31 @@ import { useTravelsContext } from "../hooks/useTravelsContext";
 const Filter = () => {
     const { travels, dispatch } = useTravelsContext()
 
-    const handleSearch = (e) => {
-        const search = e.target.value
-        const filteredTravels = travels.filter(travel => travel.title.toLowerCase().includes(search.toLowerCase() || travel.country.toLowerCase().includes(search.toLowerCase()) || travel.startDestination.toLowerCase().includes(search.toLowerCase()) || travel.endDestination.toLowerCase().includes(search.toLowerCase()) || travel.price.toLowerCase().includes(search.toLowerCase()) || travel.description.toLowerCase().includes(search.toLowerCase()) || travel.travelType.toLowerCase().includes(search.toLowerCase())))
-        dispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
+    const handleSearch = e => {
+        const search = e.target.value.toLowerCase()
+        // console.log(travels)
+        if (search === "") {
+            fetchTravels()
+        }
+        else {
+            const filteredTravels = travels.filter(travel => travel.title.toLowerCase().includes(search.toLowerCase())) 
+            //&& travels.filter(travel => travel.country.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.startDestination.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.endDestination.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.description.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.travelType.toLowerCase().includes(search.toLowerCase()))
+            dispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
+        }
     }
 
+    const fetchTravels = async () => {
+        const response = await fetch("/api/travels")
+        const json = await response.json()
+        if (response.ok) {
+            dispatch({type: "SET_TRAVELS", payload: json})
+        }
+    }
 
     return (
         <div className="filter">
             <div>
-                <input className="searchBar" onKeyUp={handleSearch} placeholder='Search travels' />
+                <input className="searchBar" onChange={handleSearch} placeholder='Search travels' />
             </div>
         </div>
     )
