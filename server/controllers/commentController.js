@@ -9,7 +9,7 @@ const getComments = async (req, res) => {
 }
 
 // GET a single comment
-const getComment = async (req, res) => {
+/*const getComment = async (req, res) => {
     const { _id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -19,7 +19,7 @@ const getComment = async (req, res) => {
     const comment = await Comment.findById(_id)
 
     res.status(200).json(comment)
-}
+}*/
 
 // GET comments for one travel route
 /*const getCommentsByTravel = async (req, res) => {
@@ -89,8 +89,8 @@ const updateComment = async (req, res) => {
 
 module.exports = {
     getComments,
-    getComment,
-    getCommentsByTravel,
+    //getComment,
+    //getCommentsByTravel,
     createComment,
     deleteComment,
     updateComment

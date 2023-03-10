@@ -8,9 +8,7 @@ export const commentReducer = (state, action) => {
             return { comment: action.payload }}
         case "CREATE_COMMENT":
             return [...state, {
-                commentID: action.commentID,
                 author: action.author,
-                travelRoute: action.travelID,
                 text: action.text,
                 time: action.time
             }]

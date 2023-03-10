@@ -39,7 +39,6 @@ export const TravelCard = ({ travel }) => {
  
     const handleClickOpen = () => {
       setOpen(true);
-      getComments()
     };
   
     const handleClose = () => {
