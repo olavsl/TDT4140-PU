@@ -4,8 +4,7 @@ import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
 const Feed = () => {
-    const { travelContext, dispatch } = useTravelsContext()
-    const [ travels, setTravels] = useState([])
+    const { travels, dispatch } = useTravelsContext()
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -25,7 +24,8 @@ const Feed = () => {
         const response = await fetch("/api/travels")
         const json = await response.json()
         if (response.ok) {
-            setTravels(json)
+            // FIXME: This causes infinite rerenders.
+            dispatch({type: "SET_TRAVELS", payload: json})
         }
     }
 
@@ -34,7 +34,7 @@ const Feed = () => {
             console.log("did mount")
         })
     }, [])
-    
+
     return (
         <div className="feed">
 
