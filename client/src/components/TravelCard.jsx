@@ -45,7 +45,9 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
+
     const onSubmitCommment = () => {
+        // TODO create add comment for reducer.
         if (user != null){
             let newComment = {author: user.username, text: commentInput, time: String(Date.now())}
             let oldArray = commentArray
@@ -270,7 +272,7 @@ export const TravelCard = ({ travel }) => {
                                 {commentArray && commentArray.map((comment, index) => (
                                     <CommentCard key={index} comment = {comment}/>
                                 ))}
-                                <form onSubmit={onSubmitCommment()}>
+                                <form onSubmit={() => onSubmitCommment()}>
                                     <label type="commmentText">Comment:</label>
                                     <input type="text" id="commentText" className="commentText" onChange={(e) => {handelCommentInput(e)}}/>
                                     <button type="publish" id="publishC omment" className="publishComment">Publish</button>
