@@ -11,12 +11,14 @@ import Loginform from "../components/Loginform"
 import SignupForm from "../components/SignupForm"
 
 const Home = () => {
-
+    const { user } = useAuthContext();
     //TODO: toggle som bytter mellom signup og login
 
     return (
         <div className="home">
-            <Loginform />
+            {
+                user === null && <Loginform />
+            }
             <div className="blur-wrapper">
                 <Header />
                 <div className="flexContent">
