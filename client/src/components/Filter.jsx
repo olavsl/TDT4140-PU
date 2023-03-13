@@ -1,84 +1,45 @@
-import { useState, useMemo } from "react"
-import { useTravelsContext } from "../hooks/useTravelsContext";
+import { useState, useEffect } from "react"
+import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const Filter = () => {
-    const { travels, dispatch } = useTravelsContext()
+    const { travels, travelDispatch } = useTravelsContext()
     const [showCountries, setShowCountries] = useState(false)
     const [showPrice, setShowPrice] = useState(false)
-    const [distinctCountries, setDistinctCountries] = useState([])
-    const allTravels = useMemo(() => {return travels}, [showCountries])
-    var filteredTravels = [];
-    var checkedCountries = [];
+    var distinctCountries = []
 
-    // Push json travels to JS array
-    const resetFilteredTravels = () => {
-        filteredTravels = []
+    useEffect(() => {
+        setDistinctCountries()
+    })
+
+    const setDistinctCountries = () => {
+        const countryList = []
         
-        for (var i in allTravels) {
-            filteredTravels.push(allTravels[i])
+        for (var i in travels) {
+            countryList.push(travels[i].country)
         }
+
+        return distinctCountries = new Set(countryList)
     }
 
-    // Filter functions
-    const filterTravelsByCountry = () => {
-        filteredTravels = []
-        for (var i = 0; i < allTravels.length; i++) {
-            if (checkedCountries.includes(allTravels[i].country)) {
-                filteredTravels.push(allTravels[i])
-            }
-        }
-
-        if (checkedCountries.length === 0) {
-            resetFilteredTravels()
-        }
-    }
-
-    // Get distinct countries of travels on the page
-    const getDistinctCountries = () => {
-        const countries = []
-        travels && travels.map((travel) => {
-            if (!countries.includes(travel.country)) {
-                countries.push(travel.country)
-            }
+    const filterTravels = (e) => {
+        return travels.filter(() => {
+            return 
         })
-        countries.sort()
-
-        return countries
     }
 
     // Show different options for filtering
     const fireShowCountries = (e) => {
         e.preventDefault()
-        setDistinctCountries(getDistinctCountries())
         setShowCountries(current => !current)
-
-        if (showCountries) {
-            dispatch({type: "SET_TRAVELS", payload: allTravels})
-        }
+        console.log(distinctCountries)
+        // if (showCountries) {
+        //     dispatch({type: "SET_TRAVELS", payload: allTravels})
+        // }
     }
 
     const fireShowPrice = (e) => {
-        e.preventDefault()
-        setShowPrice(current => !current)
-    }
-
-    // Get checked countries
-    const getCheckedCountries = () => {
-        checkedCountries = []
-        
-        var countryInputFilters = document.getElementsByClassName("filter-country-checkbox")
-        for (var i = 0; i < countryInputFilters.length; i++) {
-            if (countryInputFilters[i].checked) {
-                checkedCountries.push(countryInputFilters[i].value)
-            }
-        }
-    }
-
-    const filterTravels = (e) => {
-        getCheckedCountries()
-        filterTravelsByCountry()
-
-        dispatch({type: "SET_TRAVELS", payload: filteredTravels})
+        // e.preventDefault()
+        // setShowPrice(current => !current)
     }
 
     return (
@@ -114,5 +75,6 @@ const Filter = () => {
         </div>
     )
 }
+
 
 export default Filter
