@@ -35,7 +35,7 @@ const Feed = () => {
             console.log("did mount")
         })
     }, [])
-
+    
     return (
         <div className="feed">
 
