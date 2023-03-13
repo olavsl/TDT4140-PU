@@ -98,6 +98,60 @@ a {
   background-color: #ECE3D9;
 }
 
+.filter-heading {
+  position: absolute;
+  left: 7.5%;
+  top: 5vh;
+  font-size: 4vh;
+  color: #876833;
+}
+
+
+.filter-heading-line {
+  position: absolute;
+  top: 10vh;
+  left: 7.5%;
+  width: 85%;
+  border-radius: 0.1vh;
+  border-color: #DFC296;
+}
+
+
+.filter-form {
+  position: absolute;
+  top: 15%;
+  left: 7.5%;
+  width: auto;
+  max-height: 85%;
+}
+
+
+.filter-form-section-heading {
+  width: 17vw;
+  height: auto;
+  background-color:#ECE3D9;
+  border: none;
+  text-align: left;
+  font-size: 2vh;
+}
+
+
+.filter-form-subsection {
+  position: relative;
+  left: 1vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  width: 16vw;
+  height: 2.5vh;
+}
+
+
+.filter-price-input {
+  position: absolute;
+  left: 20%;
+  width: 70%;
+}
+
 .feed {
   position: relative;
   left: 0px;
