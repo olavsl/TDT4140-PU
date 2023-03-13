@@ -20,6 +20,8 @@ const Feed = () => {
         setToggleValue(false);
     }
 
+
+    //Kan dette endres til å bruke useTravelContext
     const fetchTravels = async () => {
         const response = await fetch("/api/travels")
         const json = await response.json()

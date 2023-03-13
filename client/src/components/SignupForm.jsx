@@ -1,19 +1,24 @@
 import { useState } from "react"
-import { useSignup } from "../hooks/useSignup"
-import { Link } from "react-router-dom"
+//import { useSignup } from "../hooks/useSignup"
+//import { Link } from "react-router-dom"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const SignupForm = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("");
-    const { signup, error, isLoading } = useSignup()
+    const { signup, isLoading, dispatch } = useAuthContext()
+
+    //const error = new Error("Already have an account")
 
     const handleSignup = async (e) => {
         // Stops the page from refreshing
         e.preventDefault()
 
         console.log("Username: ", username, "Password: ", password, "Confirmed password: ", confirmedPassword)
-        await signup(username, password, confirmedPassword)
+        //await signup(username, password, confirmedPassword)
+        
+        dispatch({type: "SIGNUP", payload: { username: username, password: password, confirmedPassword: confirmedPassword}})
     }
 
     return (
@@ -35,7 +40,6 @@ const SignupForm = () => {
 
             <p className="alreadyHaveAnAccount">Already have an account?</p>
 
-            {error && <div className="errorResponse">{error}</div>}
         </form>
     )
 }
