@@ -71,9 +71,7 @@ const Home = () => {
         
                     <input type="password" className="signupInput" id="confirmPasswordInput" placeholder="Confirm password" 
                         onChange={(e) => setConfirmedPassword(e.target.value)} value={confirmedPassword} />
-        
-                    <hr className="line" />
-        
+                
                     <button className="formButton" id="signupButton" disabled={isLoading}>Sign up</button>        
                 </form>    
             }
