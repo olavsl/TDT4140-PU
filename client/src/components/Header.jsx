@@ -12,8 +12,7 @@ const Header = () => {
                 <img className="logo" id="header-logo" src={logo} alt="logo" />
             </div>
             <div>
-                <h1 className="heading">
-                </h1>
+                <h1 className="heading">Peregrinate</h1>
             </div>
             <div> 
                 <button className="profileButton" id="profileButton">
