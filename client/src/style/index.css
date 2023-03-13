@@ -195,7 +195,7 @@ a {
   transform: translate(-50%,-50%);
   display: block;
   width: 25vw;
-  height: 40vh;
+  height: 30vh;
   background-color: rgb(240, 204, 160);
   z-index: 1;
   opacity: 100%;
@@ -259,7 +259,7 @@ a {
   left: 50%;
   display: block;
   width: 25vw;
-  height: 45vh;
+  height: 35vh;
   background-color: rgb(240, 204, 160);
   z-index: 1;
   opacity: 100%;
@@ -404,7 +404,7 @@ a {
   cursor: pointer;
   padding: 8px 16px;
   font-size: 17px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   width: 50%;
   border: 2px solid #c0a06a;
   box-sizing: border-box;
@@ -417,7 +417,7 @@ a {
   cursor: pointer;
   padding: 8px 16px;
   font-size: 17px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
   text-decoration: underline;
   width: 50%;

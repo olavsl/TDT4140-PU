@@ -78,7 +78,6 @@ export const TravelCard = ({ travel }) => {
                                 sx={{
                                     mt: -1, 
                                     mb: -0.1, 
-                                    textDecoration: "underline"
                                     }}>
 
                                 {travel.title}   
