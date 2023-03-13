@@ -1,16 +1,34 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import Header from "../components/Header"
 import Filter from "../components/Filter"
 import Feed from "../components/Feed"
 import Ads from "../components/Ads"
+import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const Home = () => {
+    const { travels, travelDispatch } = useTravelsContext()
     const [toggleForms, setToggleForms] = useState(true);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("");
-    const { user, isLoading, dispatch } = useAuthContext()
+    const { user, isLoading, userDispatch } = useAuthContext()
+
+    
+    //Kan dette endres til noe enklere?
+    const fetchTravels = async () => {
+        const response = await fetch("/api/travels")
+        const json = await response.json()
+        if (response.ok) {
+            userDispatch({type: "SET_TRAVELS", payload: json})
+        }
+    }
+
+    useEffect(() => {
+        fetchTravels().then((res) => {
+            console.log("did mount")
+        })
+    }, [])
     
     const toggleLogin = () => {
         setToggleForms(true);
@@ -22,13 +40,13 @@ const Home = () => {
     const handleLogin = async (e) => {
         // Stops the page from refreshing
         e.preventDefault()
-        dispatch({type: "LOGIN", payload: { username: username, password: password}})
+        userDispatch({type: "LOGIN", payload: { username: username, password: password}})
     }
 
     const handleSignup = async (e) => {
         // Stops the page from refreshing
         e.preventDefault()
-        dispatch({type: "SIGNUP", payload: { username: username, password: password, confirmedPassword: confirmedPassword}})
+        userDispatch({type: "SIGNUP", payload: { username: username, password: password, confirmedPassword: confirmedPassword}})
     }
 
     return (
