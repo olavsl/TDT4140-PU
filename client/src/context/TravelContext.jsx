@@ -4,7 +4,7 @@ export const TravelsContext = createContext()
 
 export const travelsReducer = (state, action) => {
     switch (action.type) {
-        case "SET_TRAVELS":
+        case "SET_TRAVELS":   
             return {
                 travels: action.payload
             }
@@ -12,6 +12,10 @@ export const travelsReducer = (state, action) => {
             return {
                 travels: [...state.travels, action.payload]
             }
+        /*case "UPDATE_COMMENTS":
+            return {
+                travels: [...state.travels.comments, action.payload.comments ]
+            }*/
         default: 
             return state
     } 
@@ -23,7 +27,7 @@ export const TravelsContextSupplier = ({ children }) => {
     })
     
     const valueTravCon = useMemo(() => ({...state, dispatch}), [state])
-
+    
     return (
         <TravelsContext.Provider value={valueTravCon}>
             { children }
