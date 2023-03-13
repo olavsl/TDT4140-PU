@@ -52,7 +52,6 @@ const Home = () => {
                     <button className="formButton" id="loginButton" disabled={isLoading}>Log in</button>
                 </form>                
                 }
-             
             </div>
             :
             <div></div> }
@@ -74,8 +73,7 @@ const Home = () => {
                 
                     <button className="formButton" id="signupButton" disabled={isLoading}>Sign up</button>        
                 </form>    
-            }
-             
+                }
             </div>
             :
             <div></div> }
