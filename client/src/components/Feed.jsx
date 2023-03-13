@@ -21,12 +21,11 @@ const Feed = () => {
     }
 
 
-    //Kan dette endres til å bruke useTravelContext
+    //Kan dette endres til noe enklere?
     const fetchTravels = async () => {
         const response = await fetch("/api/travels")
         const json = await response.json()
         if (response.ok) {
-            // FIXME: This causes infinite rerenders.
             dispatch({type: "SET_TRAVELS", payload: json})
         }
     }
