@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useTravelsContext } from '../hooks/useTravelsContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -34,8 +35,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
     const [commentArray, setCommentArray] = useState([])
-    const { user } = useAuthContext();
-    const [commentInput, setCommentInput] = useState("")
+    const [commentInputText, setCommentInputText] = useState("")
+    const { user } = useAuthContext()
+    const { travelDispatch } = useTravelsContext()
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -47,17 +49,34 @@ export const TravelCard = ({ travel }) => {
 
 
     const onSubmitCommment = () => {
-        // TODO create add comment for reducer.
         if (user != null){
-            let newComment = {author: user.username, text: commentInput, time: String(Date.now())}
+            let newComment = {author: user.username, text: commentInputText, time: String(Date.now())}
             let oldArray = commentArray
             oldArray.push(newComment)
             setCommentArray(oldArray)
+            travelComment(travel, commentArray)
+        }
+        else {
+            throw Error("You need to be loged in to comment on a travel route.")
         }
     };
 
+    const travelComment = (travel, commentArray) => {        
+        const travelPayload = {
+            travelID: travel.travelID, 
+            title: travel.title,
+            country: travel.country,
+            startDestination: travel.startDestination,
+            endDestination: travel.endDestination,
+            price: travel.price,
+            description: travel.description,
+            rating: travel.rating,
+            comments: commentArray}
+        travelDispatch({type: "UPDATE_TRAVEL", payload: travelPayload })
+    }
+
     const handelCommentInput = (e) => {
-        setCommentInput(e.target.value)
+        setCommentInputText(e.target.value)
     }
     
     /*useEffect(() => {
