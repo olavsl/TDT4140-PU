@@ -20,7 +20,7 @@ const Home = () => {
         const response = await fetch("/api/travels")
         const json = await response.json()
         if (response.ok) {
-            userDispatch({type: "SET_TRAVELS", payload: json})
+            travelDispatch({type: "SET_TRAVELS", payload: json})
         }
     }
 
