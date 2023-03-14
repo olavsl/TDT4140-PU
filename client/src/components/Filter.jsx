@@ -50,7 +50,6 @@ const Filter = () => {
             return countries.includes(travel.country) && travel.price > priceRange[0] && travel.price < priceRange[1]
         })
 
-        console.log(filteredTravels)
         dispatch({type: "SET_TRAVELS", payload: filteredTravels})
     }
 
