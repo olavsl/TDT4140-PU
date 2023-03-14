@@ -12,21 +12,21 @@ export const travelsReducer = (state, action) => {
             return {
                 travels: [...state.travels, action.payload]
             }
-        /*case "UPDATE_COMMENTS":
+        case "UPDATE_TRAVEL":
             return {
-                travels: [...state.travels.comments, action.payload.comments ]
-            }*/
+                travels: [...state.travels, action.payload ]
+            }
         default: 
             return state
     } 
 }
 
 export const TravelsContextSupplier = ({ children }) => {
-    const [state, dispatch] = useReducer(travelsReducer, {
+    const [state, travelDispatch] = useReducer(travelsReducer, {
         travels: null
     })
     
-    const valueTravCon = useMemo(() => ({...state, dispatch}), [state])
+    const valueTravCon = useMemo(() => ({...state, travelDispatch}), [state])
     
     return (
         <TravelsContext.Provider value={valueTravCon}>
