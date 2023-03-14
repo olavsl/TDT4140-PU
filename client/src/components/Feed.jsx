@@ -20,22 +20,6 @@ const Feed = () => {
         setToggleValue(false);
     }
 
-
-    //Kan dette endres til noe enklere?
-    const fetchTravels = async () => {
-        const response = await fetch("/api/travels")
-        const json = await response.json()
-        if (response.ok) {
-            dispatch({type: "SET_TRAVELS", payload: json})
-        }
-    }
-
-    useEffect(() => {
-        fetchTravels().then((res) => {
-            console.log("did mount")
-        })
-    }, [])
-
     return (
         <div className="feed">
 
