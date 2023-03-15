@@ -10,6 +10,10 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    myTravels: {
+        type: [String],
+        required: false
     }
 }, { /* Here one can add spesific fields to every new user (e.g. "timestamps: true") */ })
 
