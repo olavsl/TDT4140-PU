@@ -1,60 +1,62 @@
-import { useState, useMemo } from "react"
-import { useTravelsContext } from "../hooks/useTravelsContext";
+import { useState, useEffect, useMemo } from "react"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useTravelsContext } from "../hooks/useTravelsContext"
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 
 const Filter = () => {
+    const { user } = useAuthContext()
     const { travels, dispatch } = useTravelsContext()
     const [showCountries, setShowCountries] = useState(false)
     const [showPrice, setShowPrice] = useState(false)
-    const [distinctCountries, setDistinctCountries] = useState([])
-    const allTravels = useMemo(() => {return travels}, [showCountries])
-    var filteredTravels = [];
-    var checkedCountries = [];
 
-    // Push json travels to JS array
-    const resetFilteredTravels = () => {
-        filteredTravels = []
+    const allTravels = useMemo (() => {return travels}, [user])
+
+    const distinctCountries = useMemo(() => {
+        const countryList = []
         
         for (var i in allTravels) {
-            filteredTravels.push(allTravels[i])
+            countryList.push(allTravels[i].country)
         }
-    }
 
-    // Filter functions
-    const filterTravelsByCountry = () => {
-        filteredTravels = []
-        for (var i = 0; i < allTravels.length; i++) {
-            if (checkedCountries.includes(allTravels[i].country)) {
-                filteredTravels.push(allTravels[i])
+        return Array.from(new Set(countryList))
+    }, [user])
+
+    var countries = []
+    const getCountries = () => {
+        const inputs = document.getElementsByClassName("filter-country-checkbox")
+
+        var result = []
+
+        for (var i in inputs) {
+            if (inputs[i].checked) {
+                result.push(inputs[i].value)
             }
         }
 
-        if (checkedCountries.length === 0) {
-            resetFilteredTravels()
+        if (result.length === 0) {
+            result = distinctCountries
         }
+        
+        return result
     }
 
-    // Get distinct countries of travels on the page
-    const getDistinctCountries = () => {
-        const countries = []
-        travels && travels.map((travel) => {
-            if (!countries.includes(travel.country)) {
-                countries.push(travel.country)
-            }
+    const [priceRange, setPriceRange] = useState([0, 200000])
+
+    const filterTravels = (e) => {
+        countries = getCountries()
+        
+        const filteredTravels = allTravels.filter((travel) => {
+            return countries.includes(travel.country) && travel.price > priceRange[0] && travel.price < priceRange[1]
         })
-        countries.sort()
 
-        return countries
+        dispatch({type: "SET_TRAVELS", payload: filteredTravels})
     }
 
     // Show different options for filtering
     const fireShowCountries = (e) => {
         e.preventDefault()
-        setDistinctCountries(getDistinctCountries())
         setShowCountries(current => !current)
-
-        if (showCountries) {
-            dispatch({type: "SET_TRAVELS", payload: allTravels})
-        }
     }
 
     const fireShowPrice = (e) => {
@@ -62,24 +64,25 @@ const Filter = () => {
         setShowPrice(current => !current)
     }
 
-    // Get checked countries
-    const getCheckedCountries = () => {
-        checkedCountries = []
-        
-        var countryInputFilters = document.getElementsByClassName("filter-country-checkbox")
-        for (var i = 0; i < countryInputFilters.length; i++) {
-            if (countryInputFilters[i].checked) {
-                checkedCountries.push(countryInputFilters[i].value)
-            }
+    const handleChange = (e, newValue) => {
+        setPriceRange(newValue)
+        filterTravels(e)
+    };
+
+    // Fetch travels
+    const fetchTravels = async () => {
+        const response = await fetch("/api/travels")
+        const json = await response.json()
+        if (response.ok) {
+            dispatch({type: "SET_TRAVELS", payload: json})
         }
     }
 
-    const filterTravels = (e) => {
-        getCheckedCountries()
-        filterTravelsByCountry()
-
-        dispatch({type: "SET_TRAVELS", payload: filteredTravels})
-    }
+    useEffect(() => {
+        fetchTravels().then((res) => {
+            console.log("did mount")
+        })
+    }, [])
 
     return (
         <div className="filter">
@@ -99,14 +102,18 @@ const Filter = () => {
                     <button className="filter-form-section-heading" onClick={fireShowPrice}>Price</button>
                     {showPrice &&
                         <div className="filter-form-subsection">
-                            <div className="filter-form-subsection">
-                                <label htmlFor="minPrice">Min</label>
-                                <input className="filter-price-input" name="minPrice" type="number"></input>
-                            </div>
-                            <div className="filter-form-subsection">
-                                <label htmlFor="maxPrice">Max</label>
-                                <input className="filter-price-input" name="maxPrice" type="number"></input>
-                            </div>
+                            <Box sx={{ width: 100 }}>
+                            <Slider
+                                getAriaLabel={() => 'Temperature range'}
+                                value={priceRange}
+                                onChange={handleChange}
+                                valueLabelDisplay="auto"
+                                min={0}
+                                max={200000}
+                                step={1000}
+                            />
+                            </Box>
+                            <p>Min: {priceRange[0]} Max: {priceRange[1]}</p>
                         </div>
                     }
                 </div>
@@ -114,5 +121,6 @@ const Filter = () => {
         </div>
     )
 }
+
 
 export default Filter
