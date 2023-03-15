@@ -115,16 +115,6 @@ const Filter = () => {
                             </Box>
                             <p>Min: {priceRange[0]} Max: {priceRange[1]}</p>
                         </div>
-                        // <div className="filter-form-subsection">
-                        //     <div className="filter-form-subsection">
-                        //         <label htmlFor="minPrice">Min</label>
-                        //         <input className="filter-price-input" name="minPrice" type="number"></input>
-                        //     </div>
-                        //     <div className="filter-form-subsection">
-                        //         <label htmlFor="maxPrice">Max</label>
-                        //         <input className="filter-price-input" name="maxPrice" type="number"></input>
-                        //     </div>
-                        // </div>
                     }
                 </div>
             </form>
