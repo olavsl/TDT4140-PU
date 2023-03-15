@@ -81,7 +81,7 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.login(username, password)
 
-        res.status(200).json({username})
+        res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

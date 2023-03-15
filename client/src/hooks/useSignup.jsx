@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 export const useSignup = () => {
-    const [error, setError] = useState(null)
+    const [signupError, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
 
     const signup = async (username, password, confirmedPassword) => {
@@ -26,5 +26,5 @@ export const useSignup = () => {
         }
     }
 
-    return { signup, isLoading, error }
+    return { signup, isLoading, signupError }
 }
