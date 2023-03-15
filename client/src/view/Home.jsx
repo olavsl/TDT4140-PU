@@ -13,22 +13,6 @@ const Home = () => {
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const { user, isLoading, userDispatch } = useAuthContext()
-
-    
-    //Kan dette endres til noe enklere?
-    const fetchTravels = async () => {
-        const response = await fetch("/api/travels")
-        const json = await response.json()
-        if (response.ok) {
-            userDispatch({type: "SET_TRAVELS", payload: json})
-        }
-    }
-
-    useEffect(() => {
-        fetchTravels().then((res) => {
-            console.log("did mount")
-        })
-    }, [])
     
     const toggleLogin = () => {
         setToggleForms(true);
