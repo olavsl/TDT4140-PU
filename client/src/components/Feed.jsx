@@ -4,7 +4,8 @@ import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
 const Feed = () => {
-    const { travels, dispatch } = useTravelsContext()
+    const { travels } = useTravelsContext()
+    const [ travelRouteList, setTravelRouteList ] = useState(travels)
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -28,7 +29,7 @@ const Feed = () => {
                 <button className={toggleValue ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
             </div>
             {toggleValue ? <div className='Tab' id='Recent'>
-                {travels && travels
+                {travelRouteList && travelRouteList
                 .slice(0)
                 .reverse()
                 .map((travel) => (
@@ -50,7 +51,7 @@ const Feed = () => {
 
 
                 {!toggleValue ? <div className='Tab' id='Toplist'>
-                {travels && travels
+                {travelRouteList && travelRouteList
                 .slice(0, 9)
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />

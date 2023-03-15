@@ -34,8 +34,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
-    const [commentArray, setCommentArray] = useState([])
+    const [commentArray, setCommentArray]= useState([travel.comments])
     const [commentInputText, setCommentInputText] = useState("")
+    const [error, setError] = useState(null)
     const { user } = useAuthContext()
     const { travelDispatch } = useTravelsContext()
 
@@ -48,40 +49,55 @@ export const TravelCard = ({ travel }) => {
     };
 
 
-    const onSubmitCommment = () => {
-        if (user != null){
-            let newComment = {author: user.username, text: commentInputText, time: String(Date.now())}
-            let oldArray = commentArray
-            oldArray.push(newComment)
-            setCommentArray(oldArray)
-            travelComment(travel, commentArray)
-        }
-        else {
-            throw Error("You need to be loged in to comment on a travel route.")
-        }
+    const onSubmitCommment = async(event) => {
+        event.preventDefault()
+        let newComment = {author: user.username, text: commentInputText, time: Date.now()} //Gut
+        let oldArray = commentArray
+        oldArray.push(newComment)
+        setCommentArray(oldArray)
+        setCommentInputText("")
+        travelComment(travel, commentArray)
     };
 
-    const travelComment = (travel, commentArray) => {        
+    const updateCommentArray = (index, newComment) => {
+        const updatedArray = [...commentArray]
+        updatedArray[index] = newComment
+        setCommentArray(updatedArray)
+    }
+
+    const travelComment = async(travel, commentArray) => {        
         const travelPayload = {
-            travelID: travel.travelID, 
             title: travel.title,
             country: travel.country,
             startDestination: travel.startDestination,
             endDestination: travel.endDestination,
             price: travel.price,
+            travelType: travel.travelType,
             description: travel.description,
             rating: travel.rating,
-            comments: commentArray}
-        travelDispatch({type: "UPDATE_TRAVEL", payload: travelPayload })
+            comments: commentArray
+        }
+        const fetchString = '/api/travels/'+travel._id
+        console.log(fetchString)
+        const response = await fetch(fetchString, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({travelPayload})
+        }).then((res) => {
+            if(res.ok) {
+                console.log("its good")
+            }
+        })
     }
 
     const handelCommentInput = (e) => {
         setCommentInputText(e.target.value)
     }
     
-    /*useEffect(() => {
+    useEffect(() => {
         setCommentArray(travel.comments)
-    }, [])*/
+        console.log("useeffekt happend")
+    }, [])
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -287,10 +303,10 @@ export const TravelCard = ({ travel }) => {
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
-                                {commentArray && commentArray.map((comment, index) => (
-                                    <CommentCard key={index} comment = {comment}/>
-                                ))}
-                                <form onSubmit={() => onSubmitCommment()}>
+                            {commentArray.map((comment, index) =>
+                                <CommentCard key={index} comment={comment} onChange={(e) => updateCommentArray(index, {newComment: e.target.value} )}/>)}   
+                        
+                                <form onSubmit={(event) => onSubmitCommment(event)}>
                                     <label type="commmentText">Comment:</label>
                                     <input type="text" id="commentText" className="commentText" onChange={(e) => {handelCommentInput(e)}}/>
                                     <button type="publish" id="publishC omment" className="publishComment">Publish</button>
