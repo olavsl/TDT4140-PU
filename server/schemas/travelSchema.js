@@ -51,7 +51,11 @@ const travelSchema = new Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    likes: {
+        type: Number,
+        required: false
+    }
 }, { timestamps: true })
 
 /*travelSchema.static.create = async function(title, country, startDestination, 

@@ -177,6 +177,23 @@ a {
 } */
 
 }
+
+.like-button {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 70%;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgb(64, 125, 222);
+  border-radius: 1rem;
+}
+
+.like-button:hover {
+  cursor: pointer;
+  background-color: rgb(93, 141, 218);
+}
+
 .add-travel-button {
   position: fixed;
   bottom: 3vh;
