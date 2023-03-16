@@ -8,27 +8,28 @@ import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const Home = () => {
     const { travels, travelDispatch } = useTravelsContext()
+    const [ travelList, setTravelList ] = useState(travels)
     const [toggleForms, setToggleForms] = useState(true);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const { user, isLoading, userDispatch } = useAuthContext()
 
-    
-    //Kan dette endres til noe enklere?
     const fetchTravels = async () => {
         const response = await fetch("/api/travels")
         const json = await response.json()
         if (response.ok) {
-            userDispatch({type: "SET_TRAVELS", payload: json})
+            travelDispatch({type: "SET_TRAVELS", payload: json})
         }
     }
 
     useEffect(() => {
-        fetchTravels().then((res) => {
-            console.log("did mount")
-        })
+        fetchTravels()
     }, [])
+
+    useEffect(() => {
+        setTravelList(travels)
+    }, [travels])
     
     const toggleLogin = () => {
         setToggleForms(true);
