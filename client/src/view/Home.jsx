@@ -86,7 +86,7 @@ const Home = () => {
             :
             <div></div> }
             
-            <div className="blur-wrapper">
+            <div className="blur-wrapper" style={ !user ? {filter: "blur(5px)", pointerEvents: "none"} : {} }>
                 <Header />
                 <div className="flexContent">
                     <Filter />

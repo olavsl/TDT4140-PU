@@ -22,11 +22,11 @@ export const travelsReducer = (state, action) => {
 }
 
 export const TravelsContextSupplier = ({ children }) => {
-    const [state, dispatch] = useReducer(travelsReducer, {
+    const [state, travelDispatch] = useReducer(travelsReducer, {
         travels: null
     })
     
-    const valueTravCon = useMemo(() => ({...state, dispatch}), [state])
+    const valueTravCon = useMemo(() => ({...state, travelDispatch}), [state])
     
     return (
         <TravelsContext.Provider value={valueTravCon}>
