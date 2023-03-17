@@ -89,9 +89,7 @@ export const TravelCard = ({ travel }) => {
         console.log(travel.rating)
         console.log(travel)
     }
-
     
-
     // Payload for the rating
     const travelRating = async (travel, ratingArray) => {        
         const travelPayload = {
@@ -202,10 +200,9 @@ export const TravelCard = ({ travel }) => {
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
                 <Card variant = "outlined" sx={{height: '22vw', width: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
-                    <CardActionArea sx={{maxHeight: '12rem'}} onClick={handleClickOpen}>
+                    <CardActionArea onClick={handleClickOpen}>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
-                            image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
-                            alt ="Picture from the trip"
+                            image = {require ("../resources/backpack.jpg")}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div" className="travelTitle"
@@ -243,7 +240,8 @@ export const TravelCard = ({ travel }) => {
                             <Divider />
                             <Typography variant="body2" color="text.secondary" className="travelShortDesc"
                                 sx={{
-                                    fontStyle: 'italic' 
+                                    fontStyle: 'italic' ,
+                                    minHeight: "8.5vh"
                                     }}>
 
                                 {parseDescription(travel.description)}
@@ -269,7 +267,7 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#A8D881",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" className="travelType">
+                                    <Typography variant="body2" color="text.seconda ry" className="travelType">
 
                                         {travel.travelType}
 
@@ -284,7 +282,7 @@ export const TravelCard = ({ travel }) => {
                                         }}>
                                     <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                        {travel.duration} km
+                                        {travel.duration} days
 
                                     </Typography>
                                 </Box>
