@@ -25,6 +25,10 @@ const Feed = () => {
     }
 
     const getCountriesOfUsersRoutes = () => {
+        if (user.myTravels.length === 0) {
+            return;
+        }
+        
         var recommendationData = []
         var distinctCountries = []
         var recommendations = []
