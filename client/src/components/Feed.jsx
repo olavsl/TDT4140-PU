@@ -7,7 +7,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Feed = () => {
     const { travels, travelDispatch } = useTravelsContext()
     const { user } = useAuthContext()
-    const [ travelRouteList, setTravelRouteList ] = useState(travels)
+    // const [ travelRouteList, setTravelRouteList ] = useState(travels)
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -114,7 +114,7 @@ const Feed = () => {
                 <button className={!toggleValue ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleRecent}>Recommended</button>
             </div>
             {toggleValue ? <div className='Tab' id='Recent'>
-                {travelRouteList && travelRouteList
+                {travels && travels
                 .slice(0)
                 .reverse()
                 .map((travel) => (
@@ -139,7 +139,7 @@ const Feed = () => {
 
 
                 {!toggleValue ? <div className='Tab' id='Toplist'>
-                {travelRouteList && travelRouteList
+                {travels && travels
                 .slice(0, 9)
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />
