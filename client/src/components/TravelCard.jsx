@@ -15,6 +15,8 @@ import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useTravelsContext } from '../hooks/useTravelsContext';
+import { Rating } from '@mui/material';
+
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -31,6 +33,15 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+  // The parseDescription function is used to shorten the description of the travel to 120 characters.
+const parseDescription = (description) => {
+    if (description.length > 120) {
+        return description.substring(0, 120) + "...";
+    }
+    return description;
+}
+
+
 
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
@@ -39,6 +50,11 @@ export const TravelCard = ({ travel }) => {
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
     const { travelDispatch } = useTravelsContext()
+    const [ratingColor, setRatingColor] = useState("white");
+    const [ratingValue, setRatingValue] = useState(travel.rating);
+    const [rating, setRating] = useState(travel.rating);
+    
+
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -64,6 +80,13 @@ export const TravelCard = ({ travel }) => {
         updatedArray[index] = newComment
         setCommentArray(updatedArray)
     }
+
+    const updateRatingArray = (index, newRating) => {
+        const updatedArray = [...rating]
+        updatedArray[index] = newRating
+        setRating(updatedArray)
+    }
+
 
     const travelComment = async (travel, commentArray) => {        
         const travelPayload = {
@@ -97,7 +120,23 @@ export const TravelCard = ({ travel }) => {
     useEffect(() => {
         setCommentArray(travel.comments)
         console.log("useeffekt happend")
+
     }, [])
+    // Sets color of rating based on the rating value.
+    useEffect(() => {
+        if (travel.rating >= 4) {
+            setRatingColor("#b7ed66");
+        } else if (travel.rating >= 3) {
+            setRatingColor("#dded66");
+        } else if (travel.rating >= 2) {
+            setRatingColor("#edc566");
+        } else if (travel.rating >= 0.01) {
+            setRatingColor("#ed8a66");
+        } else {
+            setRatingColor("white");
+        }
+    }, [travel.rating,]);
+
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -118,12 +157,27 @@ export const TravelCard = ({ travel }) => {
                                 {travel.title}   
 
                             </Typography>
-                            <Grid container direction="row" justifyContent="flex-start">
+                            <Grid container direction="row" justifyContent="space-between">
                                 <Typography variant="body2" color="text.secondary" className="travelStartEnd">
 
                                     {travel.startDestination} to {travel.endDestination}
 
                                 </Typography>
+                                <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: ratingColor,
+                                    }}>
+                                <Typography variant="body2" color="black" className="rating"
+                                sx={{ 
+                                    mt:-0.5,
+                                    }}>
+                                {travel.rating} / 5
+                            </Typography>
+                            </Box>
+
                             </Grid>
                             <Divider />
                             <Typography variant="body2" color="text.secondary" className="travelShortDesc"
@@ -225,6 +279,8 @@ export const TravelCard = ({ travel }) => {
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             {travel.title}
                             </Typography>
+
+
                             <Typography>
                             By {travel.author}
                             </Typography>
@@ -237,6 +293,7 @@ export const TravelCard = ({ travel }) => {
                             {travel.title}
                             
                         </Typography>
+                        
                         <Typography variant="body2" component="div" sx={{ p: 2 }}>
                             From {travel.startDestination} to {travel.endDestination}
                         </Typography>
@@ -297,9 +354,42 @@ export const TravelCard = ({ travel }) => {
                                     {travel.price} kr
 
                                 </Typography>
+                                
+                            </Box>
+                            <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: ratingColor,
+                                    }}>
+                                <Typography variant="body2" color="black" className="rating"
+                                sx={{ 
+                                    mt:-0.5,
+                                    }}>
+                                {travel.rating} / 5
+                            </Typography>
                             </Box>
                         </Grid>
-                        <Divider />
+                        <Grid sx={{mt: 3, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
+
+                        Give your rating:
+
+                        </Grid>
+           
+                        <Grid sx={{mt: 0, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
+                            <Rating
+                                name="simple-controlled"
+                                value={ratingValue}
+                                onChange={(event, newValue) => {
+                                    setRatingValue(newValue)
+                                    updateRatingArray(ratingValue)
+                                    
+                            }}
+                            />
+                        </Grid>
+
+                              <Divider />
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
