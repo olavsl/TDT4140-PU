@@ -65,7 +65,7 @@ export const TravelCard = ({ travel }) => {
         setCommentArray(updatedArray)
     }
 
-    const travelComment = async(travel, commentArray) => {        
+    const travelComment = async (travel, commentArray) => {        
         const travelPayload = {
             title: travel.title,
             country: travel.country,
