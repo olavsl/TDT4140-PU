@@ -4,7 +4,8 @@ import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
 
 const Feed = () => {
-    const { travels, dispatch } = useTravelsContext()
+    const { travels } = useTravelsContext()
+    const [ travelRouteList, setTravelRouteList ] = useState(travels)
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -14,28 +15,12 @@ const Feed = () => {
     const [toggleValue, setToggleValue] = useState(true);
     const toggleRecent = () => {
         setToggleValue(true);
-
     }
+    
     const toggleTopList = () => {
         setToggleValue(false);
     }
 
-
-    //Kan dette endres til noe enklere?
-    const fetchTravels = async () => {
-        const response = await fetch("/api/travels")
-        const json = await response.json()
-        if (response.ok) {
-            dispatch({type: "SET_TRAVELS", payload: json})
-        }
-    }
-
-    useEffect(() => {
-        fetchTravels().then((res) => {
-            console.log("did mount")
-        })
-    }, [])
-    
     return (
         <div className="feed">
 
@@ -44,7 +29,7 @@ const Feed = () => {
                 <button className={toggleValue ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
             </div>
             {toggleValue ? <div className='Tab' id='Recent'>
-                {travels && travels
+                {travelRouteList && travelRouteList
                 .slice(0)
                 .reverse()
                 .map((travel) => (
@@ -66,7 +51,7 @@ const Feed = () => {
 
 
                 {!toggleValue ? <div className='Tab' id='Toplist'>
-                {travels && travels
+                {travelRouteList && travelRouteList
                 .slice(0, 9)
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />

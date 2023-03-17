@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useTravelsContext } from "../hooks/useTravelsContext"
 
 const AddTravelForm = () => {
-    const { dispatch } = useTravelsContext()
+    const { travelDispatch } = useTravelsContext()
 
     const [title, setTitle] = useState("")
     const [country, setCountry] = useState("")
@@ -42,7 +42,7 @@ const AddTravelForm = () => {
             setTravelType("")
             setDescription("")
             
-            dispatch({type: "CREATE_TRAVEL", payload: json})
+            travelDispatch({type: "CREATE_TRAVEL", payload: json})
 
             setStyle("add-travel-form-hide")
         }

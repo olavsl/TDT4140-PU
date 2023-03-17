@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useTravelsContext } from '../hooks/useTravelsContext';
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -33,9 +34,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
-    const [commentArray, setCommentArray] = useState([])
-    const { user } = useAuthContext();
-    const [commentInput, setCommentInput] = useState("")
+    const [commentArray, setCommentArray]= useState([travel.comments])
+    const [commentInputText, setCommentInputText] = useState("")
+    const [error, setError] = useState(null)
+    const { user } = useAuthContext()
+    const { travelDispatch } = useTravelsContext()
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -46,23 +49,55 @@ export const TravelCard = ({ travel }) => {
     };
 
 
-    const onSubmitCommment = () => {
-        // TODO create add comment for reducer.
-        if (user != null){
-            let newComment = {author: user.username, text: commentInput, time: String(Date.now())}
-            let oldArray = commentArray
-            oldArray.push(newComment)
-            setCommentArray(oldArray)
-        }
+    const onSubmitCommment = async(event) => {
+        event.preventDefault()
+        let newComment = {author: user.username, text: commentInputText, time: Date.now()} //Gut
+        let oldArray = commentArray
+        oldArray.push(newComment)
+        setCommentArray(oldArray)
+        setCommentInputText("")
+        travelComment(travel, commentArray)
     };
 
+    const updateCommentArray = (index, newComment) => {
+        const updatedArray = [...commentArray]
+        updatedArray[index] = newComment
+        setCommentArray(updatedArray)
+    }
+
+    const travelComment = async(travel, commentArray) => {        
+        const travelPayload = {
+            title: travel.title,
+            country: travel.country,
+            startDestination: travel.startDestination,
+            endDestination: travel.endDestination,
+            price: travel.price,
+            travelType: travel.travelType,
+            description: travel.description,
+            rating: travel.rating,
+            comments: commentArray
+        }
+        const fetchString = '/api/travels/'+travel._id
+        console.log(fetchString)
+        const response = await fetch(fetchString, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({travelPayload})
+        }).then((res) => {
+            if(res.ok) {
+                console.log("its good")
+            }
+        })
+    }
+
     const handelCommentInput = (e) => {
-        setCommentInput(e.target.value)
+        setCommentInputText(e.target.value)
     }
     
-    /*useEffect(() => {
+    useEffect(() => {
         setCommentArray(travel.comments)
-    }, [])*/
+        console.log("useeffekt happend")
+    }, [])
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -268,10 +303,10 @@ export const TravelCard = ({ travel }) => {
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
-                                {commentArray && commentArray.map((comment, index) => (
-                                    <CommentCard key={index} comment = {comment}/>
-                                ))}
-                                <form onSubmit={() => onSubmitCommment()}>
+                            {commentArray.map((comment, index) =>
+                                <CommentCard key={index} comment={comment} onChange={(e) => updateCommentArray(index, {newComment: e.target.value} )}/>)}   
+                        
+                                <form onSubmit={(event) => onSubmitCommment(event)}>
                                     <label type="commmentText">Comment:</label>
                                     <input type="text" id="commentText" className="commentText" onChange={(e) => {handelCommentInput(e)}}/>
                                     <button type="publish" id="publishC omment" className="publishComment">Publish</button>
