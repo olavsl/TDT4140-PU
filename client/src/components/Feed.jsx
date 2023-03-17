@@ -5,7 +5,8 @@ import { useTravelsContext } from "../hooks/useTravelsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Feed = () => {
-    const { travels } = useTravelsContext()
+    const { travels, travelDispatch } = useTravelsContext()
+    const { user } = useAuthContext()
     const [ travelRouteList, setTravelRouteList ] = useState(travels)
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
@@ -76,7 +77,7 @@ const Feed = () => {
 
         recommendations = Array.from(new Set(notRecommendations))
 
-        dispatch({type: "SET_TRAVELS", payload: recommendations})
+        travelDispatch({type: "SET_TRAVELS", payload: recommendations})
     }
 
     // const likeTravel = async (e) => {
