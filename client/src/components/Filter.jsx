@@ -1,5 +1,6 @@
 import { useTravelsContext } from "../hooks/useTravelsContext";
-
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useMemo } from "react";
 
 /* function search_travel() {
     // try {
@@ -16,22 +17,21 @@ import { useTravelsContext } from "../hooks/useTravelsContext";
 
 const Filter = () => {
     const { travels, dispatch } = useTravelsContext()
+    const { user } = useAuthContext()
 
-    const handleSearch = e => {
-        const search = e.target.value.toLowerCase()
-        console.log(travels)
-        if (search === "") {
-            fetchTravels()
-        }
-        else {
-            const filteredTravels = travels.filter(travel => travel.title.toLowerCase().includes(search.toLowerCase())) 
-            // for (travel in hsJson) {
-            //     if (travel in filteredTravels) {
-            //         filteredTravels += travel
-            //     }
-            // }
-            //&& travels.filter(travel => travel.country.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.startDestination.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.endDestination.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.description.toLowerCase().includes(search.toLowerCase())) && travels.filter(travel => travel.travelType.toLowerCase().includes(search.toLowerCase()))
-            dispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
+    const allTravels = useMemo(() => {return travels}, [user])
+
+    const handleSearch = async e => {
+        if (e.keyCode === 13) {
+            const search = e.target.value.toLowerCase()
+            if (search === "") {
+                await fetchTravels()
+            }
+            else {
+                await fetchTravels()
+                const filteredTravels = allTravels.filter(travel => travel.title.toLowerCase().includes(search) || travel.country.toLowerCase().includes(search)) 
+                dispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
+        }  
         }
     }
 
@@ -41,12 +41,12 @@ const Filter = () => {
         if (response.ok) {
             dispatch({type: "SET_TRAVELS", payload: json})
         }
-    }
+    };
 
     return (
         <div className="filter">
             <div>
-                <input className="searchBar" onChange={handleSearch} placeholder='Search travels' />
+                <input className="searchBar" onKeyDown={handleSearch} placeholder='Search on travels or contries' />
             </div>
         </div>
     )
