@@ -4,7 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 
 const AddTravelForm = () => {
     const { travelDispatch } = useTravelsContext()
-
+    const { user } = useAuthContext()
     const [title, setTitle] = useState("")
     const [country, setCountry] = useState("")
     const [startDestination, setStartDestination] = useState("")
