@@ -48,10 +48,18 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
+    const getTodayDate = () => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+
+    return dateTime;
+    }
 
     const onSubmitCommment = async(event) => {
         event.preventDefault()
-        let newComment = {author: user.username, text: commentInputText, time: Date.now()} //Gut
+        let newComment = {author: user.username, text: commentInputText, time: getTodayDate()} //Gut
         let oldArray = commentArray
         oldArray.push(newComment)
         setCommentArray(oldArray)

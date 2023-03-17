@@ -31,8 +31,12 @@ const travelSchema = new Schema({
         required: false
     },
     rating: {
-        type: Number,
-        required: false
+        type: Array,
+        items: {
+            type: "number",
+            format: "int32",
+            required: false
+        }
     },
     comments: [{
         author: {
