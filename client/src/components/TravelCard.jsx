@@ -50,7 +50,7 @@ export const TravelCard = ({ travel }) => {
     const { travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
     const [rating, setRating] = useState(travel.rating);
-    const [newRating, setNewRating] = useState(0);
+    const [newRating, setNewRating] = useState(Number);
     const [ratingArray, setRatingArray] = useState(travel.rating);
     const [averageRating, setAverageRating] = useState(0);
 
@@ -68,10 +68,15 @@ export const TravelCard = ({ travel }) => {
 
     // Adds the new rating to the rating array
     const newRate = async() => {
+        for (let i = 0; i < ratingArray.length; i++) {
+            if (ratingArray[i] === 0) {
+                ratingArray.splice(i, 1);
+            }
+        }
         let oldArray = ratingArray
         oldArray.push(newRating)
         setRatingArray(oldArray)
-        
+
         console.log("newRating:")
         console.log(newRating)
         console.log("ratingArray:")
@@ -190,7 +195,7 @@ export const TravelCard = ({ travel }) => {
         } else {
             setRatingColor("white");
         }
-    }, [getAverage, travel.rating,]);
+    }, [ratingArray, travel.rating, newRate]);
 
 
     return (
@@ -381,7 +386,7 @@ export const TravelCard = ({ travel }) => {
                                     }}>
                                 <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                    {travel.duration} km
+                                    {travel.duration} days
 
                                 </Typography>
                             </Box>
@@ -436,12 +441,12 @@ export const TravelCard = ({ travel }) => {
                         <Grid sx={{mt: 0, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
                             <Rating
                                 name="simple-controlled"
-                                value={newRating}
+                                value={0}
                                 onChange={(event, newValue) => {
+                                    if (!newValue == 0){
                                     setNewRating(newValue)
-                                    setRatingArray(newRating)
-                                    
                                     newRate()
+                                    }
                                     
                                     
                             }}
