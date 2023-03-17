@@ -51,9 +51,56 @@ export const TravelCard = ({ travel }) => {
     const { user } = useAuthContext()
     const { travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
-    const [ratingValue, setRatingValue] = useState(travel.rating);
     const [rating, setRating] = useState(travel.rating);
-    
+    const [noRating, setNoRating] = useState(false);
+
+    const [newRating, setNewRating] = useState(0);
+    const [ratingArray, setRatingArray] = useState([travel.rating]);
+
+
+    // Adds the new rating to the rating array
+    const newRate = () => {
+        let oldArray = ratingArray
+        //oldArray.push(newRating)
+        setRatingArray(oldArray)
+        
+        console.log("newRating:")
+        console.log(newRating)
+        console.log("ratingArray:")
+        console.log(ratingArray)
+
+        travelRating(travel, ratingArray)
+
+        console.log("travel.rating:")
+        console.log(travel.rating)
+        console.log(travel)
+        
+    }
+    //payload for the rating
+    const travelRating = async (travel, ratingArray) => {        
+        const travelPayload = {
+            title: travel.title,
+            country: travel.country,
+            startDestination: travel.startDestination,
+            endDestination: travel.endDestination,
+            price: travel.price,
+            travelType: travel.travelType,
+            description: travel.description,
+            rating: ratingArray,
+            comments: travel.comments
+        }
+        const fetchString = '/api/travels/'+travel._id
+        console.log(fetchString)
+        const response = await fetch(fetchString, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({travelPayload})
+        }).then((res) => {
+            if(res.ok) {
+                console.log("OkiDoki")
+            }
+        })
+    }
 
 
     const handleClickOpen = () => {
@@ -79,12 +126,6 @@ export const TravelCard = ({ travel }) => {
         const updatedArray = [...commentArray]
         updatedArray[index] = newComment
         setCommentArray(updatedArray)
-    }
-
-    const updateRatingArray = (index, newRating) => {
-        const updatedArray = [...rating]
-        updatedArray[index] = newRating
-        setRating(updatedArray)
     }
 
 
@@ -118,8 +159,9 @@ export const TravelCard = ({ travel }) => {
     }
     
     useEffect(() => {
+        setRatingArray(travel.rating)
         setCommentArray(travel.comments)
-        console.log("useeffekt happend")
+        console.log("useEffect fired")
 
     }, [])
     // Sets color of rating based on the rating value.
@@ -134,6 +176,7 @@ export const TravelCard = ({ travel }) => {
             setRatingColor("#ed8a66");
         } else {
             setRatingColor("white");
+            setNoRating(true)
         }
     }, [travel.rating,]);
 
@@ -170,11 +213,9 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: ratingColor,
                                     }}>
-                                <Typography variant="body2" color="black" className="rating"
-                                sx={{ 
-                                    mt:-0.5,
-                                    }}>
-                                {travel.rating} / 5
+                                <Typography variant="body2" color="black" className="rating">
+                        
+                                {noRating ? "No Rating" : travel.rating / 5 }
                             </Typography>
                             </Box>
 
@@ -185,7 +226,7 @@ export const TravelCard = ({ travel }) => {
                                     fontStyle: 'italic' 
                                     }}>
 
-                                {travel.description}
+                                {parseDescription(travel.description)}
 
                             </Typography>
                             <Divider />
@@ -380,10 +421,12 @@ export const TravelCard = ({ travel }) => {
                         <Grid sx={{mt: 0, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
                             <Rating
                                 name="simple-controlled"
-                                value={ratingValue}
+                                value={newRating}
                                 onChange={(event, newValue) => {
-                                    setRatingValue(newValue)
-                                    updateRatingArray(ratingValue)
+                                    setNewRating(newValue)
+                                    setRatingArray(newRating)
+                                    newRate()
+                                    
                                     
                             }}
                             />

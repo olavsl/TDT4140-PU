@@ -12,6 +12,7 @@ const AddTravelForm = () => {
     const [price, setPrice] = useState("")
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
+    const [rating, setRating] = useState(null)
     const [error, setError] = useState(null)
 
     const [style, setStyle] = useState("add-travel-form-show")
@@ -19,7 +20,7 @@ const AddTravelForm = () => {
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
-        const travel = {title, country, startDestination, endDestination, price, travelType, description}
+        const travel = {title, country, startDestination, endDestination, price, travelType, description, rating}
 
         const response = await fetch("/api/travels", {
             method: "POST",
@@ -42,6 +43,7 @@ const AddTravelForm = () => {
             setPrice("")
             setTravelType("")
             setDescription("")
+            setRating(null)
             
             travelDispatch({type: "CREATE_TRAVEL", payload: json})
 
