@@ -116,7 +116,7 @@ const Feed = () => {
             {toggleValue ? <div className='Tab' id='Recent'>
                 {travels && travels
                 .slice(0)
-                .reverse()
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 .map((travel) => (
                     <div key={travel._id}>
                         <TravelCard travel = {travel} />
@@ -140,7 +140,9 @@ const Feed = () => {
 
                 {!toggleValue ? <div className='Tab' id='Toplist'>
                 {travels && travels
-                .slice(0, 9)
+               .sort ((a, b) => a.rating - b.rating)
+               .slice(0, 9)
+               .reverse()
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />
                 ))}

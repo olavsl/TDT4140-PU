@@ -41,8 +41,6 @@ const parseDescription = (description) => {
     return description;
 }
 
-
-
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
     const [commentArray, setCommentArray]= useState([travel.comments])
@@ -52,16 +50,26 @@ export const TravelCard = ({ travel }) => {
     const { travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
     const [rating, setRating] = useState(travel.rating);
-    const [noRating, setNoRating] = useState(false);
-
     const [newRating, setNewRating] = useState(0);
-    const [ratingArray, setRatingArray] = useState([travel.rating]);
+    const [ratingArray, setRatingArray] = useState(travel.rating);
+    const [averageRating, setAverageRating] = useState(0);
 
+         // Get average from values in travel.rating array. 
+
+         const getAverage = (ratingArray) => {
+            if (ratingArray === null) {
+                return 0;
+            }
+            const sum = ratingArray
+            .reduce((a, b) => a + b, 0);
+            const avg = (sum / ratingArray.length) || 0;
+            return(avg.toFixed(1))
+            }
 
     // Adds the new rating to the rating array
-    const newRate = () => {
+    const newRate = async() => {
         let oldArray = ratingArray
-        //oldArray.push(newRating)
+        oldArray.push(newRating)
         setRatingArray(oldArray)
         
         console.log("newRating:")
@@ -70,13 +78,16 @@ export const TravelCard = ({ travel }) => {
         console.log(ratingArray)
 
         travelRating(travel, ratingArray)
+        getAverage(ratingArray)
 
         console.log("travel.rating:")
         console.log(travel.rating)
         console.log(travel)
-        
     }
-    //payload for the rating
+
+    
+
+    // Payload for the rating
     const travelRating = async (travel, ratingArray) => {        
         const travelPayload = {
             title: travel.title,
@@ -98,6 +109,7 @@ export const TravelCard = ({ travel }) => {
         }).then((res) => {
             if(res.ok) {
                 console.log("OkiDoki")
+                console.log(travelPayload)
             }
         })
     }
@@ -105,12 +117,13 @@ export const TravelCard = ({ travel }) => {
 
     const handleClickOpen = () => {
       setOpen(true);
+      console.log(travel)
+      getAverage(ratingArray)
     };
   
     const handleClose = () => {
       setOpen(false);
     };
-
 
     const onSubmitCommment = async(event) => {
         event.preventDefault()
@@ -127,7 +140,6 @@ export const TravelCard = ({ travel }) => {
         updatedArray[index] = newComment
         setCommentArray(updatedArray)
     }
-
 
     const travelComment = async (travel, commentArray) => {        
         const travelPayload = {
@@ -159,26 +171,26 @@ export const TravelCard = ({ travel }) => {
     }
     
     useEffect(() => {
-        setRatingArray(travel.rating)
         setCommentArray(travel.comments)
         console.log("useEffect fired")
 
     }, [])
-    // Sets color of rating based on the rating value.
+    
     useEffect(() => {
-        if (travel.rating >= 4) {
+
+        // Sets color of rating based on the rating value.
+        if (getAverage(ratingArray) >= 4) {
             setRatingColor("#b7ed66");
-        } else if (travel.rating >= 3) {
+        } else if (getAverage(ratingArray) >= 3) {
             setRatingColor("#dded66");
-        } else if (travel.rating >= 2) {
+        } else if (getAverage(ratingArray) >= 2) {
             setRatingColor("#edc566");
-        } else if (travel.rating >= 0.01) {
+        } else if (getAverage(ratingArray) >= 0.1) {
             setRatingColor("#ed8a66");
         } else {
             setRatingColor("white");
-            setNoRating(true)
         }
-    }, [travel.rating,]);
+    }, [getAverage, travel.rating,]);
 
 
     return (
@@ -213,10 +225,13 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: ratingColor,
                                     }}>
-                                <Typography variant="body2" color="black" className="rating">
-                        
-                                {noRating ? "No Rating" : travel.rating / 5 }
+           
+                            <Typography variant="body2" color="black" className="rating">
+
+                                {getAverage(ratingArray)+ "/ 5" }
+
                             </Typography>
+                            
                             </Box>
 
                             </Grid>
@@ -408,7 +423,7 @@ export const TravelCard = ({ travel }) => {
                                 sx={{ 
                                     mt:-0.5,
                                     }}>
-                                {travel.rating} / 5
+                                {getAverage(ratingArray)} / 5
                             </Typography>
                             </Box>
                         </Grid>
@@ -425,6 +440,7 @@ export const TravelCard = ({ travel }) => {
                                 onChange={(event, newValue) => {
                                     setNewRating(newValue)
                                     setRatingArray(newRating)
+                                    
                                     newRate()
                                     
                                     
