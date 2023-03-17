@@ -12,7 +12,15 @@ const Filter = () => {
 
     const allTravels = useMemo (() => {return travels}, [user])
 
-    const handleSearch = async e => {
+    const fetchTravels = async () => {
+        const response = await fetch("/api/travels")
+        const json = await response.json()
+        if (response.ok) {
+            travelDispatch({type: "SET_TRAVELS", payload: json})
+        }
+    }
+
+    const handleSearch = async (e) => {
         if (e.keyCode === 13) {
             const search = e.target.value.toLowerCase()
             if (search === "") {
@@ -22,8 +30,8 @@ const Filter = () => {
                 await fetchTravels()
                 const filteredTravels = allTravels.filter(travel => travel.title.toLowerCase().includes(search) || travel.country.toLowerCase().includes(search)) 
                 travelDispatch({ type: 'SET_TRAVELS', payload: filteredTravels })
-        }  
-    }
+            }  
+        }
     }
 
     const distinctCountries = useMemo(() => {
@@ -86,7 +94,7 @@ const Filter = () => {
     return (
         <div className="filter">
             <div>
-                <input className="searchBar" onChange={handleSearch} placeholder='Search on travels or contries' />
+                <input className="searchBar" onKeyDown={handleSearch} placeholder='Search on travels or contries' />
             </div>
             <h2 className="filter-heading">Filter</h2>
             <hr className="filter-heading-line" />
