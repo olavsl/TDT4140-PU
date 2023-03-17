@@ -30,10 +30,10 @@ const travelSchema = new Schema({
         type: String,
         required: false
     },
-    rating: [{
-        type: Number,
+    rating: {
+        type: Int32Array,
         required: false
-    }],
+    },
     comments: [{
         author: {
             type: String,
