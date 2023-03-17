@@ -22,6 +22,9 @@ const travelSchema = new Schema({
         type: Number,
         required: true
     }, 
+    duration: {
+        type: Number,
+    },
     travelType: {
         type: String,
         required: true

@@ -277,9 +277,9 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#F2C077",
                                         }}>
-                                    <Typography variant="body2" color="text.secondary" className="travelDistance">
+                                    <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                        {travel.distance} km
+                                        {travel.duration} km
 
                                     </Typography>
                                 </Box>
@@ -379,9 +379,9 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#F2C077",
                                     }}>
-                                <Typography variant="body2" color="text.secondary" className="travelDistance">
+                                <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                    {travel.distance} km
+                                    {travel.duration} km
 
                                 </Typography>
                             </Box>
