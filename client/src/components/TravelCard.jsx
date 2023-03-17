@@ -103,7 +103,7 @@ export const TravelCard = ({ travel }) => {
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
                 <Card variant = "outlined" sx={{height: '22vw', width: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
-                    <CardActionArea onClick={handleClickOpen}>
+                    <CardActionArea sx={{maxHeight: '12rem'}} onClick={handleClickOpen}>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
                             image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
                             alt ="Picture from the trip"

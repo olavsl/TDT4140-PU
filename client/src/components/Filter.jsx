@@ -6,7 +6,7 @@ import Slider from '@mui/material/Slider';
 
 const Filter = () => {
     const { user } = useAuthContext()
-    const { travels, dispatch } = useTravelsContext()
+    const { travels, travelDispatch } = useTravelsContext()
     const [showCountries, setShowCountries] = useState(false)
     const [showPrice, setShowPrice] = useState(false)
 
@@ -50,7 +50,7 @@ const Filter = () => {
             return countries.includes(travel.country) && travel.price > priceRange[0] && travel.price < priceRange[1]
         })
 
-        dispatch({type: "SET_TRAVELS", payload: filteredTravels})
+        travelDispatch({type: "SET_TRAVELS", payload: filteredTravels})
     }
 
     // Show different options for filtering
@@ -74,7 +74,7 @@ const Filter = () => {
         const response = await fetch("/api/travels")
         const json = await response.json()
         if (response.ok) {
-            dispatch({type: "SET_TRAVELS", payload: json})
+            travelDispatch({type: "SET_TRAVELS", payload: json})
         }
     }
 

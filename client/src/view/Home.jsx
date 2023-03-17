@@ -5,6 +5,8 @@ import Filter from "../components/Filter"
 import Feed from "../components/Feed"
 import Ads from "../components/Ads"
 import { useTravelsContext } from "../hooks/useTravelsContext"
+import { useLogin } from "../hooks/useLogin"
+import { useSignup } from "../hooks/useSignup"
 
 const Home = () => {
     const { travels, travelDispatch } = useTravelsContext()
@@ -14,22 +16,8 @@ const Home = () => {
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const { user, isLoading, userDispatch } = useAuthContext()
-
-    const fetchTravels = async () => {
-        const response = await fetch("/api/travels")
-        const json = await response.json()
-        if (response.ok) {
-            travelDispatch({type: "SET_TRAVELS", payload: json})
-        }
-    }
-
-    useEffect(() => {
-        fetchTravels()
-    }, [])
-
-    useEffect(() => {
-        setTravelList(travels)
-    }, [travels])
+    const { login, loginError } = useLogin()
+    const { signup, signupError } = useSignup()
     
     const toggleLogin = () => {
         setToggleForms(true);
@@ -39,15 +27,13 @@ const Home = () => {
     }
     
     const handleLogin = async (e) => {
-        // Stops the page from refreshing
         e.preventDefault()
-        userDispatch({type: "LOGIN", payload: { username: username, password: password}})
+        await login(username, password)
     }
 
     const handleSignup = async (e) => {
-        // Stops the page from refreshing
         e.preventDefault()
-        userDispatch({type: "SIGNUP", payload: { username: username, password: password, confirmedPassword: confirmedPassword}})
+        await signup(username, password, confirmedPassword)
     }
 
     return (
@@ -69,6 +55,8 @@ const Home = () => {
                     <input type="password" className="loginInput" id="passwordInput" placeholder="Password" 
                         onChange={(e) => setPassword(e.target.value)} value={password} />
                     <button className="formButton" id="loginButton" disabled={isLoading}>Log in</button>
+
+                    {loginError && <div className="errorResponse">{loginError}</div>}
                 </form>                
                 }
             </div>
@@ -90,14 +78,16 @@ const Home = () => {
                     <input type="password" className="signupInput" id="confirmPasswordInput" placeholder="Confirm password" 
                         onChange={(e) => setConfirmedPassword(e.target.value)} value={confirmedPassword} />
                 
-                    <button className="formButton" id="signupButton" disabled={isLoading}>Sign up</button>        
+                    <button className="formButton" id="signupButton" disabled={isLoading}>Sign up</button> 
+
+                    {signupError && <div className="errorResponse">{signupError}</div>}
                 </form>    
                 }
             </div>
             :
             <div></div> }
             
-            <div className="blur-wrapper">
+            <div className="blur-wrapper" style={ !user ? {filter: "blur(5px)", pointerEvents: "none"} : {} }>
                 <Header />
                 <div className="flexContent">
                     <Filter />

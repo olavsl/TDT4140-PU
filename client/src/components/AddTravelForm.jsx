@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useTravelsContext } from "../hooks/useTravelsContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const AddTravelForm = () => {
     const { travelDispatch } = useTravelsContext()
@@ -44,10 +45,20 @@ const AddTravelForm = () => {
             
             travelDispatch({type: "CREATE_TRAVEL", payload: json})
 
+            addToUserTravels(json._id)
+
             setStyle("add-travel-form-hide")
         }
+    }
 
-        console.log(title, country, startDestination, endDestination, price, travelType, description)
+    const addToUserTravels = async (travelID) => {
+        user.myTravels.push(travelID)
+
+        const response2 = await fetch("/api/users/" + user._id, {
+            method: "PATCH",
+            body: JSON.stringify(user),
+            headers: {"Content-Type": "application/json"}
+        })
     }
     
     return (
