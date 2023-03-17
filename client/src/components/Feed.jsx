@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { TravelCard } from "./TravelCard"
 import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
@@ -65,7 +65,7 @@ const Feed = () => {
             }
         })
 
-        for (var j in recommendationData) {
+        for (var i in recommendationData) {
             for (var j in travels) {
                 if (recommendationData[i][0] === travels[j].country) {
                     recommendations.push(travels[j])
