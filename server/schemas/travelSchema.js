@@ -26,10 +26,6 @@ const travelSchema = new Schema({
         type: String,
         required: true
     }, 
-    distance: {
-        type: String,
-        required: false
-    }, 
     description: {
         type: String,
         required: false
@@ -57,16 +53,5 @@ const travelSchema = new Schema({
         required: false
     }
 }, { timestamps: true })
-
-/*travelSchema.static.create = async function(title, country, startDestination, 
-    endDestination, price, travelType, distance, description, rating) {
-    if (!title || !country || !startDestination || !endDestination || !price || !travelType) {
-        throw Error("All fields, except distance and description, must be filled in!")
-    }
-    
-    const TravelRoutes = await this.findOne({travelID})
-    
-    return TravelRoutes;
-}*/
 
 module.exports = mongoose.model("TravelRoutes", travelSchema)  

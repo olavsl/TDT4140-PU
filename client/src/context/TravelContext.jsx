@@ -12,10 +12,10 @@ export const travelsReducer = (state, action) => {
             return {
                 travels: [...state.travels, action.payload]
             }
-        /*case "UPDATE_COMMENTS":
+        case "UPDATE_TRAVEL":
             return {
-                travels: [...state.travels.comments, action.payload.comments ]
-            }*/
+                travels: {...state}
+            }
         default: 
             return state
     } 

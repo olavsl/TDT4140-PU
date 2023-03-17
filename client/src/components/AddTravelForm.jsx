@@ -3,8 +3,7 @@ import { useTravelsContext } from "../hooks/useTravelsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 const AddTravelForm = () => {
-    const { dispatch } = useTravelsContext()
-    const { user } = useAuthContext()
+    const { travelDispatch } = useTravelsContext()
 
     const [title, setTitle] = useState("")
     const [country, setCountry] = useState("")
@@ -44,7 +43,7 @@ const AddTravelForm = () => {
             setTravelType("")
             setDescription("")
             
-            dispatch({type: "CREATE_TRAVEL", payload: json})
+            travelDispatch({type: "CREATE_TRAVEL", payload: json})
 
             addToUserTravels(json._id)
 

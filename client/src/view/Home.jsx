@@ -10,6 +10,7 @@ import { useSignup } from "../hooks/useSignup"
 
 const Home = () => {
     const { travels, travelDispatch } = useTravelsContext()
+    const [ travelList, setTravelList ] = useState(travels)
     const [toggleForms, setToggleForms] = useState(true);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
