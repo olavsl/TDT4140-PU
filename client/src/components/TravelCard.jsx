@@ -55,6 +55,7 @@ export const TravelCard = ({ travel }) => {
     const [averageRating, setAverageRating] = useState(0);
 
          // Get average from values in travel.rating array. 
+         // Also removes initial 0 value from array (bug, not sure where it comes from)
 
          const getAverage = (ratingArray) => {
             if (ratingArray === null) {
