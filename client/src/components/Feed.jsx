@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { TravelCard } from "./TravelCard"
 import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
@@ -7,6 +7,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Feed = () => {
     const { travels, travelDispatch } = useTravelsContext()
     const { user } = useAuthContext()
+    const allTravels = useMemo (() => {return travels}, [user])
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
@@ -125,9 +126,13 @@ const Feed = () => {
             }
         }
 
-        recommendations = Array.from(new Set([...notRecommendations, ...recommendations]))
+        if (recommendations.length === 0) {
+            travelDispatch({type: "SET_TRAVELS", payload: allTravels})
+        } else {
+            recommendations = Array.from(new Set([...notRecommendations, ...recommendations]))
 
-        travelDispatch({type: "SET_TRAVELS", payload: recommendations})
+            travelDispatch({type: "SET_TRAVELS", payload: recommendations})
+        }
     }
 
     return (
