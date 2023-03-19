@@ -38,7 +38,7 @@ export const TravelCard = ({ travel }) => {
     const [commentInputText, setCommentInputText] = useState("")
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-    const { travelDispatch } = useTravelsContext()
+    const { travels, travelDispatch } = useTravelsContext()
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -106,6 +106,32 @@ export const TravelCard = ({ travel }) => {
         setCommentArray(travel.comments)
         console.log("useeffekt happend")
     }, [])
+
+    const likeTravel = async (e) => {
+        if (user.likedTravels.includes(travel._id)) {
+            return;
+        }
+
+        travel.likes++;
+
+        const response1 = await fetch("/api/travels/" + travel._id, {
+            method: "PATCH",
+            body: JSON.stringify(travel),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        user.likedTravels.push(travel._id)
+
+        const response2 = await fetch("/api/users/" + user._id, {
+            method: "PATCH",
+            body: JSON.stringify(user),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        if (response1.ok && response2.ok) {
+            travelDispatch({type: "SET_TRAVELS", payload: travels})
+        }
+    }
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -308,6 +334,13 @@ export const TravelCard = ({ travel }) => {
                             </Box>
                         </Grid>
                         <Divider />
+                        {/*Like button */}
+                        <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
+                            <Box>
+                                <button className="like-button" onClick={(e) => likeTravel(e)} value={travel._id}>Like</button>
+                                <p>{travel.likes}</p>
+                            </Box>
+                        </Grid>
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>

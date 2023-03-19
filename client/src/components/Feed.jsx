@@ -65,7 +65,7 @@ const Feed = () => {
             }
         })
 
-        for (var j in recommendationData) {
+        for (var i in recommendationData) {
             for (var j in travels) {
                 if (recommendationData[i][0] === travels[j].country) {
                     recommendations.push(travels[j])
@@ -83,32 +83,6 @@ const Feed = () => {
 
         travelDispatch({type: "SET_TRAVELS", payload: recommendations})
     }
-
-    // const likeTravel = async (e) => {
-    //     e.preventDefault()
-
-    //     const id = e.target.value
-
-    //     const travel = travels[0]
-
-    //     for (var i in travels) {
-    //         if (travels[i] === id) {
-    //             travels[i].likes++;
-    //             const travel = travels[i]
-    //         }
-    //     }
-
-    //     const response = await fetch("/api/travels/" + id, {
-    //         method: "PATCH",
-    //         body: JSON.stringify(travel),
-    //         headers: {"Content-Type": "application/json"}
-    //     })
-
-    //     if (response.ok) {
-    //         dispatch({type: "SET_TRAVELS", payload: travels})
-    //         console.log(travel.likes)
-    //     }
-    // }
     
     return (
         <div className="feed">
@@ -124,7 +98,6 @@ const Feed = () => {
                 .map((travel) => (
                     <div key={travel._id}>
                         <TravelCard travel = {travel} />
-                        {/* <button className="like-button" onClick={(e) => likeTravel(e)} value={travel._id}>Like</button> */}
                     </div>
                 ))}
 
