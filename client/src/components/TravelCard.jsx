@@ -82,6 +82,7 @@ export const TravelCard = ({ travel }) => {
             price: travel.price,
             travelType: travel.travelType,
             description: travel.description,
+            likes: travel.likes,
             rating: travel.rating,
             comments: commentArray
         }

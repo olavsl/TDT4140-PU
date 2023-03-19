@@ -36,7 +36,7 @@ const Feed = () => {
                     travel = travels[j]
                 }
 
-                if (!countries.includes(travel.country)) {
+                if (!countries.includes(travel.country) && travel.country != undefined) {
                     likeData.push([travel.country, 1])
                     countries.push(travel.country)
                 } else {
@@ -65,7 +65,7 @@ const Feed = () => {
                     travel = travels[j]
                 }
 
-                if (!countries.includes(travel.country)) {
+                if (!countries.includes(travel.country) && travel.country != undefined) {
                     ownTravelsData.push([travel.country, 1])
                     countries.push(travel.country)
                 } else {
@@ -92,7 +92,7 @@ const Feed = () => {
 
         for (var i in allData) {
             if (!countries.includes(allData[i][0])) {
-                recomData.push([allData[i][0], allData[i][0]])
+                recomData.push([allData[i][0], allData[i][1]])
                 countries.push(allData[i][0])
             } else {
                 for (var j in recomData) {
@@ -102,7 +102,7 @@ const Feed = () => {
                 }
             }
         }
-        
+
         recomData.sort((a, b) => {
             if (a[1] === b[1]) {
                 return 0;
@@ -125,7 +125,7 @@ const Feed = () => {
             }
         }
 
-        recommendations = Array.from(new Set([...recommendations, ...notRecommendations]))
+        recommendations = Array.from(new Set([...notRecommendations, ...recommendations]))
 
         travelDispatch({type: "SET_TRAVELS", payload: recommendations})
     }
