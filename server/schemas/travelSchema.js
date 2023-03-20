@@ -33,10 +33,18 @@ const travelSchema = new Schema({
         type: String,
         required: false
     },
-    rating: [{
+    likes: {
         type: Number,
         required: false
-    }],
+    },
+    rating: {
+        type: Array,
+        items: {
+            type: "number",
+            format: "int32",
+            required: false
+        }
+    },
     comments: [{
         author: {
             type: String,
@@ -50,11 +58,7 @@ const travelSchema = new Schema({
             type: String,
             required: true
         }
-    }],
-    likes: {
-        type: Number,
-        required: false
-    }
+    }]
 }, { timestamps: true })
 
 module.exports = mongoose.model("TravelRoutes", travelSchema)  

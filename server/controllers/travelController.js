@@ -27,13 +27,17 @@ const getTravel = async (req, res) => {
 
 // POST (create) new travel
 const createTravel = async (req, res) => {
+
     const { title, country, startDestination, endDestination, price, duration, 
-        travelType, description, rating, comments, timestamps } = req.body
+        travelType, description, rating, likes, comments, timestamps } = req.body
+
 
     // Add Travel document to database
     try {
         const travel = await Travel.create({title, country, startDestination, 
-            endDestination, price, duration, travelType, timestamps, description, rating, comments})
+
+            endDestination, price, duration, travelType, timestamps, description, rating, likes, comments})
+
         res.status(200).json(travel)
     } catch (error) {
         res.status(400).json({error: error.message})

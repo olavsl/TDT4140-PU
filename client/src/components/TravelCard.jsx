@@ -47,6 +47,7 @@ export const TravelCard = ({ travel }) => {
     const [commentInputText, setCommentInputText] = useState("")
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
+
     const { travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
     const [newRating, setNewRating] = useState(Number);
@@ -128,9 +129,19 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
+
+    const getTodayDate = () => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+
+    return dateTime;
+    }
+
     const onSubmitCommment = async(event) => {
         event.preventDefault()
-        let newComment = {author: user.username, text: commentInputText, time: Date.now()} //Gut
+        let newComment = {author: user.username, text: commentInputText, time: getTodayDate()} //Gut
         let oldArray = commentArray
         oldArray.push(newComment)
         setCommentArray(oldArray)
@@ -153,6 +164,7 @@ export const TravelCard = ({ travel }) => {
             price: travel.price,
             travelType: travel.travelType,
             description: travel.description,
+            likes: travel.likes,
             rating: travel.rating,
             comments: commentArray
         }
@@ -196,6 +208,32 @@ export const TravelCard = ({ travel }) => {
 
     }, [ratingArray, travel.rating, newRate]);
 
+
+    const likeTravel = async (e) => {
+        if (user.likedTravels.includes(travel._id)) {
+            return;
+        }
+
+        travel.likes++;
+
+        const response1 = await fetch("/api/travels/" + travel._id, {
+            method: "PATCH",
+            body: JSON.stringify(travel),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        user.likedTravels.push(travel._id)
+
+        const response2 = await fetch("/api/users/" + user._id, {
+            method: "PATCH",
+            body: JSON.stringify(user),
+            headers: {"Content-Type": "application/json"}
+        })
+
+        if (response1.ok && response2.ok) {
+            travelDispatch({type: "SET_TRAVELS", payload: travels})
+        }
+    }
 
     return (
         <ThemeProvider theme={cardTheme}>
@@ -431,6 +469,7 @@ export const TravelCard = ({ travel }) => {
                             </Typography>
                             </Box>
                         </Grid>
+
                         <Grid sx={{mt: 3, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
 
                         Give your rating:
@@ -453,6 +492,16 @@ export const TravelCard = ({ travel }) => {
                         </Grid>
 
                               <Divider />
+
+                        <Divider />
+                        {/*Like button */}
+                        <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
+                            <Box>
+                                <button className="like-button" onClick={(e) => likeTravel(e)} value={travel._id}>Like</button>
+                                <p>{travel.likes}</p>
+                            </Box>
+                        </Grid>
+
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>

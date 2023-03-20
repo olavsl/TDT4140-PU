@@ -14,6 +14,10 @@ const userSchema = new Schema({
     myTravels: {
         type: [String],
         required: false
+    },
+    likedTravels: {
+        type: [String],
+        required: false
     }
 }, { /* Here one can add spesific fields to every new user (e.g. "timestamps: true") */ })
 

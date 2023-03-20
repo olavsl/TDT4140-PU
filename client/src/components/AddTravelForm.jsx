@@ -13,7 +13,7 @@ const AddTravelForm = (props) => {
     const [duration, setDuration] = useState("")
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
-
+    const [likes] = useState(0)
     const [error, setError] = useState(null)
 
     const [style, setStyle] = useState("add-travel-form-show")
@@ -22,6 +22,8 @@ const AddTravelForm = (props) => {
         e.preventDefault()
 
         const travel = {title, country, startDestination, endDestination, price, duration, travelType, description}
+
+        const travel = {title, country, startDestination, endDestination, price, duration, travelType, description, likes}
 
         const response = await fetch("/api/travels", {
             method: "POST",
