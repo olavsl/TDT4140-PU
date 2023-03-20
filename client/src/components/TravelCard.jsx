@@ -48,7 +48,7 @@ export const TravelCard = ({ travel }) => {
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
 
-    const { travelDispatch } = useTravelsContext()
+    const {travels, travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
     const [newRating, setNewRating] = useState(Number);
     const [ratingArray, setRatingArray] = useState(travel.rating);
@@ -64,7 +64,7 @@ export const TravelCard = ({ travel }) => {
             const sum = ratingArray
             .reduce((a, b) => a + b, 0);
             const avg = (sum / ratingArray.length) || 0;
-            return(avg.toFixed(1))
+            return(avg.toFixed(0))
             }
 
     // Adds the new rating to the rating array
