@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { TravelCard } from "./TravelCard"
 import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
@@ -7,56 +7,104 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Feed = () => {
     const { travels, travelDispatch } = useTravelsContext()
     const { user } = useAuthContext()
-    // const [ travelRouteList, setTravelRouteList ] = useState(travels)
+    const allTravels = useMemo (() => {return travels}, [user])
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setAddNewTravel(current => !current)
     }
 
-    // Boolean state of toggleValue determines which tab is active. Recently added is true, Toplist is false.
+    // Boolean state of toggleValue determines which tab is active. Recommendations is true, Toplist is false.
     const [toggleValue, setToggleValue] = useState(false);
     const toggleRecent = () => {
         setToggleValue(true);
-        getCountriesOfUsersRoutes()
+        getRecommendations()
     }
     
     const toggleTopList = () => {
         setToggleValue(false);
     }
+    
+    const getLikeData = () => {
+        var likeData = []
 
-    const getCountriesOfUsersRoutes = () => {
-        if (user.myTravels.length === 0) {
-            return;
-        }
-        
-        var recommendationData = []
-        var distinctCountries = []
-        var recommendations = []
-        var notRecommendations = []
+        var countries = []
 
-        for (var i in travels) {
-            if (user.myTravels.includes(travels[i]._id)) {
-                for (var j in recommendationData) {
-                    if (!distinctCountries.includes(recommendationData[j][0])) {
-                        distinctCountries.push(recommendationData[j][0])
-                    }
+        for (var i in user.likedTravels) {
+            for (var j in travels) {
+                var travel = {}
+
+                if (user.likedTravels[i] === travels[j]._id) {
+                    travel = travels[j]
                 }
-                
-                if (!distinctCountries.includes(travels[i].country)) {
-                    recommendationData.push([travels[i].country, 1])
+
+                if (!countries.includes(travel.country) && travel.country != undefined) {
+                    likeData.push([travel.country, 1])
+                    countries.push(travel.country)
                 } else {
-                    for (var j in recommendationData) {
-                        if (travels[i].country === recommendationData[j][0]) {
-                            recommendationData[j][1]++;
+                    for (var k in likeData) {
+                        if (travel.country === likeData[k][0]) {
+                            likeData[k][1]++;
                         }
                     }
                 }
             }
-
-            distinctCountries = []
         }
 
-        recommendationData.sort((a, b) => {
+        return likeData
+    }
+
+    const getOwnTravelsData = () => {
+        var ownTravelsData = []
+
+        var countries = []
+
+        for (var i in user.myTravels) {
+            for (var j in travels) {
+                var travel = {}
+
+                if (user.myTravels[i] === travels[j]._id) {
+                    travel = travels[j]
+                }
+
+                if (!countries.includes(travel.country) && travel.country != undefined) {
+                    ownTravelsData.push([travel.country, 1])
+                    countries.push(travel.country)
+                } else {
+                    for (var k in ownTravelsData) {
+                        if (travel.country === ownTravelsData[k][0]) {
+                            ownTravelsData[k][1]++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return ownTravelsData
+    }
+
+    const getRecommendations = () => {
+        const likeData = getLikeData()
+        const ownTravelsData = getOwnTravelsData()
+
+        const allData = [...likeData, ...ownTravelsData]
+        var countries = []
+
+        var recomData = []
+
+        for (var i in allData) {
+            if (!countries.includes(allData[i][0])) {
+                recomData.push([allData[i][0], allData[i][1]])
+                countries.push(allData[i][0])
+            } else {
+                for (var j in recomData) {
+                    if (allData[i][0] === recomData[j][0]) {
+                        recomData[j][1] += allData[i][1]
+                    }
+                }
+            }
+        }
+
+        recomData.sort((a, b) => {
             if (a[1] === b[1]) {
                 return 0;
             }
@@ -65,9 +113,12 @@ const Feed = () => {
             }
         })
 
-        for (var i in recommendationData) {
+        var recommendations = []
+        var notRecommendations = []
+
+        for (var i in recomData) {
             for (var j in travels) {
-                if (recommendationData[i][0] === travels[j].country) {
+                if (recomData[i][0] === travels[j].country) {
                     recommendations.push(travels[j])
                 } else {
                     notRecommendations.push(travels[j])
@@ -75,41 +126,15 @@ const Feed = () => {
             }
         }
 
-        for (var i in recommendations) {
-            notRecommendations.push(recommendations[i])
+        if (recommendations.length === 0) {
+            travelDispatch({type: "SET_TRAVELS", payload: allTravels})
+        } else {
+            recommendations = Array.from(new Set([...notRecommendations, ...recommendations]))
+
+            travelDispatch({type: "SET_TRAVELS", payload: recommendations})
         }
-
-        recommendations = Array.from(new Set(notRecommendations))
-
-        travelDispatch({type: "SET_TRAVELS", payload: recommendations})
     }
 
-    // const likeTravel = async (e) => {
-    //     e.preventDefault()
-
-    //     const id = e.target.value
-
-    //     const travel = travels[0]
-
-    //     for (var i in travels) {
-    //         if (travels[i] === id) {
-    //             travels[i].likes++;
-    //             const travel = travels[i]
-    //         }
-    //     }
-
-    //     const response = await fetch("/api/travels/" + id, {
-    //         method: "PATCH",
-    //         body: JSON.stringify(travel),
-    //         headers: {"Content-Type": "application/json"}
-    //     })
-
-    //     if (response.ok) {
-    //         dispatch({type: "SET_TRAVELS", payload: travels})
-    //         console.log(travel.likes)
-    //     }
-    // }
-    
     return (
         <div className="feed">
 
@@ -124,7 +149,6 @@ const Feed = () => {
                 .map((travel) => (
                     <div key={travel._id}>
                         <TravelCard travel = {travel} />
-                        {/* <button className="like-button" onClick={(e) => likeTravel(e)} value={travel._id}>Like</button> */}
                     </div>
                 ))}
 
