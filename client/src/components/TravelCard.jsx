@@ -57,20 +57,32 @@ export const TravelCard = ({ travel }) => {
          // Get average from values in travel.rating array. 
          // Also removes initial 0 value from array (bug, not sure where it comes from)
 
-         const getAverage = (ratingArray) => {
-            if (ratingArray === null) {
-                return 0;
+     
+
+            const getAverage = () => {
+                const ratings = travel.rating
+                let total = 0;
+                let count = 0;
+                if (ratings !== undefined || ratings !== null || ratings !== 0 || ratings !== ""){
+
+                    ratings.forEach((rating) => {
+           
+                            total += rating;
+                            count++;
+
+                    });
+                    if (count === 0) {
+                        return 0;
+                    }
+                    return (total / count).toFixed(0);
+                }
             }
-            const sum = ratingArray
-            .reduce((a, b) => a + b, 0);
-            const avg = (sum / ratingArray.length) || 0;
-            return(avg.toFixed(0))
-            }
+            
 
     // Adds the new rating to the rating array
     const newRate = async() => {
         for (let i = 0; i < ratingArray.length; i++) {
-            if (ratingArray[i] === 0) {
+            if (ratingArray[i] === 0 || ratingArray[i] === "") {
                 ratingArray.splice(i, 1);
             }
         }
@@ -122,7 +134,6 @@ export const TravelCard = ({ travel }) => {
     const handleClickOpen = () => {
       setOpen(true);
       console.log(travel)
-      getAverage(ratingArray)
     };
   
     const handleClose = () => {
@@ -208,7 +219,6 @@ export const TravelCard = ({ travel }) => {
 
     }, [ratingArray, travel.rating, newRate]);
 
-
     const likeTravel = async (e) => {
         if (user.likedTravels.includes(travel._id)) {
             return;
@@ -269,7 +279,7 @@ export const TravelCard = ({ travel }) => {
            
                             <Typography variant="body2" color="black" className="rating">
 
-                                {getAverage(ratingArray)+ "/ 5" }
+                                {getAverage()+ "/ 5" }
 
                             </Typography>
                             
@@ -465,7 +475,7 @@ export const TravelCard = ({ travel }) => {
                                 sx={{ 
                                     mt:-0.5,
                                     }}>
-                                {getAverage(ratingArray)} / 5
+                                {getAverage()} / 5
                             </Typography>
                             </Box>
                         </Grid>
