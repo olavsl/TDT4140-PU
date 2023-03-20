@@ -21,8 +21,6 @@ const AddTravelForm = (props) => {
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
-        const travel = {title, country, startDestination, endDestination, price, duration, travelType, description}
-
         const travel = {title, country, startDestination, endDestination, price, duration, travelType, description, likes}
 
         const response = await fetch("/api/travels", {
