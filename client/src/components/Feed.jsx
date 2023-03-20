@@ -10,7 +10,6 @@ const Feed = () => {
 
     const [exitButton, setExitButton] = useState(false)
     const allTravels = useMemo (() => {return travels}, [user])
-    const [exitButton, setExitButton] = useState(false)
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
         setExitButton(current => !current)
