@@ -89,7 +89,7 @@ const AddTravelForm = (props) => {
                 onChange={(e) => setPrice(e.target.value)} value={price} />
 
             <input className="add-travel-input" type="number" placeholder="Duration"
-                onChange={(e) => setDuration(e.target.value)} value={price} />
+                onChange={(e) => setDuration(e.target.value)} value={duration} />
 
             <input className="add-travel-input" type="text" placeholder="Type of travel"
                 onChange={(e) => setTravelType(e.target.value)} value={travelType} />
