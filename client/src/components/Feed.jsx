@@ -7,9 +7,12 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Feed = () => {
     const { travels, travelDispatch } = useTravelsContext()
     const { user } = useAuthContext()
+
+    const [exitButton, setExitButton] = useState(false)
     const allTravels = useMemo (() => {return travels}, [user])
     const [addNewTravel, setAddNewTravel] = useState(false)
     const fireAddNewTravel = () => {
+        setExitButton(current => !current)
         setAddNewTravel(current => !current)
     }
 
@@ -145,22 +148,32 @@ const Feed = () => {
             {toggleValue ? <div className='Tab' id='Recent'>
                 {travels && travels
                 .slice(0)
-                .reverse()
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 .map((travel) => (
                     <div key={travel._id}>
                         <TravelCard travel = {travel} />
                     </div>
                 ))}
-
-
+                {!exitButton ?
+                
                 <button className="add-travel-button" onClick={fireAddNewTravel}>
+                    
                     <div className="add-travel-plus-sign-component" id="vertical-plus-sign-component" />
                     <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
+                    
                 </button>
+                :
+                <button className = "add-travel-button-active" onClick={fireAddNewTravel}> 
+
+                    <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component-small" />
+                </button>
+            }
 
                 {addNewTravel && 
-                    <AddTravelForm className="add-travel-form" />
-                }
+
+                <AddTravelForm setExitButton={setExitButton} 
+                setAddNewTravel={setAddNewTravel} 
+                className="add-travel-form" />}
             </div>
             :
             <div></div> }
@@ -168,18 +181,32 @@ const Feed = () => {
 
                 {!toggleValue ? <div className='Tab' id='Toplist'>
                 {travels && travels
-                .slice(0, 9)
+               .sort ((a, b) => a.rating - b.rating)
+               .slice(0, 9)
+               .reverse()
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />
                 ))}
+                 {!exitButton ?
+                    <button className="add-travel-button" onClick={fireAddNewTravel}>
+                        
+                        <div className="add-travel-plus-sign-component" id="vertical-plus-sign-component" />
+                        <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
+                        
+                    </button>
+                    :
+                    <button className = "add-travel-button-active" onClick={fireAddNewTravel}> 
 
-                <button className="add-travel-button" onClick={fireAddNewTravel}>
-                    <div className="add-travel-plus-sign-component" id="vertical-plus-sign-component" />
-                    <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
-                </button>
+                        <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component-small" />
+                    </button>
+                }
+
 
                 {addNewTravel && 
-                    <AddTravelForm className="add-travel-form" />
+
+                <AddTravelForm setExitButton={setExitButton} 
+                    setAddNewTravel={setAddNewTravel} 
+                    className="add-travel-form" />
                 }
             </div>
             :

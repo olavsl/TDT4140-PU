@@ -196,7 +196,7 @@ a {
 
 .add-travel-button {
   position: fixed;
-  bottom: 3vh;
+  bottom: 5vh;
   right: 23%;
   display: block;
   width: 5vw;
@@ -230,18 +230,24 @@ a {
   width: 4vw;
   height: 1vw;
 }
+#horizontal-plus-sign-component-small {
+  width: 1.5vw;
+  height: 0.3vw;
+}
 
 .add-travel-form-show {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  width: 60%;
-  height: 85vh;
-  background-color: rgb(240, 204, 160);
-  border-radius: 3vw;
+  width: 30%;
+  height: 80vh;
+  background-color: #DFC296;
+  border-radius: 1vw;
   text-align: center;
+  overflow: inherit;
+  border: black 0.1vw solid;
 }
 
 .add-travel-form-hide {
@@ -441,8 +447,9 @@ a {
   width: 20vw;
   height: 4vh;
   border-radius: 1vw;
-  border: 0.2vw solid rgb(0, 0, 0);
-  margin-top: 4vh;
+
+  border: 0.1vw solid rgb(0, 0, 0);
+  margin-top: 3vh;
 }
 
 #add-travel-button {
@@ -531,3 +538,29 @@ a {
   border: 0.1vw solid #ac8239;
   font-size: 15px;
 }
+
+
+
+.add-travel-close {
+  margin-right: 24.5vw;
+  margin-top: 0.5vh;
+  }
+  
+  .add-travel-button-active {
+    position: fixed;
+    bottom: 78vh;
+    right: 62%;
+    display: block;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 2.5vw;
+    border: none;
+    background-color: hsl(0, 78%, 65%);
+    z-index: 2;
+  }
+  
+  .add-travel-button-active:hover {
+    cursor: pointer;
+    background-color: hsl(0, 59%, 61%);
+    z-index: 2;
+  }

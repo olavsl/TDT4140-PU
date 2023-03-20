@@ -15,6 +15,8 @@ import Slide from '@mui/material/Slide';
 import CommentCard from '../components/CommentCard'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useTravelsContext } from '../hooks/useTravelsContext';
+import { Rating } from '@mui/material';
+
 
 // The travel card component is used to display all travels from the database in the feed. 
 // Can be clicked on to open a diaog with more information about the specific travel of the card.
@@ -31,6 +33,13 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+  // The parseDescription function is used to shorten the description of the travel to 120 characters.
+const parseDescription = (description) => {
+    if (description.length > 120) {
+        return description.substring(0, 120) + "...";
+    }
+    return description;
+}
 
 export const TravelCard = ({ travel }) => {
     const [open, setOpen] = useState(false)
@@ -38,15 +47,88 @@ export const TravelCard = ({ travel }) => {
     const [commentInputText, setCommentInputText] = useState("")
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
-    const { travels, travelDispatch } = useTravelsContext()
+
+    const { travelDispatch } = useTravelsContext()
+    const [ratingColor, setRatingColor] = useState("white");
+    const [newRating, setNewRating] = useState(Number);
+    const [ratingArray, setRatingArray] = useState(travel.rating);
+   
+
+         // Get average from values in travel.rating array. 
+         // Also removes initial 0 value from array (bug, not sure where it comes from)
+
+         const getAverage = (ratingArray) => {
+            if (ratingArray === null) {
+                return 0;
+            }
+            const sum = ratingArray
+            .reduce((a, b) => a + b, 0);
+            const avg = (sum / ratingArray.length) || 0;
+            return(avg.toFixed(1))
+            }
+
+    // Adds the new rating to the rating array
+    const newRate = async() => {
+        for (let i = 0; i < ratingArray.length; i++) {
+            if (ratingArray[i] === 0) {
+                ratingArray.splice(i, 1);
+            }
+        }
+        let oldArray = ratingArray
+        oldArray.push(newRating)
+        setRatingArray(oldArray)
+
+        console.log("newRating:")
+        console.log(newRating)
+        console.log("ratingArray:")
+        console.log(ratingArray)
+
+        travelRating(travel, ratingArray)
+        getAverage(ratingArray)
+
+        console.log("travel.rating:")
+        console.log(travel.rating)
+        console.log(travel)
+    }
+    
+    // Payload for the rating
+    const travelRating = async (travel, ratingArray) => {        
+        const travelPayload = {
+            title: travel.title,
+            country: travel.country,
+            startDestination: travel.startDestination,
+            endDestination: travel.endDestination,
+            price: travel.price,
+            travelType: travel.travelType,
+            description: travel.description,
+            rating: ratingArray,
+            comments: travel.comments
+        }
+        const fetchString = '/api/travels/'+travel._id
+        console.log(fetchString)
+        const response = await fetch(fetchString, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({travelPayload})
+        }).then((res) => {
+            if(res.ok) {
+                console.log("OkiDoki")
+                console.log(travelPayload)
+            }
+        })
+    }
+
 
     const handleClickOpen = () => {
       setOpen(true);
+      console.log(travel)
+      getAverage(ratingArray)
     };
   
     const handleClose = () => {
       setOpen(false);
     };
+
 
     const getTodayDate = () => {
     let today = new Date();
@@ -105,8 +187,27 @@ export const TravelCard = ({ travel }) => {
     
     useEffect(() => {
         setCommentArray(travel.comments)
-        console.log("useeffekt happend")
+        console.log("useEffect fired")
     }, [])
+    
+    useEffect(() => {
+
+        // Sets color of rating based on the rating value.
+        if (getAverage(ratingArray) >= 4) {
+            setRatingColor("#b7ed66");
+        } else if (getAverage(ratingArray) >= 3) {
+            setRatingColor("#dded66");
+        } else if (getAverage(ratingArray) >= 2) {
+            setRatingColor("#edc566");
+        } else if (getAverage(ratingArray) >= 0.1) {
+            setRatingColor("#ed8a66");
+        } else {
+            setRatingColor("white");
+        }
+        setRatingArray(travel.rating)
+
+    }, [ratingArray, travel.rating, newRate]);
+
 
     const likeTravel = async (e) => {
         if (user.likedTravels.includes(travel._id)) {
@@ -138,10 +239,9 @@ export const TravelCard = ({ travel }) => {
         <ThemeProvider theme={cardTheme}>
             <div style={{margin: '0.8%'}}>
                 <Card variant = "outlined" sx={{height: '22vw', width: '18.2vw', bgcolor: "#f0f4c3", border: 1, borderColor: "dark-gray"}}>
-                    <CardActionArea sx={{maxHeight: '12rem'}} onClick={handleClickOpen}>
+                    <CardActionArea onClick={handleClickOpen}>
                         <CardMedia sx={{bgcolor: "#fff"}} component="img" height="140"
-                            image ="https://cdn.kimkim.com/files/a/images/bef90c6256a4f93a06d90a84f8e011d8e0e1d531/big-53e242f895dd59fcf99bba0efed27b8b.jpg"
-                            alt ="Picture from the trip"
+                            image = {require ("../resources/backpack.jpg")}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div" className="travelTitle"
@@ -153,20 +253,37 @@ export const TravelCard = ({ travel }) => {
                                 {travel.title}   
 
                             </Typography>
-                            <Grid container direction="row" justifyContent="flex-start">
+                            <Grid container direction="row" justifyContent="space-between">
                                 <Typography variant="body2" color="text.secondary" className="travelStartEnd">
 
                                     {travel.startDestination} to {travel.endDestination}
 
                                 </Typography>
+                                <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: ratingColor,
+                                    }}>
+           
+                            <Typography variant="body2" color="black" className="rating">
+
+                                {getAverage(ratingArray)+ "/ 5" }
+
+                            </Typography>
+                            
+                            </Box>
+
                             </Grid>
                             <Divider />
                             <Typography variant="body2" color="text.secondary" className="travelShortDesc"
                                 sx={{
-                                    fontStyle: 'italic' 
+                                    fontStyle: 'italic' ,
+                                    minHeight: "8.5vh"
                                     }}>
 
-                                {travel.description}
+                                {parseDescription(travel.description)}
 
                             </Typography>
                             <Divider />
@@ -189,7 +306,7 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#A8D881",
                                     }}>
-                                    <Typography variant="body2" color="text.secondary" className="travelType">
+                                    <Typography variant="body2" color="text.seconda ry" className="travelType">
 
                                         {travel.travelType}
 
@@ -202,9 +319,9 @@ export const TravelCard = ({ travel }) => {
                                         px:0.5,
                                         bgcolor: "#F2C077",
                                         }}>
-                                    <Typography variant="body2" color="text.secondary" className="travelDistance">
+                                    <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                        {travel.distance} km
+                                        {travel.duration} days
 
                                     </Typography>
                                 </Box>
@@ -260,6 +377,8 @@ export const TravelCard = ({ travel }) => {
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             {travel.title}
                             </Typography>
+
+
                             <Typography>
                             By {travel.author}
                             </Typography>
@@ -272,6 +391,7 @@ export const TravelCard = ({ travel }) => {
                             {travel.title}
                             
                         </Typography>
+                        
                         <Typography variant="body2" component="div" sx={{ p: 2 }}>
                             From {travel.startDestination} to {travel.endDestination}
                         </Typography>
@@ -301,9 +421,9 @@ export const TravelCard = ({ travel }) => {
                                     px:0.5,
                                     bgcolor: "#F2C077",
                                     }}>
-                                <Typography variant="body2" color="text.secondary" className="travelDistance">
+                                <Typography variant="body2" color="text.secondary" className="travelduration">
 
-                                    {travel.distance} km
+                                    {travel.duration} days
 
                                 </Typography>
                             </Box>
@@ -332,8 +452,47 @@ export const TravelCard = ({ travel }) => {
                                     {travel.price} kr
 
                                 </Typography>
+                                
+                            </Box>
+                            <Box sx={{
+                                    border: 1,
+                                    borderColor: "dark-gray",
+                                    borderRadius: 1,
+                                    px:0.5,
+                                    bgcolor: ratingColor,
+                                    }}>
+                                <Typography variant="body2" color="black" className="rating"
+                                sx={{ 
+                                    mt:-0.5,
+                                    }}>
+                                {getAverage(ratingArray)} / 5
+                            </Typography>
                             </Box>
                         </Grid>
+
+                        <Grid sx={{mt: 3, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
+
+                        Give your rating:
+
+                        </Grid>
+           
+                        <Grid sx={{mt: 0, mr: -2, mb: 2}} container direction="row" justifyContent="space-evenly">
+                            <Rating
+                                name="simple-controlled"
+                                value={0}
+                                onChange={(event, newValue) => {
+                                    if (!newValue == 0){
+                                    setNewRating(newValue)
+                                    newRate()
+                                    }
+                                    
+                                    
+                            }}
+                            />
+                        </Grid>
+
+                              <Divider />
+
                         <Divider />
                         {/*Like button */}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
@@ -342,6 +501,7 @@ export const TravelCard = ({ travel }) => {
                                 <p>{travel.likes}</p>
                             </Box>
                         </Grid>
+
                         {/*Comment section under the extended travel card*/}
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
