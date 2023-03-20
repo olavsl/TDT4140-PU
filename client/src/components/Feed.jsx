@@ -119,20 +119,25 @@ const Feed = () => {
         var recommendations = []
         var notRecommendations = []
 
-        for (var i in recomData) {
-            for (var j in travels) {
-                if (recomData[i][0] === travels[j].country) {
-                    recommendations.push(travels[j])
-                } else {
-                    notRecommendations.push(travels[j])
+        for (var i in travels) {
+            var added = false
+
+            for (var j in recomData) {
+                if (travels[i].country === recomData[j][0]) {
+                    recommendations.push(travels[i])
+                    added = true
                 }
             }
-        }
 
+            if (!added) {
+                notRecommendations.push(travels[i])
+            }
+        }
+        
         if (recommendations.length === 0) {
             travelDispatch({type: "SET_TRAVELS", payload: allTravels})
         } else {
-            recommendations = Array.from(new Set([...notRecommendations, ...recommendations]))
+            recommendations = [...recommendations, ...notRecommendations]
 
             travelDispatch({type: "SET_TRAVELS", payload: recommendations})
         }
@@ -148,7 +153,6 @@ const Feed = () => {
             {toggleValue ? <div className='Tab' id='Recent'>
                 {travels && travels
                 .slice(0)
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 .map((travel) => (
                     <div key={travel._id}>
                         <TravelCard travel = {travel} />
