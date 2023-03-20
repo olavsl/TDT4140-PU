@@ -29,14 +29,13 @@ const getTravel = async (req, res) => {
 const createTravel = async (req, res) => {
 
     const { title, country, startDestination, endDestination, price, duration, 
-        travelType, description, rating, likes, comments, timestamps } = req.body
+        travelType, description, likes, author, rating, comments, timestamps } = req.body
 
 
     // Add Travel document to database
     try {
         const travel = await Travel.create({title, country, startDestination, 
-
-            endDestination, price, duration, travelType, timestamps, description, rating, likes, comments})
+            endDestination, price, duration, travelType, timestamps, description, likes, author, rating, comments, author})
 
         res.status(200).json(travel)
     } catch (error) {

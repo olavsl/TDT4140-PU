@@ -37,6 +37,10 @@ const travelSchema = new Schema({
         type: Number,
         required: false
     },
+    author: {
+        type: String,
+        required: true
+    },
     rating: {
         type: Array,
         items: {

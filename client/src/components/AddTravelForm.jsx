@@ -14,6 +14,7 @@ const AddTravelForm = (props) => {
     const [travelType, setTravelType] = useState("")
     const [description, setDescription] = useState("")
     const [likes] = useState(0)
+    const [author, setAuthor] = useState("")
     const [error, setError] = useState(null)
 
     const [style, setStyle] = useState("add-travel-form-show")
@@ -21,7 +22,7 @@ const AddTravelForm = (props) => {
     const handleAddTravel = async (e) => {
         e.preventDefault()
 
-        const travel = {title, country, startDestination, endDestination, price, duration, travelType, description, likes}
+        const travel = {title, country, startDestination, endDestination, price, duration, travelType, description, likes, author}
 
         const response = await fetch("/api/travels", {
             method: "POST",
@@ -95,7 +96,7 @@ const AddTravelForm = (props) => {
                 onChange={(e) => setTravelType(e.target.value)} value={travelType} />
 
             <input className="add-travel-input" type="text" placeholder="Short description"
-                onChange={(e) => setDescription(e.target.value)} value={description} />
+                onChange={(e) => {setDescription(e.target.value); setAuthor(user.username)}} value={description} />
 
             <button className="formButton" id="add-travel-button" onClick={handleAddTravel}>Publish</button>
         </form>
