@@ -49,10 +49,9 @@ export const TravelCard = ({ travel }) => {
     const { user } = useAuthContext()
     const { travelDispatch } = useTravelsContext()
     const [ratingColor, setRatingColor] = useState("white");
-    const [rating, setRating] = useState(travel.rating);
     const [newRating, setNewRating] = useState(Number);
     const [ratingArray, setRatingArray] = useState(travel.rating);
-    const [averageRating, setAverageRating] = useState(0);
+   
 
          // Get average from values in travel.rating array. 
          // Also removes initial 0 value from array (bug, not sure where it comes from)
@@ -177,7 +176,6 @@ export const TravelCard = ({ travel }) => {
     useEffect(() => {
         setCommentArray(travel.comments)
         console.log("useEffect fired")
-
     }, [])
     
     useEffect(() => {
@@ -194,6 +192,8 @@ export const TravelCard = ({ travel }) => {
         } else {
             setRatingColor("white");
         }
+        setRatingArray(travel.rating)
+
     }, [ratingArray, travel.rating, newRate]);
 
 
