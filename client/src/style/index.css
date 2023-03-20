@@ -483,7 +483,7 @@ a {
   padding: 8px 16px;
   font-size: 17px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  width: 50%;
+  width: 33.3%;
   border: 2px solid #c0a06a;
   box-sizing: border-box;
 }
@@ -498,7 +498,7 @@ a {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
   text-decoration: underline;
-  width: 50%;
+  width: 33.3%;
   border: 2px solid #ac8239;
   box-sizing: border-box;
 

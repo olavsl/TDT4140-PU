@@ -17,16 +17,39 @@ const Feed = () => {
     }
 
     // Boolean state of toggleValue determines which tab is active. Recommendations is true, Toplist is false.
-    const [toggleValue, setToggleValue] = useState(false);
-    const toggleRecent = () => {
-        setToggleValue(true);
+    const [toggleValue, setToggleValue] = useState(0);
+    const toggleTopList = () => {
+        setToggleValue(0);
+    }
+    const toggleRecommended = () => {
+        setToggleValue(1)
         getRecommendations()
     }
-    
-    const toggleTopList = () => {
-        setToggleValue(false);
+    const toggleLikedList = () => {
+        setToggleValue(2)
+        getLikedTravels()
     }
+
+    const [numLikedTravels, setNumLikedTravels] = useState(0)
     
+    const getLikedTravels = () => {
+        var result = []
+        var notLiked = []
+
+        for (var i in allTravels) {
+            if (user.likedTravels.includes(allTravels[i]._id)) {
+                result.push(allTravels[i])
+            } else {
+                notLiked.push(allTravels[i])
+            }
+        }
+
+        result = [...result, ...notLiked]
+        setNumLikedTravels(user.likedTravels.length)
+
+        travelDispatch( {type: "SET_TRAVELS", payload: result})
+    }
+
     const getLikeData = () => {
         var likeData = []
 
@@ -147,10 +170,11 @@ const Feed = () => {
         <div className="feed">
 
             <div className="feedHeader">
-                <button className={toggleValue ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
-                <button className={!toggleValue ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleRecent}>Recommended</button>
+                <button className={toggleValue == 1 ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
+                <button className={toggleValue == 0 ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleRecommended}>Recommended</button>
+                <button className={toggleValue == 2 ? "tabButton" : "tabButton-Active"} id="likedButton" onClick={toggleLikedList}>Liked</button>
             </div>
-            {toggleValue ? <div className='Tab' id='Recent'>
+            {toggleValue == 1 ? <div className='Tab' id='Recent'>
                 {travels && travels
                 .slice(0)
                 .map((travel) => (
@@ -182,8 +206,7 @@ const Feed = () => {
             :
             <div></div> }
 
-
-                {!toggleValue ? <div className='Tab' id='Toplist'>
+            {toggleValue == 0 ? <div className='Tab' id='Toplist'>
                 {travels && travels
                .sort ((a, b) => a.rating - b.rating)
                .slice(0, 9)
@@ -215,6 +238,40 @@ const Feed = () => {
             </div>
             :
             <div></div> }
+
+            {toggleValue == 2 ? <div className='Tab' id='Likedlist'>
+                {travels && travels
+                .sort ((a, b) => a.rating - b.rating)
+                .slice(0, numLikedTravels)
+                .reverse()
+                .map((travel) => (
+                    <TravelCard key={travel._id} travel = {travel} />
+                ))}
+                 {!exitButton ?
+                    <button className="add-travel-button" onClick={fireAddNewTravel}>
+                        
+                        <div className="add-travel-plus-sign-component" id="vertical-plus-sign-component" />
+                        <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component" />
+                        
+                    </button>
+                    :
+                    <button className = "add-travel-button-active" onClick={fireAddNewTravel}> 
+
+                        <div className="add-travel-plus-sign-component" id="horizontal-plus-sign-component-small" />
+                    </button>
+                }
+
+
+                {addNewTravel && 
+
+                <AddTravelForm setExitButton={setExitButton} 
+                    setAddNewTravel={setAddNewTravel} 
+                    className="add-travel-form" />
+                }
+            </div>
+            :
+            <div></div> }
+
             </div>
     )
 }
