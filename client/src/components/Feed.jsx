@@ -17,12 +17,12 @@ const Feed = () => {
     }
 
     // Boolean state of toggleValue determines which tab is active. Recommendations is true, Toplist is false.
-    const [toggleValue, setToggleValue] = useState(0);
+    const [toggleValue, setToggleValue] = useState(1);
     const toggleTopList = () => {
-        setToggleValue(0);
+        setToggleValue(1);
     }
     const toggleRecommended = () => {
-        setToggleValue(1)
+        setToggleValue(0)
         getRecommendations()
     }
     const toggleLikedList = () => {
@@ -170,11 +170,11 @@ const Feed = () => {
         <div className="feed">
 
             <div className="feedHeader">
-                <button className={toggleValue == 1 ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
-                <button className={toggleValue == 0 ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleRecommended}>Recommended</button>
-                <button className={toggleValue == 2 ? "tabButton" : "tabButton-Active"} id="likedButton" onClick={toggleLikedList}>Liked</button>
+                <button className={toggleValue === 1 ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleTopList}>Top-rated</button>
+                <button className={toggleValue === 0 ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleRecommended}>Recommended</button>
+                <button className={toggleValue === 2 ? "tabButton" : "tabButton-Active"} id="likedButton" onClick={toggleLikedList}>Liked</button>
             </div>
-            {toggleValue == 1 ? <div className='Tab' id='Recent'>
+            {toggleValue == 0 ? <div className='Tab' id='Recent'>
                 {travels && travels
                 .slice(0)
                 .map((travel) => (
@@ -206,7 +206,7 @@ const Feed = () => {
             :
             <div></div> }
 
-            {toggleValue == 0 ? <div className='Tab' id='Toplist'>
+            {toggleValue == 1 ? <div className='Tab' id='Toplist'>
                 {travels && travels
                .sort ((a, b) => a.rating - b.rating)
                .slice(0, 9)

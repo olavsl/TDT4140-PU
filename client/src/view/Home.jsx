@@ -54,15 +54,15 @@ const Home = () => {
     return (
         <div className="home">            
         <div className="FormSwitch">
-            <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleLogin}>Log in</button>
-            <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleSignup}>Sign up</button>
+            <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="loginButton" onClick={toggleLogin}>Log in</button>
+            <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="signupButton" onClick={toggleSignup}>Sign up</button>
         </div>    
             { toggleForms ? <div> {
                 user === null && 
                 <form className="logInWindow" onSubmit={handleLogin}>
                     <div className="FormSwitch">
-                        <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="recentButton" onClick={toggleLogin}>Log in</button>
-                        <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="toplistButton" onClick={toggleSignup}>Sign up</button>
+                        <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="loginButton" onClick={toggleLogin}>Log in</button>
+                        <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="signupButton" onClick={toggleSignup}>Sign up</button>
                     </div>    
                     <input type="text" className="loginInput" id="usernameInput" placeholder="Username" 
                         onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -81,8 +81,8 @@ const Home = () => {
                 user === null && 
                 <form className="signupWindow" onSubmit={handleSignup} >
                     <div className="FormSwitch">
-                        <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="loginButton" onClick={toggleLogin}>Log in</button>
-                        <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="signupButton" onClick={toggleSignup}>Sign up</button>
+                        <button className={toggleForms ? "tabButton" : "tabButton-Active"} id="loginButton" onClick={toggleLogin}>Log in</button>
+                        <button className={!toggleForms ? "tabButton" : "tabButton-Active"} id="signupButton" onClick={toggleSignup}>Sign up</button>
                     </div>    
                     <input type="text" className="signupInput" id="signupUsernameInput" placeholder="Username" 
                         onChange={(e) => setUsername(e.target.value)} value={username} />

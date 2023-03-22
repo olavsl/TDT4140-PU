@@ -474,7 +474,7 @@ a {
   z-index: 2;
 }
 
-.tabButton {
+.tabButton-Active {
   background-color: #b29460;
   color: white;
   float: left;
@@ -483,11 +483,10 @@ a {
   padding: 8px 16px;
   font-size: 17px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  width: 33.3%;
   border: 2px solid #c0a06a;
   box-sizing: border-box;
 }
-.tabButton-Active {
+.tabButton {
   background-color: #b99452;
   color: white;
   float: left;
@@ -498,10 +497,29 @@ a {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
   text-decoration: underline;
-  width: 33.3%;
   border: 2px solid #ac8239;
   box-sizing: border-box;
 
+}
+
+#toplistButton {
+  width: 33.3%;
+}
+
+#recentButton {
+  width: 33.3%;
+}
+
+#likedButton {
+  width: 33.3%;
+}
+
+#loginButton {
+  width: 50%;
+}
+
+#signupButton {
+  width: 50%;
 }
 
 .tabButton:hover {
