@@ -208,9 +208,10 @@ const Feed = () => {
 
             {toggleValue == 1 ? <div className='Tab' id='Toplist'>
                 {travels && travels
-               .sort ((a, b) => a.rating - b.rating)
+               .sort ((a, b) => {
+                    return b.rating.reduce((partialSum, b) => partialSum + b, 0) / b.rating.length - a.rating.reduce((partialSum, a) => partialSum + a, 0) / a.rating.length
+                })
                .slice(0, 9)
-               .reverse()
                 .map((travel) => (
                     <TravelCard key={travel._id} travel = {travel} />
                 ))}

@@ -33,7 +33,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-  // The parseDescription function is used to shorten the description of the travel to 120 characters.
+// The parseDescription function is used to shorten the description of the travel to 120 characters.
 const parseDescription = (description) => {
     if (description.length > 120) {
         return description.substring(0, 120) + "...";
@@ -54,82 +54,49 @@ export const TravelCard = ({ travel }) => {
     const [ratingArray, setRatingArray] = useState(travel.rating);
    
 
-         // Get average from values in travel.rating array. 
-         // Also removes initial 0 value from array (bug, not sure where it comes from)
+    // Get average from values in travel.rating array. 
+    // Also removes initial 0 value from array (bug, not sure where it comes from)
 
-     
-
-            const getAverage = () => {
-                const ratings = travel.rating
-                let total = 0;
-                let count = 0;
-                if (ratings !== undefined || ratings !== null || ratings !== 0 || ratings !== ""){
-
-                    ratings.forEach((rating) => {
-           
-                            total += rating;
-                            count++;
-
-                    });
-                    if (count === 0) {
-                        return 0;
-                    }
-                    return (total / count).toFixed(0);
-                }
-            }
-            
-
-    // Adds the new rating to the rating array
-    const newRate = async() => {
-        for (let i = 0; i < ratingArray.length; i++) {
-            if (ratingArray[i] === 0 || ratingArray[i] === "") {
-                ratingArray.splice(i, 1);
-            }
-        }
-        let oldArray = ratingArray
-        oldArray.push(newRating)
-        setRatingArray(oldArray)
-
-        console.log("newRating:")
-        console.log(newRating)
-        console.log("ratingArray:")
-        console.log(ratingArray)
-
-        travelRating(travel, ratingArray)
-        getAverage(ratingArray)
-
-        console.log("travel.rating:")
-        console.log(travel.rating)
-        console.log(travel)
-    }
-    
-    // Payload for the rating
-    const travelRating = async (travel, ratingArray) => {        
-        const travelPayload = {
-            title: travel.title,
-            country: travel.country,
-            startDestination: travel.startDestination,
-            endDestination: travel.endDestination,
-            price: travel.price,
-            travelType: travel.travelType,
-            description: travel.description,
-            rating: ratingArray,
-            comments: travel.comments
-        }
-        const fetchString = '/api/travels/'+travel._id
-        console.log(fetchString)
-        const response = await fetch(fetchString, {
-            method: 'PATCH',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({travelPayload})
-        }).then((res) => {
-            if(res.ok) {
-                console.log("OkiDoki")
-                console.log(travelPayload)
-            }
+    const giveNewRating = async (newValue) => {
+        const allRatings = [...ratingArray, newValue]
+        setNewRating(getAverageOfArray(allRatings))
+        
+        travel.rating.push(newValue)
+        
+        const response = await fetch("/api/travels/" + travel._id, {
+            method: "PATCH",
+            body: JSON.stringify(travel),
+            headers: {"Content-Type": "application/json"}
         })
+
+        if (response.ok) {
+            travelDispatch({type: "SET_TRAVELS", payload: travels})
+        }
     }
 
+    const getAverageOfArray = (arr) => {
+        return arr.reduce((partialSum, a) => partialSum + a, 0) / arr.length
+    }
+
+    const getAverage = () => {
+        const ratings = travel.rating
+        let total = 0;
+        let count = 0;
+        if (ratings !== undefined || ratings !== null || ratings !== 0 || ratings !== ""){
+            ratings.forEach((rating) => {
+    
+                    total += rating;
+                    count++;
+
+            });
+
+            if (count === 0) {
+                return 0;
+            }
+
+            return (total / count).toFixed(0);
+        }
+    }
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -140,14 +107,13 @@ export const TravelCard = ({ travel }) => {
       setOpen(false);
     };
 
-
     const getTodayDate = () => {
-    let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let dateTime = date+' '+time;
+        let today = new Date();
+        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let dateTime = date+' '+time;
 
-    return dateTime;
+        return dateTime;
     }
 
     const onSubmitCommment = async(event) => {
@@ -202,7 +168,6 @@ export const TravelCard = ({ travel }) => {
     }, [])
     
     useEffect(() => {
-
         // Sets color of rating based on the rating value.
         if (getAverage(ratingArray) >= 4) {
             setRatingColor("#b7ed66");
@@ -216,8 +181,7 @@ export const TravelCard = ({ travel }) => {
             setRatingColor("white");
         }
         setRatingArray(travel.rating)
-
-    }, [ratingArray, travel.rating, newRate]);
+    }, [ratingArray, travel.rating]);
 
     const likeTravel = async (e) => {
         if (user.likedTravels.includes(travel._id)) {
@@ -279,7 +243,7 @@ export const TravelCard = ({ travel }) => {
            
                             <Typography variant="body2" color="black" className="rating">
 
-                                {getAverage()+ "/ 5" }
+                                {Math.round(getAverageOfArray(ratingArray)) + "/ 5" }
 
                             </Typography>
                             
@@ -475,7 +439,7 @@ export const TravelCard = ({ travel }) => {
                                 sx={{ 
                                     mt:-0.5,
                                     }}>
-                                {getAverage()} / 5
+                                {Math.round(getAverageOfArray(ratingArray))} / 5
                             </Typography>
                             </Box>
                         </Grid>
@@ -492,12 +456,9 @@ export const TravelCard = ({ travel }) => {
                                 value={0}
                                 onChange={(event, newValue) => {
                                     if (!newValue == 0){
-                                    setNewRating(newValue)
-                                    newRate()
-                                    }
-                                    
-                                    
-                            }}
+                                        giveNewRating(newValue)
+                                    }     
+                                }}
                             />
                         </Grid>
 
