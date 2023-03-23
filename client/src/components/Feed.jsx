@@ -17,7 +17,7 @@ const Feed = () => {
     }
 
     // Boolean state of toggleValue determines which tab is active. Recommendations is true, Toplist is false.
-    const [toggleValue, setToggleValue] = useState(1);
+    const [toggleValue, setToggleValue] = useState(0);
     const toggleTopList = () => {
         setToggleValue(1);
     }

@@ -75,6 +75,9 @@ export const TravelCard = ({ travel }) => {
     }
 
     const getAverageOfArray = (arr) => {
+        if (arr.length === 0) {
+            return 0;
+        }
         return arr.reduce((partialSum, a) => partialSum + a, 0) / arr.length
     }
 
@@ -167,21 +170,21 @@ export const TravelCard = ({ travel }) => {
         console.log("useEffect fired")
     }, [])
     
-    useEffect(() => {
-        // Sets color of rating based on the rating value.
-        if (getAverage(ratingArray) >= 4) {
-            setRatingColor("#b7ed66");
-        } else if (getAverage(ratingArray) >= 3) {
-            setRatingColor("#dded66");
-        } else if (getAverage(ratingArray) >= 2) {
-            setRatingColor("#edc566");
-        } else if (getAverage(ratingArray) >= 0.1) {
-            setRatingColor("#ed8a66");
-        } else {
-            setRatingColor("white");
-        }
-        setRatingArray(travel.rating)
-    }, [ratingArray, travel.rating]);
+    // useEffect(() => {
+    //     // Sets color of rating based on the rating value.
+    //     if (getAverage(ratingArray) >= 4) {
+    //         setRatingColor("#b7ed66");
+    //     } else if (getAverage(ratingArray) >= 3) {
+    //         setRatingColor("#dded66");
+    //     } else if (getAverage(ratingArray) >= 2) {
+    //         setRatingColor("#edc566");
+    //     } else if (getAverage(ratingArray) >= 0.1) {
+    //         setRatingColor("#ed8a66");
+    //     } else {
+    //         setRatingColor("white");
+    //     }
+    //     setRatingArray(travel.rating)
+    // }, [ratingArray, travel.rating]);
 
     const likeTravel = async (e) => {
         if (user.likedTravels.includes(travel._id)) {
@@ -469,7 +472,7 @@ export const TravelCard = ({ travel }) => {
                         <Grid sx={{mt: 1, mb:-1}} container direction="row" justifyContent="space-evenly">
                             <Box>
                                 <button className="like-button" onClick={(e) => likeTravel(e)} value={travel._id}>Like</button>
-                                <p>{travel.likes}</p>
+                                <div style={{position: "relative", top: "-3.5vh"}}>{travel.likes}</div>
                             </Box>
                         </Grid>
 
