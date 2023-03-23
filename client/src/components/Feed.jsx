@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { TravelCard } from "./TravelCard"
 import AddTravelForm from "./AddTravelForm";
 import { useTravelsContext } from "../hooks/useTravelsContext";
@@ -83,16 +83,16 @@ const Feed = () => {
         var ownTravelsData = []
 
         var countries = []
-
+        
         for (var i in user.myTravels) {
             for (var j in travels) {
                 var travel = {}
-
+                
                 if (user.myTravels[i] === travels[j]._id) {
                     travel = travels[j]
                 }
 
-                if (!countries.includes(travel.country) && travel.country != undefined) {
+                if (!countries.includes(travel.country) && travel.country !== undefined) {
                     ownTravelsData.push([travel.country, 1])
                     countries.push(travel.country)
                 } else {
@@ -111,7 +111,7 @@ const Feed = () => {
     const getRecommendations = () => {
         const likeData = getLikeData()
         const ownTravelsData = getOwnTravelsData()
-
+        
         const allData = [...likeData, ...ownTravelsData]
         var countries = []
 
@@ -120,7 +120,6 @@ const Feed = () => {
         for (var i in allData) {
             if (!countries.includes(allData[i][0])) {
                 recomData.push([allData[i][0], allData[i][1]])
-                countries.push(allData[i][0])
             } else {
                 for (var j in recomData) {
                     if (allData[i][0] === recomData[j][0]) {
@@ -138,10 +137,10 @@ const Feed = () => {
                 return (a[1] > b[1]) ? -1 : 1;
             }
         })
-
+        
         var recommendations = []
         var notRecommendations = []
-
+        
         for (var i in travels) {
             var added = false
 
@@ -165,6 +164,12 @@ const Feed = () => {
             travelDispatch({type: "SET_TRAVELS", payload: recommendations})
         }
     }
+
+    useEffect(() => {
+        if (toggleValue === 0 && user !== null) {
+            getRecommendations()
+        }
+    }, [travels])
 
     return (
         <div className="feed">

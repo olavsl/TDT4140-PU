@@ -170,21 +170,21 @@ export const TravelCard = ({ travel }) => {
         console.log("useEffect fired")
     }, [])
     
-    // useEffect(() => {
-    //     // Sets color of rating based on the rating value.
-    //     if (getAverage(ratingArray) >= 4) {
-    //         setRatingColor("#b7ed66");
-    //     } else if (getAverage(ratingArray) >= 3) {
-    //         setRatingColor("#dded66");
-    //     } else if (getAverage(ratingArray) >= 2) {
-    //         setRatingColor("#edc566");
-    //     } else if (getAverage(ratingArray) >= 0.1) {
-    //         setRatingColor("#ed8a66");
-    //     } else {
-    //         setRatingColor("white");
-    //     }
-    //     setRatingArray(travel.rating)
-    // }, [ratingArray, travel.rating]);
+    useEffect(() => {
+        // Sets color of rating based on the rating value.
+        // if (getAverage(ratingArray) >= 4) {
+        //     setRatingColor("#b7ed66");
+        // } else if (getAverage(ratingArray) >= 3) {
+        //     setRatingColor("#dded66");
+        // } else if (getAverage(ratingArray) >= 2) {
+        //     setRatingColor("#edc566");
+        // } else if (getAverage(ratingArray) >= 0.1) {
+        //     setRatingColor("#ed8a66");
+        // } else {
+        //     setRatingColor("white");
+        // }
+        setRatingArray(travel.rating)
+    }, [ratingArray, travel.rating]);
 
     const likeTravel = async (e) => {
         if (user.likedTravels.includes(travel._id)) {
@@ -246,7 +246,7 @@ export const TravelCard = ({ travel }) => {
            
                             <Typography variant="body2" color="black" className="rating">
 
-                                {Math.round(getAverageOfArray(ratingArray)) + "/ 5" }
+                                {Math.round(getAverageOfArray(ratingArray)) + "★" }
 
                             </Typography>
                             
@@ -442,7 +442,7 @@ export const TravelCard = ({ travel }) => {
                                 sx={{ 
                                     mt:-0.5,
                                     }}>
-                                {Math.round(getAverageOfArray(ratingArray))} / 5
+                                {Math.round(getAverageOfArray(ratingArray))}★
                             </Typography>
                             </Box>
                         </Grid>
