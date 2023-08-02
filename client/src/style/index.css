@@ -1,13 +1,584 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0; /* Removes white space at top of webpage */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.blur-wrapper {
+  filter: blur(0px);
 }
+
+.header {
+  position: relative;
+  left: 0px;
+  top: 0vw;
+  margin: 0px;
+  display: block;
+  width: 100%;
+  height: 10vh;
+  background-color: #DFC296;
+  text-align: center;
+  box-shadow: 0.2vh 0.2vh 0.2vh #c0b8af;
+  z-index: 2;
+}
+
+#header-logo{
+  position: absolute;
+  left: 0vw;
+  top: 0vw;
+  height: 10vh;
+}
+
+.heading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  font-size: 5vh;
+  color: #876833;
+}
+
+a {
+  color: #876833;
+  text-decoration: none;
+  cursor: default;
+}
+
+.username-display {
+  position: absolute;
+  top: 50%;
+  right: 15vw;
+  transform: translateY(-50%);
+  font-size: 2vw;
+  color: white;
+}
+
+.flexContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height:100%
+}
+
+.profileButton {
+  position: absolute;
+  top: 50%;
+  right: 1vw;
+  transform: translateY(-50%);
+  margin: 0px;
+  display: inline-block;
+  width: 8vh;
+  height: 8vh;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 2vw;
+  border-radius: 2.5vw;
+  border: none;
+}
+
+.profileButton:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.profileImg {
+  width: 35px;
+  height: 35px;  
+}
+
+.filter {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display: inline-block;
+  width: 20%;
+  height: 90vh;
+  background-color: #ECE3D9;
+}
+
+.filter-heading {
+  position: absolute;
+  left: 7.5%;
+  top: 5vh;
+  font-size: 4vh;
+  color: #876833;
+}
+
+
+.filter-heading-line {
+  position: absolute;
+  top: 10vh;
+  left: 7.5%;
+  width: 85%;
+  border-radius: 0.1vh;
+  border-color: #DFC296;
+}
+
+
+.filter-form {
+  position: absolute;
+  top: 15%;
+  left: 7.5%;
+  width: auto;
+  max-height: 85%;
+}
+
+
+.filter-form-section-heading {
+  width: 17vw;
+  height: auto;
+  background-color:#ECE3D9;
+  border: none;
+  text-align: left;
+  font-size: 2vh;
+}
+
+
+.filter-form-subsection {
+  position: relative;
+  left: 1vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  width: 16vw;
+  height: 2.5vh;
+}
+
+
+.filter-price-input {
+  position: absolute;
+  left: 20%;
+  width: 70%;
+}
+
+.feed {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display:flex;
+  width: 60%;
+  height: 90vh;
+  background-color: #ECE3D9;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-y: scroll;
+
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  /* -ms-overflow-style: none;   
+  scrollbar-width: none;    
+}
+*/
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* .feed::-webkit-scrollbar {
+  display: none;
+} */
+
+}
+
+.like-button {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 70%;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgb(64, 125, 222);
+  border-radius: 1rem;
+}
+
+.like-button:hover {
+  cursor: pointer;
+  background-color: rgb(93, 141, 218);
+}
+
+.add-travel-button {
+  position: fixed;
+  bottom: 5vh;
+  right: 23%;
+  display: block;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 2.5vw;
+  border: none;
+  background-color: hsl(198, 100%, 59%);
+}
+
+.add-travel-button:hover {
+  cursor: pointer;
+  background-color: hsl(198, 93%, 45%);
+}
+
+.add-travel-plus-sign-component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  background-color: white;
+  border-radius: 0.5vw;
+}
+
+#vertical-plus-sign-component {
+  width: 1vw;
+  height: 4vw;
+}
+
+#horizontal-plus-sign-component {
+  width: 4vw;
+  height: 1vw;
+}
+#horizontal-plus-sign-component-small {
+  width: 1.5vw;
+  height: 0.3vw;
+}
+
+.add-travel-form-show {
+  position: fixed;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 30%;
+  height: 80vh;
+  background-color: #DFC296;
+  border-radius: 1vw;
+  text-align: center;
+  overflow: inherit;
+  border: black 0.1vw solid;
+}
+
+.add-travel-form-hide {
+  display: none;
+}
+
+.ads {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0;
+  display: inline-block;
+  width: 20%;
+  height: 90vh;
+  background-color: #ECE3D9;
+}
+
+.logInWindow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: block;
+  width: 25vw;
+  height: 30vh;
+  background-color: rgb(240, 204, 160);
+  z-index: 1;
+  opacity: 100%;
+  border-radius: 3vw;
+  backdrop-filter: blur(10px);
+}
+
+.loginHeading {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.loginInput {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+}
+
+#usernameInput {
+  top: 10vh;
+}
+
+#passwordInput {
+  top: 16vh;
+}
+
+.formButton {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  background-color:  rgb(255, 255, 255);
+}
+
+.formButton:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#loginButton {
+  top: 22vh;
+}
+
+.notALine {
+  margin-top: 26vh;
+  background-color: bisque;
+}
+
+.signupWindow {
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  display: block;
+  width: 25vw;
+  height: 35vh;
+  background-color: rgb(240, 204, 160);
+  z-index: 1;
+  opacity: 100%;
+  border-radius: 3vw;
+  backdrop-filter: blur(10px);  
+}
+
+.signupHeading {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.signupInput {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  border: 0.2vw solid rgb(0, 0, 0);
+}
+
+#signupUsernameInput {
+  top: 10vh;
+}
+
+#signupPasswordInput {
+  top: 16vh;
+}
+
+#confirmPasswordInput {
+  top: 22vh;
+}
+
+#signupButton {
+  top: 28vh;
+}
+
+.dontHaveAnAccount {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 29vh;
+  display: block;
+  width: 90%;
+  text-align: center;
+}
+
+.alreadyHaveAnAccount {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 33.5vh;
+  display: block;
+  width: 90%;
+  text-align: center;
+}
+
+.link-form-button {
+  position: absolute;
+  top: 38vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+  background-color:  rgb(255, 255, 255);
+}
+
+.link-form-button:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+#go-to-signup {
+  top: 32.5vh;
+}
+
+#go-to-login {
+  top: 38vh;
+}
+
+.link-form-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:rgb(0, 0, 0);
+}
+
+.line {
+  margin-top: 31.5vh;
+}
+
+.add-travel-heading {
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 1.5vh;
+}
+
+.add-travel-input {
+  position: relative;
+  /* transform: translate(-50%,-50%);
+  left: 50%; */
+  width: 20vw;
+  height: 4vh;
+  border-radius: 1vw;
+
+  border: 0.1vw solid rgb(0, 0, 0);
+  margin-top: 3vh;
+}
+
+#add-travel-button {
+  background-color: rgb(207, 226, 190);
+  top: 72vh;
+}
+
+#add-travel-button:hover {
+  background-color: rgb(110, 241, 67);
+}
+
+.feedHeader {
+  position: sticky;
+  left: 0px;
+  top: 0vw;
+  margin: 0px;
+  display: block;
+  width: 100%;
+  background-color: #d6c5ac;
+  text-align: center;
+  box-shadow: 0.2vh 0.2vh 0.2vh #c0b8af;
+  z-index: 2;
+}
+
+.tabButton-Active {
+  background-color: #b29460;
+  color: white;
+  float: left;
+  border: #DFC296;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-size: 17px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  border: 2px solid #c0a06a;
+  box-sizing: border-box;
+}
+.tabButton {
+  background-color: #b99452;
+  color: white;
+  float: left;
+  border: #DFC296;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-size: 17px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
+  border: 2px solid #ac8239;
+  box-sizing: border-box;
+
+}
+
+#toplistButton {
+  width: 33.3%;
+}
+
+#recentButton {
+  width: 33.3%;
+}
+
+#likedButton {
+  width: 33.3%;
+}
+
+#loginButton {
+  width: 50%;
+}
+
+#signupButton {
+  width: 50%;
+}
+
+.tabButton:hover {
+  background-color: #debe7e;
+  
+}
+
+.Tab {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  display:flex;
+  width: 100%;
+  height: 90vh;
+  background-color: #ECE3D9;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.TabHidden {
+  display: none;
+}
+
+.searchBar {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18vw;
+  height: 3.5vh;
+  border-radius: 0.5vw;
+  border: 0.1vw solid #ac8239;
+  font-size: 15px;
+}
+
+
+
+.add-travel-close {
+  margin-right: 24.5vw;
+  margin-top: 0.5vh;
+  }
+  
+  .add-travel-button-active {
+    position: fixed;
+    bottom: 78vh;
+    right: 62%;
+    display: block;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 2.5vw;
+    border: none;
+    background-color: hsl(0, 78%, 65%);
+    z-index: 2;
+  }
+  
+  .add-travel-button-active:hover {
+    cursor: pointer;
+    background-color: hsl(0, 59%, 61%);
+    z-index: 2;
+  }

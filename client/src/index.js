@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './style/index.css';
 import App from './App';
+import { AuthContextSupplier } from './context/AuthContext';
 import reportWebVitals from './reportWebVitals';
+import { TravelsContextSupplier } from './context/TravelContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthContextSupplier>
+      <TravelsContextSupplier>
+          <App />
+      </TravelsContextSupplier>
+    </AuthContextSupplier>
   </React.StrictMode>
 );
 
